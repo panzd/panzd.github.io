@@ -2,36 +2,36 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>panzd.github.io/</loc>
+    <loc>/</loc>
     <lastmod>2022-06-04T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>panzd.github.io/about/</loc>
+    <loc>/about/</loc>
     <lastmod>2022-06-04T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>panzd.github.io/page/</loc>
+    <loc>/page/</loc>
     <lastmod>2022-06-04T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>panzd.github.io/p/2021-vlog/</loc>
+    <loc>/p/2021-vlog/</loc>
     <lastmod>2022-01-26T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>panzd.github.io/categories/</loc>
+    <loc>/categories/</loc>
     <lastmod>2022-01-26T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>panzd.github.io/post/</loc>
+    <loc>/post/</loc>
     <lastmod>2022-01-26T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>panzd.github.io/tags/</loc>
+    <loc>/tags/</loc>
     <lastmod>2022-01-26T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>panzd.github.io/categories/video/</loc>
+    <loc>/categories/video/</loc>
     <lastmod>2022-01-26T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>panzd.github.io/tags/%E6%88%90%E9%95%BF/</loc>
+    <loc>/tags/%E6%88%90%E9%95%BF/</loc>
     <lastmod>2022-01-26T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>panzd.github.io/archives/</loc>
+    <loc>/archives/</loc>
     <lastmod>2019-05-28T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>panzd.github.io/search/</loc>
+    <loc>/search/</loc>
   </url>
 </urlset>

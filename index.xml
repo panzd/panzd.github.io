@@ -2,16 +2,16 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
     <channel>
         <title>panzd</title>
-        <link>panzd.github.io/</link>
+        <link>/</link>
         <description>Recent content on panzd</description>
         <generator>Hugo -- gohugo.io</generator>
         <language>en-us</language>
-        <lastBuildDate>Sat, 04 Jun 2022 00:00:00 +0000</lastBuildDate><atom:link href="panzd.github.io/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Sat, 04 Jun 2022 00:00:00 +0000</lastBuildDate><atom:link href="/index.xml" rel="self" type="application/rss+xml" /><item>
         <title>About</title>
-        <link>panzd.github.io/about/</link>
+        <link>/about/</link>
         <pubDate>Sat, 04 Jun 2022 00:00:00 +0000</pubDate>
         
-        <guid>panzd.github.io/about/</guid>
+        <guid>/about/</guid>
         <description>&lt;h4 id=&#34;一个喜爱的理工男成长中的程序员&#34;&gt;一个喜爱的理工男，成长中的程序员&lt;/h4&gt;
 &lt;p&gt;坐标：上海浦东&lt;/p&gt;
 &lt;p&gt;日常就是写代码，阅读、健身、打羽毛球、练琴&lt;/p&gt;
@@ -33,10 +33,10 @@
         </item>
         <item>
         <title>2021 vlog</title>
-        <link>panzd.github.io/p/2021-vlog/</link>
+        <link>/p/2021-vlog/</link>
         <pubDate>Wed, 26 Jan 2022 00:00:00 +0000</pubDate>
         
-        <guid>panzd.github.io/p/2021-vlog/</guid>
+        <guid>/p/2021-vlog/</guid>
         <description>&lt;p&gt;在2021年里经历了很多事情，成长了很多，希望2022年的自己能更好！&lt;/p&gt;
 &lt;hr&gt;
 &lt;h2 id=&#34;2021快乐&#34;&gt;2021快乐！&lt;/h2&gt;
@@ -61,18 +61,18 @@
         </item>
         <item>
         <title>Archives</title>
-        <link>panzd.github.io/archives/</link>
+        <link>/archives/</link>
         <pubDate>Tue, 28 May 2019 00:00:00 +0000</pubDate>
         
-        <guid>panzd.github.io/archives/</guid>
+        <guid>/archives/</guid>
         <description></description>
         </item>
         <item>
         <title>Search</title>
-        <link>panzd.github.io/search/</link>
+        <link>/search/</link>
         <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
         
-        <guid>panzd.github.io/search/</guid>
+        <guid>/search/</guid>
         <description></description>
         </item>
         

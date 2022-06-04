@@ -2,16 +2,16 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
     <channel>
         <title>Posts on panzd</title>
-        <link>panzd.github.io/post/</link>
+        <link>/post/</link>
         <description>Recent content in Posts on panzd</description>
         <generator>Hugo -- gohugo.io</generator>
         <language>en-us</language>
-        <lastBuildDate>Wed, 26 Jan 2022 00:00:00 +0000</lastBuildDate><atom:link href="panzd.github.io/post/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Wed, 26 Jan 2022 00:00:00 +0000</lastBuildDate><atom:link href="/post/index.xml" rel="self" type="application/rss+xml" /><item>
         <title>2021 vlog</title>
-        <link>panzd.github.io/p/2021-vlog/</link>
+        <link>/p/2021-vlog/</link>
         <pubDate>Wed, 26 Jan 2022 00:00:00 +0000</pubDate>
         
-        <guid>panzd.github.io/p/2021-vlog/</guid>
+        <guid>/p/2021-vlog/</guid>
         <description>&lt;p&gt;在2021年里经历了很多事情，成长了很多，希望2022年的自己能更好！&lt;/p&gt;
 &lt;hr&gt;
 &lt;h2 id=&#34;2021快乐&#34;&gt;2021快乐！&lt;/h2&gt;
