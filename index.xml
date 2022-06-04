@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+    <channel>
+        <title>panzd</title>
+        <link>panzd.github.io/</link>
+        <description>Recent content on panzd</description>
+        <generator>Hugo -- gohugo.io</generator>
+        <language>en-us</language>
+        <lastBuildDate>Sat, 04 Jun 2022 00:00:00 +0000</lastBuildDate><atom:link href="panzd.github.io/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>About</title>
+        <link>panzd.github.io/about/</link>
+        <pubDate>Sat, 04 Jun 2022 00:00:00 +0000</pubDate>
+        
+        <guid>panzd.github.io/about/</guid>
+        <description>&lt;h4 id=&#34;一个喜爱的理工男成长中的程序员&#34;&gt;一个喜爱的理工男，成长中的程序员&lt;/h4&gt;
+&lt;p&gt;坐标：上海浦东&lt;/p&gt;
+&lt;p&gt;日常就是写代码，阅读、健身、打羽毛球、练琴&lt;/p&gt;
+&lt;p&gt;偶尔会去听音乐会、戏剧&lt;/p&gt;
+&lt;p&gt;技能栈：Golang、Java、C++、Lisp&lt;/p&gt;
+&lt;p&gt;研究方向：并行编程、分布式存储&lt;/p&gt;
+&lt;p&gt;最喜欢的编程书：《C++沉思录》&lt;/p&gt;
+&lt;p&gt;喜爱的作家：陀思妥耶夫斯基、茨威格、毛姆、雨果&lt;/p&gt;
+&lt;p&gt;最喜欢的作品：《悲惨世界》&lt;/p&gt;
+&lt;p&gt;最喜欢的钢琴曲：《六月船歌》&lt;/p&gt;
+&lt;p&gt;欢迎关注我的微博 ： &lt;a class=&#34;link&#34; href=&#34;https://weibo.com/u/3528852115&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;冬瓜爆炒芋头&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://juejin.cn/user/2858385960602231&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;掘金(主要是关于工具类的):    panzd&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;曾经的CSDN博客：
+&lt;a class=&#34;link&#34; href=&#34;https://blog.csdn.net/Panshaoling&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;ArchiePan&lt;/a&gt;&lt;/p&gt;
+</description>
+        </item>
+        <item>
+        <title>2021 vlog</title>
+        <link>panzd.github.io/p/2021-vlog/</link>
+        <pubDate>Wed, 26 Jan 2022 00:00:00 +0000</pubDate>
+        
+        <guid>panzd.github.io/p/2021-vlog/</guid>
+        <description>&lt;p&gt;在2021年里经历了很多事情，成长了很多，希望2022年的自己能更好！&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id=&#34;2021快乐&#34;&gt;2021快乐！&lt;/h2&gt;
+
+
+
+
+
+
+    
+
+
+&lt;div class=&#34;video-wrapper&#34;&gt;
+    &lt;iframe src=&#34;https://player.bilibili.com/player.html?as_wide=1&amp;amp;high_quality=1&amp;amp;page=1&amp;bvid=BV16F411p79W&#34;
+            scrolling=&#34;no&#34;
+            frameborder=&#34;no&#34;
+            framespacing=&#34;0&#34;
+            allowfullscreen=&#34;true&#34;
+    &gt;
+    &lt;/iframe&gt;
+&lt;/div&gt;</description>
+        </item>
+        <item>
+        <title>Archives</title>
+        <link>panzd.github.io/archives/</link>
+        <pubDate>Tue, 28 May 2019 00:00:00 +0000</pubDate>
+        
+        <guid>panzd.github.io/archives/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>Search</title>
+        <link>panzd.github.io/search/</link>
+        <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+        
+        <guid>panzd.github.io/search/</guid>
+        <description></description>
+        </item>
+        
+    </channel>
+</rss>
