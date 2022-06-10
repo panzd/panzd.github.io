@@ -1,1 +1,1 @@
-[{"content":"在2021年里经历了很多事情，成长了很多，希望2022年的自己能更好！\n2021快乐！ ","date":"2022-01-26T00:00:00Z","permalink":"/p/2021-vlog/","title":"2021 vlog"}]
+[{"content":"在2021年里经历了很多事情，成长了很多，希望2022年的自己能更好！\n2021快乐！ ","date":"2022-01-26T00:00:00Z","permalink":"/p/2021-vlog/","title":"2021 vlog"},{"content":"本文主要分析了defer在代码里的各种情况。本文先发于掘金论坛上。\ndefer执行顺序 defer关键字的插入顺序时从后向前的，而defer关键字执行是从前向后的，所以后来的defer会优先执行。 当goroutine获取到runtime._defer结构体后，将追加在Goroutine_defer链表的最前面。\n","date":"2022-01-15T00:00:00Z","permalink":"/p/golang-defer%E7%9A%84%E6%8E%A2%E7%B4%A2/","title":"Golang defer的探索"}]

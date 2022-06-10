@@ -60,6 +60,28 @@
 &lt;/div&gt;</description>
         </item>
         <item>
+        <title>Golang defer的探索</title>
+        <link>/p/golang-defer%E7%9A%84%E6%8E%A2%E7%B4%A2/</link>
+        <pubDate>Sat, 15 Jan 2022 00:00:00 +0000</pubDate>
+        
+        <guid>/p/golang-defer%E7%9A%84%E6%8E%A2%E7%B4%A2/</guid>
+        <description>&lt;p&gt;本文主要分析了defer在代码里的各种情况。本文先发于掘金论坛上。&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id=&#34;defer执行顺序&#34;&gt;defer执行顺序&lt;/h2&gt;
+&lt;p&gt;defer关键字的插入顺序时从后向前的，而defer关键字执行是从前向后的，所以后来的defer会优先执行。
+当goroutine获取到runtime._defer结构体后，将追加在Goroutine_defer链表的最前面。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/images/1.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;例题1&#34;
+	
+	
+&gt;&lt;/p&gt;</description>
+        </item>
+        <item>
         <title>Archives</title>
         <link>/archives/</link>
         <pubDate>Tue, 28 May 2019 00:00:00 +0000</pubDate>
