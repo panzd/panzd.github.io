@@ -40,21 +40,515 @@
         <pubDate>Sat, 15 Jan 2022 00:00:00 +0000</pubDate>
         
         <guid>/p/golang-defer%E7%9A%84%E6%8E%A2%E7%B4%A2/</guid>
-        <description>&lt;p&gt;本文主要分析了defer在代码里的各种情况。本文先发于掘金论坛上。&lt;/p&gt;
+        <description>&lt;p&gt;本文主要分析了defer在代码里的各种情况，本文先发于掘金论坛上。&lt;/p&gt;
 &lt;hr&gt;
-&lt;h2 id=&#34;defer执行顺序&#34;&gt;defer执行顺序&lt;/h2&gt;
+&lt;h2 id=&#34;1defer执行顺序&#34;&gt;1.defer执行顺序&lt;/h2&gt;
 &lt;p&gt;defer关键字的插入顺序时从后向前的，而defer关键字执行是从前向后的，所以后来的defer会优先执行。
 当goroutine获取到runtime._defer结构体后，将追加在Goroutine_defer链表的最前面。&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;/images/1.png&#34;
+&lt;p&gt;&lt;img src=&#34;/p/golang-defer%E7%9A%84%E6%8E%A2%E7%B4%A2/images/1.png&#34;
+	width=&#34;635&#34;
+	height=&#34;491&#34;
+	srcset=&#34;/p/golang-defer%E7%9A%84%E6%8E%A2%E7%B4%A2/images/1_huda372122980d53daf1bd3e9c1ea05566_104869_480x0_resize_box_3.png 480w, /p/golang-defer%E7%9A%84%E6%8E%A2%E7%B4%A2/images/1_huda372122980d53daf1bd3e9c1ea05566_104869_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;图1&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;129&#34;
+		data-flex-basis=&#34;310px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;h2 id=&#34;2defer关键词按值传递&#34;&gt;2.defer关键词按值传递&lt;/h2&gt;
+&lt;p&gt;defer函数调用都是传值的，会立即复制函数中的引用的外部参数。&lt;/p&gt;
+&lt;p&gt;例题：&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/p/golang-defer%E7%9A%84%E6%8E%A2%E7%B4%A2/images/2.webp&#34;
+	width=&#34;718&#34;
+	height=&#34;370&#34;
+	srcset=&#34;/p/golang-defer%E7%9A%84%E6%8E%A2%E7%B4%A2/images/2_hu19b0a0d58510caa2b7d88253bfa6f714_11834_480x0_resize_q75_h2_box_2.webp 480w, /p/golang-defer%E7%9A%84%E6%8E%A2%E7%B4%A2/images/2_hu19b0a0d58510caa2b7d88253bfa6f714_11834_1024x0_resize_q75_h2_box_2.webp 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;图2&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;194&#34;
+		data-flex-basis=&#34;465px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;这里f(i)拿到的是i的值。&lt;/p&gt;
+&lt;p&gt;同理：&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/p/golang-defer%E7%9A%84%E6%8E%A2%E7%B4%A2/images/3.webp&#34;
+	width=&#34;759&#34;
+	height=&#34;558&#34;
+	srcset=&#34;/p/golang-defer%E7%9A%84%E6%8E%A2%E7%B4%A2/images/3_hu3b91a8dde5ae81288417259ca4f6bcdd_12032_480x0_resize_q75_h2_box_2.webp 480w, /p/golang-defer%E7%9A%84%E6%8E%A2%E7%B4%A2/images/3_hu3b91a8dde5ae81288417259ca4f6bcdd_12032_1024x0_resize_q75_h2_box_2.webp 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;图3&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;136&#34;
+		data-flex-basis=&#34;326px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;在这里，前者的defer拿到的是i这个值，而后者defer拿到的是域变量(指针)。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/p/golang-defer%E7%9A%84%E6%8E%A2%E7%B4%A2/images/4.webp&#34;
+	width=&#34;471&#34;
+	height=&#34;529&#34;
+	srcset=&#34;/p/golang-defer%E7%9A%84%E6%8E%A2%E7%B4%A2/images/4_hu4320306bc7c598df088e8716ba1b6fde_14396_480x0_resize_q75_h2_box_2.webp 480w, /p/golang-defer%E7%9A%84%E6%8E%A2%E7%B4%A2/images/4_hu4320306bc7c598df088e8716ba1b6fde_14396_1024x0_resize_q75_h2_box_2.webp 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;图4&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;89&#34;
+		data-flex-basis=&#34;213px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;我在increaseB()加入输出，更能明白：&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/p/golang-defer%E7%9A%84%E6%8E%A2%E7%B4%A2/images/5.webp&#34;
+	width=&#34;584&#34;
+	height=&#34;618&#34;
+	srcset=&#34;/p/golang-defer%E7%9A%84%E6%8E%A2%E7%B4%A2/images/5_huad51e01f05946e5885999804fbe59d3f_20852_480x0_resize_q75_h2_box_2.webp 480w, /p/golang-defer%E7%9A%84%E6%8E%A2%E7%B4%A2/images/5_huad51e01f05946e5885999804fbe59d3f_20852_1024x0_resize_q75_h2_box_2.webp 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;图5&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;94&#34;
+		data-flex-basis=&#34;226px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;println拿到的也是值。&lt;/p&gt;
+&lt;h2 id=&#34;3defer等于nil的函数&#34;&gt;3.defer等于nil的函数&lt;/h2&gt;
+&lt;p&gt;&lt;img src=&#34;/p/golang-defer%E7%9A%84%E6%8E%A2%E7%B4%A2/images/6.webp&#34;
+	width=&#34;480&#34;
+	height=&#34;286&#34;
+	srcset=&#34;/p/golang-defer%E7%9A%84%E6%8E%A2%E7%B4%A2/images/6_hub0696b01c7b3387ad1665de525e38492_7518_480x0_resize_q75_h2_box_2.webp 480w, /p/golang-defer%E7%9A%84%E6%8E%A2%E7%B4%A2/images/6_hub0696b01c7b3387ad1665de525e38492_7518_1024x0_resize_q75_h2_box_2.webp 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;图6&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;167&#34;
+		data-flex-basis=&#34;402px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/p/golang-defer%E7%9A%84%E6%8E%A2%E7%B4%A2/images/7.webp&#34;
+	width=&#34;930&#34;
+	height=&#34;153&#34;
+	srcset=&#34;/p/golang-defer%E7%9A%84%E6%8E%A2%E7%B4%A2/images/7_hua5ea5acc38368c13808a9579ba0d0ebe_9676_480x0_resize_q75_h2_box_2.webp 480w, /p/golang-defer%E7%9A%84%E6%8E%A2%E7%B4%A2/images/7_hua5ea5acc38368c13808a9579ba0d0ebe_9676_1024x0_resize_q75_h2_box_2.webp 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;图7&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;607&#34;
+		data-flex-basis=&#34;1458px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;可以看到在defer函数启动后，因为nil发生了panic，但在此之前函数是可以顺利运行的。run()的注册也是没有问题的。&lt;/p&gt;
+&lt;h2 id=&#34;4在循环中的defer&#34;&gt;4.在循环中的defer&lt;/h2&gt;
+&lt;p&gt;通常情况下，我们不在循环体里用defer，除非特殊的要求。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/p/golang-defer%E7%9A%84%E6%8E%A2%E7%B4%A2/images/8.webp&#34;
+	width=&#34;588&#34;
+	height=&#34;754&#34;
+	srcset=&#34;/p/golang-defer%E7%9A%84%E6%8E%A2%E7%B4%A2/images/8_hu553e28e3857a3ea0e56da746ffcfcdd2_22140_480x0_resize_q75_h2_box_2.webp 480w, /p/golang-defer%E7%9A%84%E6%8E%A2%E7%B4%A2/images/8_hu553e28e3857a3ea0e56da746ffcfcdd2_22140_1024x0_resize_q75_h2_box_2.webp 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;图8&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;77&#34;
+		data-flex-basis=&#34;187px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;这里出现了不符合我们预期的结果，在这个循环里的defer函数并没有每次循环都发生打印，而是在整个循环结束后，才开始打印。因为defer调用都被压到defer栈里，等待循环函数结束后出栈。要解决的话，一种是不在循环里放defer，另一种如下：&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/p/golang-defer%E7%9A%84%E6%8E%A2%E7%B4%A2/images/9.webp&#34;
+	width=&#34;723&#34;
+	height=&#34;457&#34;
+	srcset=&#34;/p/golang-defer%E7%9A%84%E6%8E%A2%E7%B4%A2/images/9_hubd9c550d8a930d1528aa62e8d05c1341_19168_480x0_resize_q75_h2_box_2.webp 480w, /p/golang-defer%E7%9A%84%E6%8E%A2%E7%B4%A2/images/9_hubd9c550d8a930d1528aa62e8d05c1341_19168_1024x0_resize_q75_h2_box_2.webp 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;图9&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;158&#34;
+		data-flex-basis=&#34;379px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;在defer函数外面再加一层函数，这里defer函数就会在这层函数结束后调用。&lt;/p&gt;
+&lt;h2 id=&#34;5用defer来封装&#34;&gt;5.用defer来封装&lt;/h2&gt;
+&lt;p&gt;有时候，我们需要用defer来关闭外部资源，譬如数据库，IO操作等等。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/p/golang-defer%E7%9A%84%E6%8E%A2%E7%B4%A2/images/10.webp&#34;
+	width=&#34;533&#34;
+	height=&#34;676&#34;
+	srcset=&#34;/p/golang-defer%E7%9A%84%E6%8E%A2%E7%B4%A2/images/10_hu360d90d6168736a9f3de75711288e5ba_22352_480x0_resize_q75_h2_box_2.webp 480w, /p/golang-defer%E7%9A%84%E6%8E%A2%E7%B4%A2/images/10_hu360d90d6168736a9f3de75711288e5ba_22352_1024x0_resize_q75_h2_box_2.webp 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;图10&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;78&#34;
+		data-flex-basis=&#34;189px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;可以看到defer出现了bug，没有出现断开数据库的连接disconnect，connect()被放在了一边没有运行。&lt;/p&gt;
+&lt;p&gt;解决方案如下：&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/p/golang-defer%E7%9A%84%E6%8E%A2%E7%B4%A2/images/11.webp&#34;
+	width=&#34;499&#34;
+	height=&#34;301&#34;
+	srcset=&#34;/p/golang-defer%E7%9A%84%E6%8E%A2%E7%B4%A2/images/11_hu3481413e170feab62af1b71d4446fb0d_13390_480x0_resize_q75_h2_box_2.webp 480w, /p/golang-defer%E7%9A%84%E6%8E%A2%E7%B4%A2/images/11_hu3481413e170feab62af1b71d4446fb0d_13390_1024x0_resize_q75_h2_box_2.webp 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;图11&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;165&#34;
+		data-flex-basis=&#34;397px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;先让connect()函数运行，然后defer利用它的return操作来关闭数据库。&lt;/p&gt;
+&lt;p&gt;当然，我们也可以运用一些go的特性(语法糖),从技术上是相同，但是写法不怎么容易理解。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/p/golang-defer%E7%9A%84%E6%8E%A2%E7%B4%A2/images/12.webp&#34;
+	width=&#34;453&#34;
+	height=&#34;365&#34;
+	srcset=&#34;/p/golang-defer%E7%9A%84%E6%8E%A2%E7%B4%A2/images/12_hu90209da7fd9cc08ea3421788a2004d9c_16514_480x0_resize_q75_h2_box_2.webp 480w, /p/golang-defer%E7%9A%84%E6%8E%A2%E7%B4%A2/images/12_hu90209da7fd9cc08ea3421788a2004d9c_16514_1024x0_resize_q75_h2_box_2.webp 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;图12&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;124&#34;
+		data-flex-basis=&#34;297px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;与上面的方法相同，第一个()连接到数据库，相当于defer db.connect()，
+而第二个()则用来运行disconnect方法，在函数调用后，它会执行关闭操作。原因是defer调用了db.connect()关闭操作的值。&lt;/p&gt;
+&lt;h2 id=&#34;6在块中的defer&#34;&gt;6.在块中的defer&lt;/h2&gt;
+&lt;p&gt;刚开始你可以期待deferred函数会在一个代码块结束后调用，后来你才发现deferred函数只会在整个函数结束后调用，
+因为defer属于函数func而并非是块block。对于for、switch都是如此。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/p/golang-defer%E7%9A%84%E6%8E%A2%E7%B4%A2/images/13.webp&#34;
+	width=&#34;649&#34;
+	height=&#34;410&#34;
+	srcset=&#34;/p/golang-defer%E7%9A%84%E6%8E%A2%E7%B4%A2/images/13_hu9402e4276ad303ce39962d2e648c711d_19556_480x0_resize_q75_h2_box_2.webp 480w, /p/golang-defer%E7%9A%84%E6%8E%A2%E7%B4%A2/images/13_hu9402e4276ad303ce39962d2e648c711d_19556_1024x0_resize_q75_h2_box_2.webp 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;图13&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;158&#34;
+		data-flex-basis=&#34;379px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;defer函数是最后输出的。&lt;/p&gt;
+&lt;p&gt;对此，我们可以适用前面在循环里的操作，将其封装。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/p/golang-defer%E7%9A%84%E6%8E%A2%E7%B4%A2/images/14.webp&#34;
+	width=&#34;649&#34;
+	height=&#34;410&#34;
+	srcset=&#34;/p/golang-defer%E7%9A%84%E6%8E%A2%E7%B4%A2/images/14_hu9402e4276ad303ce39962d2e648c711d_19556_480x0_resize_q75_h2_box_2.webp 480w, /p/golang-defer%E7%9A%84%E6%8E%A2%E7%B4%A2/images/14_hu9402e4276ad303ce39962d2e648c711d_19556_1024x0_resize_q75_h2_box_2.webp 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;图14&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;158&#34;
+		data-flex-basis=&#34;379px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;h2 id=&#34;7defer与scope&#34;&gt;7.defer与Scope&lt;/h2&gt;
+&lt;p&gt;让我们定义一个函数，它创建一个deferred函数用来释放资源r。
+创建了一个reader用来返回Close过程的error消息，如果Close()方法起作用的话，release()会释放资源。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/p/golang-defer%E7%9A%84%E6%8E%A2%E7%B4%A2/images/15.webp&#34;
+	width=&#34;495&#34;
+	height=&#34;502&#34;
+	srcset=&#34;/p/golang-defer%E7%9A%84%E6%8E%A2%E7%B4%A2/images/15_hu0517417daafcb19a363751c636253a74_21188_480x0_resize_q75_h2_box_2.webp 480w, /p/golang-defer%E7%9A%84%E6%8E%A2%E7%B4%A2/images/15_hu0517417daafcb19a363751c636253a74_21188_1024x0_resize_q75_h2_box_2.webp 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;图15&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;98&#34;
+		data-flex-basis=&#34;236px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;但这里的输出却是&amp;quot;nil&amp;quot;，不是我们想的&amp;quot;Close Error&amp;quot;。&lt;/p&gt;
+&lt;p&gt;原因是，如果block隐式地用新的err变量替代了原本的err变量，而release()只会返回原本err的值。我们只需仍然使用之前的err，用&amp;quot;=&amp;ldquo;代替掉&amp;rdquo;:=&amp;quot;。就会解决这个问题。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/images/16.webp&#34;
 	
 	
 	
 	loading=&#34;lazy&#34;
 	
-		alt=&#34;例题1&#34;
+		alt=&#34;图16&#34;
 	
 	
-&gt;&lt;/p&gt;</description>
+&gt;&lt;/p&gt;
+&lt;h2 id=&#34;8defer在loop的传参&#34;&gt;8.Defer在loop的传参&lt;/h2&gt;
+&lt;p&gt;我们创建一个循环，并用defer输出：&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/images/17.webp&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;图17&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;发现全部都是3，这是因为defer只看到了i循环结束后最新的值，Goruntime是将i的地址捕获了后直接传给了defer。&lt;/p&gt;
+&lt;p&gt;解决方法1就是直接把参数传给defer：&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/p/golang-defer%E7%9A%84%E6%8E%A2%E7%B4%A2/images/18.webp&#34;
+	width=&#34;705&#34;
+	height=&#34;301&#34;
+	srcset=&#34;/p/golang-defer%E7%9A%84%E6%8E%A2%E7%B4%A2/images/18_hued95cf78821858dba7fa5fca6aa647eb_21904_480x0_resize_q75_h2_box_2.webp 480w, /p/golang-defer%E7%9A%84%E6%8E%A2%E7%B4%A2/images/18_hued95cf78821858dba7fa5fca6aa647eb_21904_1024x0_resize_q75_h2_box_2.webp 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;图18&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;234&#34;
+		data-flex-basis=&#34;562px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;Goruntime在循环中创建了不同的i变量，并且将其保存下来，每个defer即可以看到属于它的i变量。&lt;/p&gt;
+&lt;p&gt;解决方法2就是在循环中用新的i变量隐藏原本的i：&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/p/golang-defer%E7%9A%84%E6%8E%A2%E7%B4%A2/images/19.webp&#34;
+	width=&#34;678&#34;
+	height=&#34;289&#34;
+	srcset=&#34;/p/golang-defer%E7%9A%84%E6%8E%A2%E7%B4%A2/images/19_hu3323adfb3337fe39fa9e44d6c635101a_22646_480x0_resize_q75_h2_box_2.webp 480w, /p/golang-defer%E7%9A%84%E6%8E%A2%E7%B4%A2/images/19_hu3323adfb3337fe39fa9e44d6c635101a_22646_1024x0_resize_q75_h2_box_2.webp 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;图19&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;234&#34;
+		data-flex-basis=&#34;563px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;h2 id=&#34;9defer在loop的传参&#34;&gt;9.Defer在loop的传参&lt;/h2&gt;
+&lt;p&gt;我们在defer函数里用了return语句，但却失效了：&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/p/golang-defer%E7%9A%84%E6%8E%A2%E7%B4%A2/images/20.webp&#34;
+	width=&#34;484&#34;
+	height=&#34;252&#34;
+	srcset=&#34;/p/golang-defer%E7%9A%84%E6%8E%A2%E7%B4%A2/images/20_hubd135f126b96e060e5bc1933bcda6d52_12300_480x0_resize_q75_h2_box_2.webp 480w, /p/golang-defer%E7%9A%84%E6%8E%A2%E7%B4%A2/images/20_hubd135f126b96e060e5bc1933bcda6d52_12300_1024x0_resize_q75_h2_box_2.webp 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;图20&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;192&#34;
+		data-flex-basis=&#34;460px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;直接返回了nil，而不是error。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/p/golang-defer%E7%9A%84%E6%8E%A2%E7%B4%A2/images/21.webp&#34;
+	width=&#34;470&#34;
+	height=&#34;251&#34;
+	srcset=&#34;/p/golang-defer%E7%9A%84%E6%8E%A2%E7%B4%A2/images/21_hu7f96bac99e44b0fdb619b00e2619f264_12258_480x0_resize_q75_h2_box_2.webp 480w, /p/golang-defer%E7%9A%84%E6%8E%A2%E7%B4%A2/images/21_hu7f96bac99e44b0fdb619b00e2619f264_12258_1024x0_resize_q75_h2_box_2.webp 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;图21&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;187&#34;
+		data-flex-basis=&#34;449px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;我们指定一个新值给release()函数的结果，这样defer就不用直接返回值，而是帮助release()返回值。&lt;/p&gt;
+&lt;h2 id=&#34;10调用recover&#34;&gt;10.调用recover()&lt;/h2&gt;
+&lt;p&gt;一般情况下，我们要在defer里面调用recover()。当panic发生的时候，recover()不在defer里面的话，就无法catch掉panic，这时候recover()只会返回nil。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/p/golang-defer%E7%9A%84%E6%8E%A2%E7%B4%A2/images/22.webp&#34;
+	width=&#34;406&#34;
+	height=&#34;282&#34;
+	srcset=&#34;/p/golang-defer%E7%9A%84%E6%8E%A2%E7%B4%A2/images/22_hu6d525a0657423c0b0df04d4f4521f506_11356_480x0_resize_q75_h2_box_2.webp 480w, /p/golang-defer%E7%9A%84%E6%8E%A2%E7%B4%A2/images/22_hu6d525a0657423c0b0df04d4f4521f506_11356_1024x0_resize_q75_h2_box_2.webp 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;图22&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;143&#34;
+		data-flex-basis=&#34;345px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;这时候需要将recover()放到defer里面：&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/p/golang-defer%E7%9A%84%E6%8E%A2%E7%B4%A2/images/23.webp&#34;
+	width=&#34;419&#34;
+	height=&#34;334&#34;
+	srcset=&#34;/p/golang-defer%E7%9A%84%E6%8E%A2%E7%B4%A2/images/23_hu6f35ec5c68fbd9747d0004c477ccd863_13058_480x0_resize_q75_h2_box_2.webp 480w, /p/golang-defer%E7%9A%84%E6%8E%A2%E7%B4%A2/images/23_hu6f35ec5c68fbd9747d0004c477ccd863_13058_1024x0_resize_q75_h2_box_2.webp 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;图23&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;125&#34;
+		data-flex-basis=&#34;301px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;h2 id=&#34;11调用defer的顺序出错&#34;&gt;11.调用defer的顺序出错&lt;/h2&gt;
+&lt;p&gt;&lt;img src=&#34;/p/golang-defer%E7%9A%84%E6%8E%A2%E7%B4%A2/images/24.webp&#34;
+	width=&#34;495&#34;
+	height=&#34;423&#34;
+	srcset=&#34;/p/golang-defer%E7%9A%84%E6%8E%A2%E7%B4%A2/images/24_huc6f2900514f816ff5cb7b3e895965842_13694_480x0_resize_q75_h2_box_2.webp 480w, /p/golang-defer%E7%9A%84%E6%8E%A2%E7%B4%A2/images/24_huc6f2900514f816ff5cb7b3e895965842_13694_1024x0_resize_q75_h2_box_2.webp 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;图24&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;117&#34;
+		data-flex-basis=&#34;280px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;发生了panic：&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/p/golang-defer%E7%9A%84%E6%8E%A2%E7%B4%A2/images/25.webp&#34;
+	width=&#34;580&#34;
+	height=&#34;192&#34;
+	srcset=&#34;/p/golang-defer%E7%9A%84%E6%8E%A2%E7%B4%A2/images/25_hu511f095b9f35fbe50f9607ab6cb159c1_11860_480x0_resize_q75_h2_box_2.webp 480w, /p/golang-defer%E7%9A%84%E6%8E%A2%E7%B4%A2/images/25_hu511f095b9f35fbe50f9607ab6cb159c1_11860_1024x0_resize_q75_h2_box_2.webp 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;图25&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;302&#34;
+		data-flex-basis=&#34;725px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;因为我们没有去检查这个url请求是否正确，当它的地址错误的时候，会生成一个nil值，再调用Body就会发生panic。&lt;/p&gt;
+&lt;p&gt;正确的方法要将defer放在一个成功的资源分配后，需要在此之前检查返回结果。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/p/golang-defer%E7%9A%84%E6%8E%A2%E7%B4%A2/images/26.webp&#34;
+	width=&#34;593&#34;
+	height=&#34;446&#34;
+	srcset=&#34;/p/golang-defer%E7%9A%84%E6%8E%A2%E7%B4%A2/images/26_hua5145608915752650d66c324e507d8cd_20940_480x0_resize_q75_h2_box_2.webp 480w, /p/golang-defer%E7%9A%84%E6%8E%A2%E7%B4%A2/images/26_hua5145608915752650d66c324e507d8cd_20940_1024x0_resize_q75_h2_box_2.webp 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;图26&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;132&#34;
+		data-flex-basis=&#34;319px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;h2 id=&#34;12没有对错误进行检查&#34;&gt;12.没有对错误进行检查&lt;/h2&gt;
+&lt;p&gt;我们在defer里面写好了清理资源的逻辑，并不代表着这个资源就会毫无问题释放掉，它可能产生了隐式的错误，但我们没有发现有效的error信息。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/p/golang-defer%E7%9A%84%E6%8E%A2%E7%B4%A2/images/27.webp&#34;
+	width=&#34;652&#34;
+	height=&#34;632&#34;
+	srcset=&#34;/p/golang-defer%E7%9A%84%E6%8E%A2%E7%B4%A2/images/27_hu079f67f21064a74bc3daa67850911b2c_24386_480x0_resize_q75_h2_box_2.webp 480w, /p/golang-defer%E7%9A%84%E6%8E%A2%E7%B4%A2/images/27_hu079f67f21064a74bc3daa67850911b2c_24386_1024x0_resize_q75_h2_box_2.webp 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;图27&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;103&#34;
+		data-flex-basis=&#34;247px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;f.Close()并没有成功，但返回了error信息，但我们没有意识到。&lt;/p&gt;
+&lt;p&gt;正确的写法应该要check一下err，并打印出来：&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/p/golang-defer%E7%9A%84%E6%8E%A2%E7%B4%A2/images/28.webp&#34;
+	width=&#34;507&#34;
+	height=&#34;442&#34;
+	srcset=&#34;/p/golang-defer%E7%9A%84%E6%8E%A2%E7%B4%A2/images/28_hua1c05e6d1383561ea898d7f3c0f87c11_18458_480x0_resize_q75_h2_box_2.webp 480w, /p/golang-defer%E7%9A%84%E6%8E%A2%E7%B4%A2/images/28_hua1c05e6d1383561ea898d7f3c0f87c11_18458_1024x0_resize_q75_h2_box_2.webp 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;图28&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;114&#34;
+		data-flex-basis=&#34;275px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;亦或是用一个新的结果来返回defer里的error：&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/p/golang-defer%E7%9A%84%E6%8E%A2%E7%B4%A2/images/29.webp&#34;
+	width=&#34;452&#34;
+	height=&#34;249&#34;
+	srcset=&#34;/p/golang-defer%E7%9A%84%E6%8E%A2%E7%B4%A2/images/29_hu1147f575a1a3475817551a160f605804_11606_480x0_resize_q75_h2_box_2.webp 480w, /p/golang-defer%E7%9A%84%E6%8E%A2%E7%B4%A2/images/29_hu1147f575a1a3475817551a160f605804_11606_1024x0_resize_q75_h2_box_2.webp 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;图29&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;181&#34;
+		data-flex-basis=&#34;435px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;h2 id=&#34;13defer-释放同一种资源&#34;&gt;13.defer 释放同一种资源&lt;/h2&gt;
+&lt;p&gt;如果我们用同一个变量来close掉同一种资源两次，会发生一些错误：&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/p/golang-defer%E7%9A%84%E6%8E%A2%E7%B4%A2/images/30.webp&#34;
+	width=&#34;718&#34;
+	height=&#34;885&#34;
+	srcset=&#34;/p/golang-defer%E7%9A%84%E6%8E%A2%E7%B4%A2/images/30_hu3827626bd37693ce20cb73f1635c0a93_32010_480x0_resize_q75_h2_box_2.webp 480w, /p/golang-defer%E7%9A%84%E6%8E%A2%E7%B4%A2/images/30_hu3827626bd37693ce20cb73f1635c0a93_32010_1024x0_resize_q75_h2_box_2.webp 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;图30&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;81&#34;
+		data-flex-basis=&#34;194px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;它的问题正是之前循环里发生的一样，这样写，所有defer只能使用到最新的值，只会返回同一种结果。&lt;/p&gt;
+&lt;p&gt;只需要为每个defer单独设置变量。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/p/golang-defer%E7%9A%84%E6%8E%A2%E7%B4%A2/images/31.webp&#34;
+	width=&#34;576&#34;
+	height=&#34;571&#34;
+	srcset=&#34;/p/golang-defer%E7%9A%84%E6%8E%A2%E7%B4%A2/images/31_hua94f926093b18a7488ea5a5a1a1fe6b5_25972_480x0_resize_q75_h2_box_2.webp 480w, /p/golang-defer%E7%9A%84%E6%8E%A2%E7%B4%A2/images/31_hua94f926093b18a7488ea5a5a1a1fe6b5_25972_1024x0_resize_q75_h2_box_2.webp 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;图31&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;100&#34;
+		data-flex-basis=&#34;242px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;h2 id=&#34;结束&#34;&gt;结束&lt;/h2&gt;
+&lt;p&gt;defer的探索就到此结束，感谢阅读，一起进步。&lt;/p&gt;
+&lt;p&gt;参考资料：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;Github：go-demo&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;5 Gotchas of Defer in Go — Part I&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;5 More Gotchas of Defer in Go — Part II&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;5 More Gotchas of Defer in Go — Part III&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Go 语言设计与实现&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;</description>
         </item>
         
     </channel>

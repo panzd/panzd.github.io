@@ -75,7 +75,7 @@
             
                 <li>
                     <a 
-                        href='https://github.com/CaiJimmy/hugo-theme-stack'
+                        href='https://github.com/panzd'
                         target="_blank"
                         title="GitHub"
                     >
@@ -87,6 +87,62 @@
 </svg>
 
 
+
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a 
+                        href='mailto:%20donggnij@foxmail.com'
+                        target="_blank"
+                        title="Mail"
+                    >
+                        
+                        
+                            <?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 19.1.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 64 64" enable-background="new 0 0 64 64" xml:space="preserve">
+<path id="Mail" d="M58.0034485,8H5.9965506c-3.3136795,0-5.9999995,2.6862001-5.9999995,6v36c0,3.3137016,2.6863203,6,5.9999995,6
+	h52.006897c3.3137016,0,6-2.6862984,6-6V14C64.0034485,10.6862001,61.3171501,8,58.0034485,8z M62.0034485,49.1108017
+	L43.084549,30.1919994l18.9188995-12.0555992V49.1108017z M5.9965506,10h52.006897c2.2056007,0,4,1.7943001,4,4v1.7664003
+	L34.4677505,33.3134003c-1.4902,0.9492989-3.3935013,0.9199982-4.8495998-0.0703011L1.9965508,14.4694996V14
+	C1.9965508,11.7943001,3.7910507,10,5.9965506,10z M1.9965508,16.8852005L21.182251,29.9251003L1.9965508,49.1108017V16.8852005z
+	 M58.0034485,54H5.9965506c-1.6473999,0-3.0638998-1.0021019-3.6760998-2.4278984l20.5199013-20.5200024l5.6547985,3.843401
+	c1.0859013,0.7383003,2.3418007,1.1083984,3.5995998,1.1083984c1.1953011,0,2.3925018-0.3339996,3.4463005-1.0048981
+	l5.8423996-3.7230015l20.2961006,20.2961025C61.0673485,52.9978981,59.6508713,54,58.0034485,54z"/>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+</svg>
 
                         
                     </a>
@@ -291,21 +347,515 @@
     <section class="article-content">
     
     
-    <p>本文主要分析了defer在代码里的各种情况。本文先发于掘金论坛上。</p>
+    <p>本文主要分析了defer在代码里的各种情况，本文先发于掘金论坛上。</p>
 <hr>
-<h2 id="defer执行顺序">defer执行顺序</h2>
+<h2 id="1defer执行顺序">1.defer执行顺序</h2>
 <p>defer关键字的插入顺序时从后向前的，而defer关键字执行是从前向后的，所以后来的defer会优先执行。
 当goroutine获取到runtime._defer结构体后，将追加在Goroutine_defer链表的最前面。</p>
-<p><img src="/images/1.png"
+<p><img src="/p/golang-defer%E7%9A%84%E6%8E%A2%E7%B4%A2/images/1.png"
+	width="635"
+	height="491"
+	srcset="/p/golang-defer%E7%9A%84%E6%8E%A2%E7%B4%A2/images/1_huda372122980d53daf1bd3e9c1ea05566_104869_480x0_resize_box_3.png 480w, /p/golang-defer%E7%9A%84%E6%8E%A2%E7%B4%A2/images/1_huda372122980d53daf1bd3e9c1ea05566_104869_1024x0_resize_box_3.png 1024w"
+	loading="lazy"
+	
+		alt="图1"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="129"
+		data-flex-basis="310px"
+	
+></p>
+<h2 id="2defer关键词按值传递">2.defer关键词按值传递</h2>
+<p>defer函数调用都是传值的，会立即复制函数中的引用的外部参数。</p>
+<p>例题：</p>
+<p><img src="/p/golang-defer%E7%9A%84%E6%8E%A2%E7%B4%A2/images/2.webp"
+	width="718"
+	height="370"
+	srcset="/p/golang-defer%E7%9A%84%E6%8E%A2%E7%B4%A2/images/2_hu19b0a0d58510caa2b7d88253bfa6f714_11834_480x0_resize_q75_h2_box_2.webp 480w, /p/golang-defer%E7%9A%84%E6%8E%A2%E7%B4%A2/images/2_hu19b0a0d58510caa2b7d88253bfa6f714_11834_1024x0_resize_q75_h2_box_2.webp 1024w"
+	loading="lazy"
+	
+		alt="图2"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="194"
+		data-flex-basis="465px"
+	
+></p>
+<p>这里f(i)拿到的是i的值。</p>
+<p>同理：</p>
+<p><img src="/p/golang-defer%E7%9A%84%E6%8E%A2%E7%B4%A2/images/3.webp"
+	width="759"
+	height="558"
+	srcset="/p/golang-defer%E7%9A%84%E6%8E%A2%E7%B4%A2/images/3_hu3b91a8dde5ae81288417259ca4f6bcdd_12032_480x0_resize_q75_h2_box_2.webp 480w, /p/golang-defer%E7%9A%84%E6%8E%A2%E7%B4%A2/images/3_hu3b91a8dde5ae81288417259ca4f6bcdd_12032_1024x0_resize_q75_h2_box_2.webp 1024w"
+	loading="lazy"
+	
+		alt="图3"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="136"
+		data-flex-basis="326px"
+	
+></p>
+<p>在这里，前者的defer拿到的是i这个值，而后者defer拿到的是域变量(指针)。</p>
+<p><img src="/p/golang-defer%E7%9A%84%E6%8E%A2%E7%B4%A2/images/4.webp"
+	width="471"
+	height="529"
+	srcset="/p/golang-defer%E7%9A%84%E6%8E%A2%E7%B4%A2/images/4_hu4320306bc7c598df088e8716ba1b6fde_14396_480x0_resize_q75_h2_box_2.webp 480w, /p/golang-defer%E7%9A%84%E6%8E%A2%E7%B4%A2/images/4_hu4320306bc7c598df088e8716ba1b6fde_14396_1024x0_resize_q75_h2_box_2.webp 1024w"
+	loading="lazy"
+	
+		alt="图4"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="89"
+		data-flex-basis="213px"
+	
+></p>
+<p>我在increaseB()加入输出，更能明白：</p>
+<p><img src="/p/golang-defer%E7%9A%84%E6%8E%A2%E7%B4%A2/images/5.webp"
+	width="584"
+	height="618"
+	srcset="/p/golang-defer%E7%9A%84%E6%8E%A2%E7%B4%A2/images/5_huad51e01f05946e5885999804fbe59d3f_20852_480x0_resize_q75_h2_box_2.webp 480w, /p/golang-defer%E7%9A%84%E6%8E%A2%E7%B4%A2/images/5_huad51e01f05946e5885999804fbe59d3f_20852_1024x0_resize_q75_h2_box_2.webp 1024w"
+	loading="lazy"
+	
+		alt="图5"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="94"
+		data-flex-basis="226px"
+	
+></p>
+<p>println拿到的也是值。</p>
+<h2 id="3defer等于nil的函数">3.defer等于nil的函数</h2>
+<p><img src="/p/golang-defer%E7%9A%84%E6%8E%A2%E7%B4%A2/images/6.webp"
+	width="480"
+	height="286"
+	srcset="/p/golang-defer%E7%9A%84%E6%8E%A2%E7%B4%A2/images/6_hub0696b01c7b3387ad1665de525e38492_7518_480x0_resize_q75_h2_box_2.webp 480w, /p/golang-defer%E7%9A%84%E6%8E%A2%E7%B4%A2/images/6_hub0696b01c7b3387ad1665de525e38492_7518_1024x0_resize_q75_h2_box_2.webp 1024w"
+	loading="lazy"
+	
+		alt="图6"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="167"
+		data-flex-basis="402px"
+	
+></p>
+<p><img src="/p/golang-defer%E7%9A%84%E6%8E%A2%E7%B4%A2/images/7.webp"
+	width="930"
+	height="153"
+	srcset="/p/golang-defer%E7%9A%84%E6%8E%A2%E7%B4%A2/images/7_hua5ea5acc38368c13808a9579ba0d0ebe_9676_480x0_resize_q75_h2_box_2.webp 480w, /p/golang-defer%E7%9A%84%E6%8E%A2%E7%B4%A2/images/7_hua5ea5acc38368c13808a9579ba0d0ebe_9676_1024x0_resize_q75_h2_box_2.webp 1024w"
+	loading="lazy"
+	
+		alt="图7"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="607"
+		data-flex-basis="1458px"
+	
+></p>
+<p>可以看到在defer函数启动后，因为nil发生了panic，但在此之前函数是可以顺利运行的。run()的注册也是没有问题的。</p>
+<h2 id="4在循环中的defer">4.在循环中的defer</h2>
+<p>通常情况下，我们不在循环体里用defer，除非特殊的要求。</p>
+<p><img src="/p/golang-defer%E7%9A%84%E6%8E%A2%E7%B4%A2/images/8.webp"
+	width="588"
+	height="754"
+	srcset="/p/golang-defer%E7%9A%84%E6%8E%A2%E7%B4%A2/images/8_hu553e28e3857a3ea0e56da746ffcfcdd2_22140_480x0_resize_q75_h2_box_2.webp 480w, /p/golang-defer%E7%9A%84%E6%8E%A2%E7%B4%A2/images/8_hu553e28e3857a3ea0e56da746ffcfcdd2_22140_1024x0_resize_q75_h2_box_2.webp 1024w"
+	loading="lazy"
+	
+		alt="图8"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="77"
+		data-flex-basis="187px"
+	
+></p>
+<p>这里出现了不符合我们预期的结果，在这个循环里的defer函数并没有每次循环都发生打印，而是在整个循环结束后，才开始打印。因为defer调用都被压到defer栈里，等待循环函数结束后出栈。要解决的话，一种是不在循环里放defer，另一种如下：</p>
+<p><img src="/p/golang-defer%E7%9A%84%E6%8E%A2%E7%B4%A2/images/9.webp"
+	width="723"
+	height="457"
+	srcset="/p/golang-defer%E7%9A%84%E6%8E%A2%E7%B4%A2/images/9_hubd9c550d8a930d1528aa62e8d05c1341_19168_480x0_resize_q75_h2_box_2.webp 480w, /p/golang-defer%E7%9A%84%E6%8E%A2%E7%B4%A2/images/9_hubd9c550d8a930d1528aa62e8d05c1341_19168_1024x0_resize_q75_h2_box_2.webp 1024w"
+	loading="lazy"
+	
+		alt="图9"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="158"
+		data-flex-basis="379px"
+	
+></p>
+<p>在defer函数外面再加一层函数，这里defer函数就会在这层函数结束后调用。</p>
+<h2 id="5用defer来封装">5.用defer来封装</h2>
+<p>有时候，我们需要用defer来关闭外部资源，譬如数据库，IO操作等等。</p>
+<p><img src="/p/golang-defer%E7%9A%84%E6%8E%A2%E7%B4%A2/images/10.webp"
+	width="533"
+	height="676"
+	srcset="/p/golang-defer%E7%9A%84%E6%8E%A2%E7%B4%A2/images/10_hu360d90d6168736a9f3de75711288e5ba_22352_480x0_resize_q75_h2_box_2.webp 480w, /p/golang-defer%E7%9A%84%E6%8E%A2%E7%B4%A2/images/10_hu360d90d6168736a9f3de75711288e5ba_22352_1024x0_resize_q75_h2_box_2.webp 1024w"
+	loading="lazy"
+	
+		alt="图10"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="78"
+		data-flex-basis="189px"
+	
+></p>
+<p>可以看到defer出现了bug，没有出现断开数据库的连接disconnect，connect()被放在了一边没有运行。</p>
+<p>解决方案如下：</p>
+<p><img src="/p/golang-defer%E7%9A%84%E6%8E%A2%E7%B4%A2/images/11.webp"
+	width="499"
+	height="301"
+	srcset="/p/golang-defer%E7%9A%84%E6%8E%A2%E7%B4%A2/images/11_hu3481413e170feab62af1b71d4446fb0d_13390_480x0_resize_q75_h2_box_2.webp 480w, /p/golang-defer%E7%9A%84%E6%8E%A2%E7%B4%A2/images/11_hu3481413e170feab62af1b71d4446fb0d_13390_1024x0_resize_q75_h2_box_2.webp 1024w"
+	loading="lazy"
+	
+		alt="图11"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="165"
+		data-flex-basis="397px"
+	
+></p>
+<p>先让connect()函数运行，然后defer利用它的return操作来关闭数据库。</p>
+<p>当然，我们也可以运用一些go的特性(语法糖),从技术上是相同，但是写法不怎么容易理解。</p>
+<p><img src="/p/golang-defer%E7%9A%84%E6%8E%A2%E7%B4%A2/images/12.webp"
+	width="453"
+	height="365"
+	srcset="/p/golang-defer%E7%9A%84%E6%8E%A2%E7%B4%A2/images/12_hu90209da7fd9cc08ea3421788a2004d9c_16514_480x0_resize_q75_h2_box_2.webp 480w, /p/golang-defer%E7%9A%84%E6%8E%A2%E7%B4%A2/images/12_hu90209da7fd9cc08ea3421788a2004d9c_16514_1024x0_resize_q75_h2_box_2.webp 1024w"
+	loading="lazy"
+	
+		alt="图12"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="124"
+		data-flex-basis="297px"
+	
+></p>
+<p>与上面的方法相同，第一个()连接到数据库，相当于defer db.connect()，
+而第二个()则用来运行disconnect方法，在函数调用后，它会执行关闭操作。原因是defer调用了db.connect()关闭操作的值。</p>
+<h2 id="6在块中的defer">6.在块中的defer</h2>
+<p>刚开始你可以期待deferred函数会在一个代码块结束后调用，后来你才发现deferred函数只会在整个函数结束后调用，
+因为defer属于函数func而并非是块block。对于for、switch都是如此。</p>
+<p><img src="/p/golang-defer%E7%9A%84%E6%8E%A2%E7%B4%A2/images/13.webp"
+	width="649"
+	height="410"
+	srcset="/p/golang-defer%E7%9A%84%E6%8E%A2%E7%B4%A2/images/13_hu9402e4276ad303ce39962d2e648c711d_19556_480x0_resize_q75_h2_box_2.webp 480w, /p/golang-defer%E7%9A%84%E6%8E%A2%E7%B4%A2/images/13_hu9402e4276ad303ce39962d2e648c711d_19556_1024x0_resize_q75_h2_box_2.webp 1024w"
+	loading="lazy"
+	
+		alt="图13"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="158"
+		data-flex-basis="379px"
+	
+></p>
+<p>defer函数是最后输出的。</p>
+<p>对此，我们可以适用前面在循环里的操作，将其封装。</p>
+<p><img src="/p/golang-defer%E7%9A%84%E6%8E%A2%E7%B4%A2/images/14.webp"
+	width="649"
+	height="410"
+	srcset="/p/golang-defer%E7%9A%84%E6%8E%A2%E7%B4%A2/images/14_hu9402e4276ad303ce39962d2e648c711d_19556_480x0_resize_q75_h2_box_2.webp 480w, /p/golang-defer%E7%9A%84%E6%8E%A2%E7%B4%A2/images/14_hu9402e4276ad303ce39962d2e648c711d_19556_1024x0_resize_q75_h2_box_2.webp 1024w"
+	loading="lazy"
+	
+		alt="图14"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="158"
+		data-flex-basis="379px"
+	
+></p>
+<h2 id="7defer与scope">7.defer与Scope</h2>
+<p>让我们定义一个函数，它创建一个deferred函数用来释放资源r。
+创建了一个reader用来返回Close过程的error消息，如果Close()方法起作用的话，release()会释放资源。</p>
+<p><img src="/p/golang-defer%E7%9A%84%E6%8E%A2%E7%B4%A2/images/15.webp"
+	width="495"
+	height="502"
+	srcset="/p/golang-defer%E7%9A%84%E6%8E%A2%E7%B4%A2/images/15_hu0517417daafcb19a363751c636253a74_21188_480x0_resize_q75_h2_box_2.webp 480w, /p/golang-defer%E7%9A%84%E6%8E%A2%E7%B4%A2/images/15_hu0517417daafcb19a363751c636253a74_21188_1024x0_resize_q75_h2_box_2.webp 1024w"
+	loading="lazy"
+	
+		alt="图15"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="98"
+		data-flex-basis="236px"
+	
+></p>
+<p>但这里的输出却是&quot;nil&quot;，不是我们想的&quot;Close Error&quot;。</p>
+<p>原因是，如果block隐式地用新的err变量替代了原本的err变量，而release()只会返回原本err的值。我们只需仍然使用之前的err，用&quot;=&ldquo;代替掉&rdquo;:=&quot;。就会解决这个问题。</p>
+<p><img src="/images/16.webp"
 	
 	
 	
 	loading="lazy"
 	
-		alt="例题1"
+		alt="图16"
 	
 	
 ></p>
+<h2 id="8defer在loop的传参">8.Defer在loop的传参</h2>
+<p>我们创建一个循环，并用defer输出：</p>
+<p><img src="/images/17.webp"
+	
+	
+	
+	loading="lazy"
+	
+		alt="图17"
+	
+	
+></p>
+<p>发现全部都是3，这是因为defer只看到了i循环结束后最新的值，Goruntime是将i的地址捕获了后直接传给了defer。</p>
+<p>解决方法1就是直接把参数传给defer：</p>
+<p><img src="/p/golang-defer%E7%9A%84%E6%8E%A2%E7%B4%A2/images/18.webp"
+	width="705"
+	height="301"
+	srcset="/p/golang-defer%E7%9A%84%E6%8E%A2%E7%B4%A2/images/18_hued95cf78821858dba7fa5fca6aa647eb_21904_480x0_resize_q75_h2_box_2.webp 480w, /p/golang-defer%E7%9A%84%E6%8E%A2%E7%B4%A2/images/18_hued95cf78821858dba7fa5fca6aa647eb_21904_1024x0_resize_q75_h2_box_2.webp 1024w"
+	loading="lazy"
+	
+		alt="图18"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="234"
+		data-flex-basis="562px"
+	
+></p>
+<p>Goruntime在循环中创建了不同的i变量，并且将其保存下来，每个defer即可以看到属于它的i变量。</p>
+<p>解决方法2就是在循环中用新的i变量隐藏原本的i：</p>
+<p><img src="/p/golang-defer%E7%9A%84%E6%8E%A2%E7%B4%A2/images/19.webp"
+	width="678"
+	height="289"
+	srcset="/p/golang-defer%E7%9A%84%E6%8E%A2%E7%B4%A2/images/19_hu3323adfb3337fe39fa9e44d6c635101a_22646_480x0_resize_q75_h2_box_2.webp 480w, /p/golang-defer%E7%9A%84%E6%8E%A2%E7%B4%A2/images/19_hu3323adfb3337fe39fa9e44d6c635101a_22646_1024x0_resize_q75_h2_box_2.webp 1024w"
+	loading="lazy"
+	
+		alt="图19"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="234"
+		data-flex-basis="563px"
+	
+></p>
+<h2 id="9defer在loop的传参">9.Defer在loop的传参</h2>
+<p>我们在defer函数里用了return语句，但却失效了：</p>
+<p><img src="/p/golang-defer%E7%9A%84%E6%8E%A2%E7%B4%A2/images/20.webp"
+	width="484"
+	height="252"
+	srcset="/p/golang-defer%E7%9A%84%E6%8E%A2%E7%B4%A2/images/20_hubd135f126b96e060e5bc1933bcda6d52_12300_480x0_resize_q75_h2_box_2.webp 480w, /p/golang-defer%E7%9A%84%E6%8E%A2%E7%B4%A2/images/20_hubd135f126b96e060e5bc1933bcda6d52_12300_1024x0_resize_q75_h2_box_2.webp 1024w"
+	loading="lazy"
+	
+		alt="图20"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="192"
+		data-flex-basis="460px"
+	
+></p>
+<p>直接返回了nil，而不是error。</p>
+<p><img src="/p/golang-defer%E7%9A%84%E6%8E%A2%E7%B4%A2/images/21.webp"
+	width="470"
+	height="251"
+	srcset="/p/golang-defer%E7%9A%84%E6%8E%A2%E7%B4%A2/images/21_hu7f96bac99e44b0fdb619b00e2619f264_12258_480x0_resize_q75_h2_box_2.webp 480w, /p/golang-defer%E7%9A%84%E6%8E%A2%E7%B4%A2/images/21_hu7f96bac99e44b0fdb619b00e2619f264_12258_1024x0_resize_q75_h2_box_2.webp 1024w"
+	loading="lazy"
+	
+		alt="图21"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="187"
+		data-flex-basis="449px"
+	
+></p>
+<p>我们指定一个新值给release()函数的结果，这样defer就不用直接返回值，而是帮助release()返回值。</p>
+<h2 id="10调用recover">10.调用recover()</h2>
+<p>一般情况下，我们要在defer里面调用recover()。当panic发生的时候，recover()不在defer里面的话，就无法catch掉panic，这时候recover()只会返回nil。</p>
+<p><img src="/p/golang-defer%E7%9A%84%E6%8E%A2%E7%B4%A2/images/22.webp"
+	width="406"
+	height="282"
+	srcset="/p/golang-defer%E7%9A%84%E6%8E%A2%E7%B4%A2/images/22_hu6d525a0657423c0b0df04d4f4521f506_11356_480x0_resize_q75_h2_box_2.webp 480w, /p/golang-defer%E7%9A%84%E6%8E%A2%E7%B4%A2/images/22_hu6d525a0657423c0b0df04d4f4521f506_11356_1024x0_resize_q75_h2_box_2.webp 1024w"
+	loading="lazy"
+	
+		alt="图22"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="143"
+		data-flex-basis="345px"
+	
+></p>
+<p>这时候需要将recover()放到defer里面：</p>
+<p><img src="/p/golang-defer%E7%9A%84%E6%8E%A2%E7%B4%A2/images/23.webp"
+	width="419"
+	height="334"
+	srcset="/p/golang-defer%E7%9A%84%E6%8E%A2%E7%B4%A2/images/23_hu6f35ec5c68fbd9747d0004c477ccd863_13058_480x0_resize_q75_h2_box_2.webp 480w, /p/golang-defer%E7%9A%84%E6%8E%A2%E7%B4%A2/images/23_hu6f35ec5c68fbd9747d0004c477ccd863_13058_1024x0_resize_q75_h2_box_2.webp 1024w"
+	loading="lazy"
+	
+		alt="图23"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="125"
+		data-flex-basis="301px"
+	
+></p>
+<h2 id="11调用defer的顺序出错">11.调用defer的顺序出错</h2>
+<p><img src="/p/golang-defer%E7%9A%84%E6%8E%A2%E7%B4%A2/images/24.webp"
+	width="495"
+	height="423"
+	srcset="/p/golang-defer%E7%9A%84%E6%8E%A2%E7%B4%A2/images/24_huc6f2900514f816ff5cb7b3e895965842_13694_480x0_resize_q75_h2_box_2.webp 480w, /p/golang-defer%E7%9A%84%E6%8E%A2%E7%B4%A2/images/24_huc6f2900514f816ff5cb7b3e895965842_13694_1024x0_resize_q75_h2_box_2.webp 1024w"
+	loading="lazy"
+	
+		alt="图24"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="117"
+		data-flex-basis="280px"
+	
+></p>
+<p>发生了panic：</p>
+<p><img src="/p/golang-defer%E7%9A%84%E6%8E%A2%E7%B4%A2/images/25.webp"
+	width="580"
+	height="192"
+	srcset="/p/golang-defer%E7%9A%84%E6%8E%A2%E7%B4%A2/images/25_hu511f095b9f35fbe50f9607ab6cb159c1_11860_480x0_resize_q75_h2_box_2.webp 480w, /p/golang-defer%E7%9A%84%E6%8E%A2%E7%B4%A2/images/25_hu511f095b9f35fbe50f9607ab6cb159c1_11860_1024x0_resize_q75_h2_box_2.webp 1024w"
+	loading="lazy"
+	
+		alt="图25"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="302"
+		data-flex-basis="725px"
+	
+></p>
+<p>因为我们没有去检查这个url请求是否正确，当它的地址错误的时候，会生成一个nil值，再调用Body就会发生panic。</p>
+<p>正确的方法要将defer放在一个成功的资源分配后，需要在此之前检查返回结果。</p>
+<p><img src="/p/golang-defer%E7%9A%84%E6%8E%A2%E7%B4%A2/images/26.webp"
+	width="593"
+	height="446"
+	srcset="/p/golang-defer%E7%9A%84%E6%8E%A2%E7%B4%A2/images/26_hua5145608915752650d66c324e507d8cd_20940_480x0_resize_q75_h2_box_2.webp 480w, /p/golang-defer%E7%9A%84%E6%8E%A2%E7%B4%A2/images/26_hua5145608915752650d66c324e507d8cd_20940_1024x0_resize_q75_h2_box_2.webp 1024w"
+	loading="lazy"
+	
+		alt="图26"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="132"
+		data-flex-basis="319px"
+	
+></p>
+<h2 id="12没有对错误进行检查">12.没有对错误进行检查</h2>
+<p>我们在defer里面写好了清理资源的逻辑，并不代表着这个资源就会毫无问题释放掉，它可能产生了隐式的错误，但我们没有发现有效的error信息。</p>
+<p><img src="/p/golang-defer%E7%9A%84%E6%8E%A2%E7%B4%A2/images/27.webp"
+	width="652"
+	height="632"
+	srcset="/p/golang-defer%E7%9A%84%E6%8E%A2%E7%B4%A2/images/27_hu079f67f21064a74bc3daa67850911b2c_24386_480x0_resize_q75_h2_box_2.webp 480w, /p/golang-defer%E7%9A%84%E6%8E%A2%E7%B4%A2/images/27_hu079f67f21064a74bc3daa67850911b2c_24386_1024x0_resize_q75_h2_box_2.webp 1024w"
+	loading="lazy"
+	
+		alt="图27"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="103"
+		data-flex-basis="247px"
+	
+></p>
+<p>f.Close()并没有成功，但返回了error信息，但我们没有意识到。</p>
+<p>正确的写法应该要check一下err，并打印出来：</p>
+<p><img src="/p/golang-defer%E7%9A%84%E6%8E%A2%E7%B4%A2/images/28.webp"
+	width="507"
+	height="442"
+	srcset="/p/golang-defer%E7%9A%84%E6%8E%A2%E7%B4%A2/images/28_hua1c05e6d1383561ea898d7f3c0f87c11_18458_480x0_resize_q75_h2_box_2.webp 480w, /p/golang-defer%E7%9A%84%E6%8E%A2%E7%B4%A2/images/28_hua1c05e6d1383561ea898d7f3c0f87c11_18458_1024x0_resize_q75_h2_box_2.webp 1024w"
+	loading="lazy"
+	
+		alt="图28"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="114"
+		data-flex-basis="275px"
+	
+></p>
+<p>亦或是用一个新的结果来返回defer里的error：</p>
+<p><img src="/p/golang-defer%E7%9A%84%E6%8E%A2%E7%B4%A2/images/29.webp"
+	width="452"
+	height="249"
+	srcset="/p/golang-defer%E7%9A%84%E6%8E%A2%E7%B4%A2/images/29_hu1147f575a1a3475817551a160f605804_11606_480x0_resize_q75_h2_box_2.webp 480w, /p/golang-defer%E7%9A%84%E6%8E%A2%E7%B4%A2/images/29_hu1147f575a1a3475817551a160f605804_11606_1024x0_resize_q75_h2_box_2.webp 1024w"
+	loading="lazy"
+	
+		alt="图29"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="181"
+		data-flex-basis="435px"
+	
+></p>
+<h2 id="13defer-释放同一种资源">13.defer 释放同一种资源</h2>
+<p>如果我们用同一个变量来close掉同一种资源两次，会发生一些错误：</p>
+<p><img src="/p/golang-defer%E7%9A%84%E6%8E%A2%E7%B4%A2/images/30.webp"
+	width="718"
+	height="885"
+	srcset="/p/golang-defer%E7%9A%84%E6%8E%A2%E7%B4%A2/images/30_hu3827626bd37693ce20cb73f1635c0a93_32010_480x0_resize_q75_h2_box_2.webp 480w, /p/golang-defer%E7%9A%84%E6%8E%A2%E7%B4%A2/images/30_hu3827626bd37693ce20cb73f1635c0a93_32010_1024x0_resize_q75_h2_box_2.webp 1024w"
+	loading="lazy"
+	
+		alt="图30"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="81"
+		data-flex-basis="194px"
+	
+></p>
+<p>它的问题正是之前循环里发生的一样，这样写，所有defer只能使用到最新的值，只会返回同一种结果。</p>
+<p>只需要为每个defer单独设置变量。</p>
+<p><img src="/p/golang-defer%E7%9A%84%E6%8E%A2%E7%B4%A2/images/31.webp"
+	width="576"
+	height="571"
+	srcset="/p/golang-defer%E7%9A%84%E6%8E%A2%E7%B4%A2/images/31_hua94f926093b18a7488ea5a5a1a1fe6b5_25972_480x0_resize_q75_h2_box_2.webp 480w, /p/golang-defer%E7%9A%84%E6%8E%A2%E7%B4%A2/images/31_hua94f926093b18a7488ea5a5a1a1fe6b5_25972_1024x0_resize_q75_h2_box_2.webp 1024w"
+	loading="lazy"
+	
+		alt="图31"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="100"
+		data-flex-basis="242px"
+	
+></p>
+<h2 id="结束">结束</h2>
+<p>defer的探索就到此结束，感谢阅读，一起进步。</p>
+<p>参考资料：</p>
+<ol>
+<li>
+<p>Github：go-demo</p>
+</li>
+<li>
+<p>5 Gotchas of Defer in Go — Part I</p>
+</li>
+<li>
+<p>5 More Gotchas of Defer in Go — Part II</p>
+</li>
+<li>
+<p>5 More Gotchas of Defer in Go — Part III</p>
+</li>
+<li>
+<p>Go 语言设计与实现</p>
+</li>
+</ol>
 </section>
 
 
@@ -504,7 +1054,20 @@
         <div class="widget--toc">
             <nav id="TableOfContents">
   <ol>
-    <li><a href="#defer执行顺序">defer执行顺序</a></li>
+    <li><a href="#1defer执行顺序">1.defer执行顺序</a></li>
+    <li><a href="#2defer关键词按值传递">2.defer关键词按值传递</a></li>
+    <li><a href="#3defer等于nil的函数">3.defer等于nil的函数</a></li>
+    <li><a href="#4在循环中的defer">4.在循环中的defer</a></li>
+    <li><a href="#5用defer来封装">5.用defer来封装</a></li>
+    <li><a href="#6在块中的defer">6.在块中的defer</a></li>
+    <li><a href="#7defer与scope">7.defer与Scope</a></li>
+    <li><a href="#8defer在loop的传参">8.Defer在loop的传参</a></li>
+    <li><a href="#9defer在loop的传参">9.Defer在loop的传参</a></li>
+    <li><a href="#10调用recover">10.调用recover()</a></li>
+    <li><a href="#11调用defer的顺序出错">11.调用defer的顺序出错</a></li>
+    <li><a href="#12没有对错误进行检查">12.没有对错误进行检查</a></li>
+    <li><a href="#13defer-释放同一种资源">13.defer 释放同一种资源</a></li>
+    <li><a href="#结束">结束</a></li>
   </ol>
 </nav>
         </div>
