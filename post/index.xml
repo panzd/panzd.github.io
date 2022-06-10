@@ -6,7 +6,262 @@
         <description>Recent content in Posts on panzd</description>
         <generator>Hugo -- gohugo.io</generator>
         <language>en-us</language>
-        <lastBuildDate>Wed, 26 Jan 2022 00:00:00 +0000</lastBuildDate><atom:link href="/post/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Thu, 19 May 2022 00:00:00 +0000</lastBuildDate><atom:link href="/post/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>Infrastructure As Code：Terraform制霸之道</title>
+        <link>/p/infrastructure-as-codeterraform%E5%88%B6%E9%9C%B8%E4%B9%8B%E9%81%93/</link>
+        <pubDate>Thu, 19 May 2022 00:00:00 +0000</pubDate>
+        
+        <guid>/p/infrastructure-as-codeterraform%E5%88%B6%E9%9C%B8%E4%B9%8B%E9%81%93/</guid>
+        <description>&lt;h2 id=&#34;前言&#34;&gt;前言:&lt;/h2&gt;
+&lt;p&gt;如果你习惯别人帮你烤肉，那你便无法拒绝terraform。便捷是它的利器，普适是它的价值。你唯一要做的，就是确保最终的状态是你想要的。&lt;/p&gt;
+&lt;p&gt;Infrastructure as code (IaC)，IaC allows you to build, change, and manage your infrastructurein a safe, consistent and repeatable way by defining resourceconfigurations that you can version, reuse,and share.&lt;/p&gt;
+&lt;p&gt;&lt;!-- raw HTML omitted --&gt;Tool for infrastructure provisioning，是Terraform的本质。&lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;p&gt;在那么多基础设施供应工具中，脱颖而出，必有Terraform的独到之处。首先是要挑战广为应用的Ansible，其以playbook模式而强大，playbook通过多个task（服务，任务）集合完成一类功能，让远端主机达到预期的状态，它像是一款用shell写的To-do-list工具。而Terraform关心的是配置文件的最终状态，而不是操作流程。&lt;/p&gt;
+&lt;p&gt;&lt;!-- raw HTML omitted --&gt;Terraform的优势是什么？&lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;适用于多云平台。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;HCL语言更容易理解，也写地更快。Human-Readable~&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Terraform可以在每次你apply之后，追踪到资源的改变。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;每次修改都可以提交，简而言之有版本控制，更加安全。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;!-- raw HTML omitted --&gt;只需要定义你最终想要的状态应该是什么，这很重要。&lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;p&gt;&lt;!-- raw HTML omitted --&gt;Terraform&lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;p&gt;provisions,updates, and destroys infrastructure resources such as physical machines, VMs,network switches, containers, and more.&lt;/p&gt;
+&lt;p&gt;&lt;!-- raw HTML omitted --&gt;Configurations&lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;p&gt;arecode written for Terraform, using the human-readable HashiCorp ConfigurationLanguage (HCL) to describe the desired state of infrastructure resources.&lt;/p&gt;
+&lt;p&gt;&lt;!-- raw HTML omitted --&gt;Providers&lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;p&gt;arethe plugins that Terraform uses to manage those resources. Every supportedservice or infrastructure platform has a provider that defines which resourcesare available and performs API calls to manage those resources.&lt;/p&gt;
+&lt;p&gt;&lt;!-- raw HTML omitted --&gt;Modules&lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;p&gt;arereusable Terraform configurations that can be called and configured by otherconfigurations. Most modulesmanage a few closely related resources from a single provider.&lt;/p&gt;
+&lt;p&gt;&lt;!-- raw HTML omitted --&gt;The Terraform Registry&lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;p&gt;makesit easy to use any provider or module. To use a provider or module from thisregistry, just add it to your configuration; when you run &lt;code&gt;terraform init&lt;/code&gt;,Terraform will automatically download everything it needs.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/p/infrastructure-as-codeterraform%E5%88%B6%E9%9C%B8%E4%B9%8B%E9%81%93/images/1.png&#34;
+	width=&#34;865&#34;
+	height=&#34;291&#34;
+	srcset=&#34;/p/infrastructure-as-codeterraform%E5%88%B6%E9%9C%B8%E4%B9%8B%E9%81%93/images/1_hu15e22027b7a30da23287fb354f70391b_35070_480x0_resize_box_3.png 480w, /p/infrastructure-as-codeterraform%E5%88%B6%E9%9C%B8%E4%B9%8B%E9%81%93/images/1_hu15e22027b7a30da23287fb354f70391b_35070_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;图1:terraform构成&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;297&#34;
+		data-flex-basis=&#34;713px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;可以看到，Terraform 由Terraform Core和Terraform Plugins组成。&lt;/p&gt;
+&lt;p&gt;Terraform Core reads the configuration and builds the resource dependency graph.
+Resource dependency graph使得HCL中可以无视资源的顺序写出资源，无论是subnet、route table，还是associations，Terraform可以找出资源的依赖，并将其正确无误地创建。而你要做的是配好ID，然后等待。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/p/infrastructure-as-codeterraform%E5%88%B6%E9%9C%B8%E4%B9%8B%E9%81%93/images/2.png&#34;
+	width=&#34;1035&#34;
+	height=&#34;973&#34;
+	srcset=&#34;/p/infrastructure-as-codeterraform%E5%88%B6%E9%9C%B8%E4%B9%8B%E9%81%93/images/2_hu894f48a7c3d0ce4b214f12ba121998ab_162379_480x0_resize_box_3.png 480w, /p/infrastructure-as-codeterraform%E5%88%B6%E9%9C%B8%E4%B9%8B%E9%81%93/images/2_hu894f48a7c3d0ce4b214f12ba121998ab_162379_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;图2:graph&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;106&#34;
+		data-flex-basis=&#34;255px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;!-- raw HTML omitted --&gt;Terraform Plugins (providers and provisioners) bridge Terraform Core and their respective target APIs. &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;p&gt;Terraform provider plugins implement resources via basic CRUD (create, read, update, and delete) APIs to communicate with third party services.通过第三方服务调用CRUD API，如果以HashiCups为例，它的接口通过REST API，与Ansible一致。&lt;/p&gt;
+&lt;p&gt;&amp;ldquo;Terraform-plugin-framework is a module for building Terraform providers. It is built on terraform-plugin-go. It aims to provide as much of the power, predictability, and versatility of terraform-plugin-go as it can while abstracting away implementation details and repetitive, verbose tasks.&amp;rdquo;
+而其核心则是tfsdk，tfsdk包让Terraform能够与provider通信。&lt;/p&gt;
+&lt;p&gt;可以来看一下代码，我们拿hashicup provider 举例！&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/p/infrastructure-as-codeterraform%E5%88%B6%E9%9C%B8%E4%B9%8B%E9%81%93/images/3.png&#34;
+	width=&#34;812&#34;
+	height=&#34;473&#34;
+	srcset=&#34;/p/infrastructure-as-codeterraform%E5%88%B6%E9%9C%B8%E4%B9%8B%E9%81%93/images/3_hu564cf84b38de2a9701cb84e7522c7dc0_22860_480x0_resize_box_3.png 480w, /p/infrastructure-as-codeterraform%E5%88%B6%E9%9C%B8%E4%B9%8B%E9%81%93/images/3_hu564cf84b38de2a9701cb84e7522c7dc0_22860_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;图3:provider&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;171&#34;
+		data-flex-basis=&#34;412px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;New方法来调用provider的一个实例&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/p/infrastructure-as-codeterraform%E5%88%B6%E9%9C%B8%E4%B9%8B%E9%81%93/images/4.png&#34;
+	width=&#34;752&#34;
+	height=&#34;110&#34;
+	srcset=&#34;/p/infrastructure-as-codeterraform%E5%88%B6%E9%9C%B8%E4%B9%8B%E9%81%93/images/4_huacb106471642e9f22e97aa73cd2fbfb5_7513_480x0_resize_box_3.png 480w, /p/infrastructure-as-codeterraform%E5%88%B6%E9%9C%B8%E4%B9%8B%E9%81%93/images/4_huacb106471642e9f22e97aa73cd2fbfb5_7513_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;图4:new&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;683&#34;
+		data-flex-basis=&#34;1640px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;而provider的struct，较为简单。作为一个api client去请求数据，而不是Terraform直接向api递交请求，如同SDKv2一样。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/p/infrastructure-as-codeterraform%E5%88%B6%E9%9C%B8%E4%B9%8B%E9%81%93/images/5.png&#34;
+	width=&#34;794&#34;
+	height=&#34;146&#34;
+	srcset=&#34;/p/infrastructure-as-codeterraform%E5%88%B6%E9%9C%B8%E4%B9%8B%E9%81%93/images/5_hu9e6a7af1b082a361f42266bc28646463_8716_480x0_resize_box_3.png 480w, /p/infrastructure-as-codeterraform%E5%88%B6%E9%9C%B8%E4%B9%8B%E9%81%93/images/5_hu9e6a7af1b082a361f42266bc28646463_8716_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;图5:struct&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;543&#34;
+		data-flex-basis=&#34;1305px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;我们可以看下具体的providerData，&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/p/infrastructure-as-codeterraform%E5%88%B6%E9%9C%B8%E4%B9%8B%E9%81%93/images/6.png&#34;
+	width=&#34;940&#34;
+	height=&#34;959&#34;
+	srcset=&#34;/p/infrastructure-as-codeterraform%E5%88%B6%E9%9C%B8%E4%B9%8B%E9%81%93/images/6_hu214d86d4127fbab8d08d95ed7d47a2e1_53650_480x0_resize_box_3.png 480w, /p/infrastructure-as-codeterraform%E5%88%B6%E9%9C%B8%E4%B9%8B%E9%81%93/images/6_hu214d86d4127fbab8d08d95ed7d47a2e1_53650_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;图6:providerData&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;98&#34;
+		data-flex-basis=&#34;235px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;而接下来的congfigure方法则api client的配置加入到provider。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/p/infrastructure-as-codeterraform%E5%88%B6%E9%9C%B8%E4%B9%8B%E9%81%93/images/7.png&#34;
+	width=&#34;952&#34;
+	height=&#34;156&#34;
+	srcset=&#34;/p/infrastructure-as-codeterraform%E5%88%B6%E9%9C%B8%E4%B9%8B%E9%81%93/images/7_hue6b78f7d1a500bf7357a05c2c43364ee_12664_480x0_resize_box_3.png 480w, /p/infrastructure-as-codeterraform%E5%88%B6%E9%9C%B8%E4%B9%8B%E9%81%93/images/7_hue6b78f7d1a500bf7357a05c2c43364ee_12664_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;图7:congfigure&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;610&#34;
+		data-flex-basis=&#34;1464px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;ctx context.Context：属于golang标准库的一部分，我们很熟悉，通常用作生成api 请求。&lt;/p&gt;
+&lt;p&gt;req tfsdk.ConfigureProviderRequest：作为配置步骤中的请求，它需要在tfsdk库中的request struct，并且与其他runtime信息一样，会在Terraform configuration block中列举出来。&lt;/p&gt;
+&lt;p&gt;resp *tfsdk.ConfigureProviderResponse：注意它是一个指针。作为对请求的响应，还可以返回error和warning。&lt;/p&gt;
+&lt;p&gt;下面，我们来看下请求方法的细节，&lt;/p&gt;
+&lt;p&gt;从配置中获取provider数据&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/p/infrastructure-as-codeterraform%E5%88%B6%E9%9C%B8%E4%B9%8B%E9%81%93/images/8.png&#34;
+	width=&#34;787&#34;
+	height=&#34;297&#34;
+	srcset=&#34;/p/infrastructure-as-codeterraform%E5%88%B6%E9%9C%B8%E4%B9%8B%E9%81%93/images/8_hud0d8b42d5fc5b4ff9cefdb041d087849_19229_480x0_resize_box_3.png 480w, /p/infrastructure-as-codeterraform%E5%88%B6%E9%9C%B8%E4%B9%8B%E9%81%93/images/8_hud0d8b42d5fc5b4ff9cefdb041d087849_19229_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;图8:provider.go&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;264&#34;
+		data-flex-basis=&#34;635px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;2.验证username，password，host的存在。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/p/infrastructure-as-codeterraform%E5%88%B6%E9%9C%B8%E4%B9%8B%E9%81%93/images/9.png&#34;
+	width=&#34;840&#34;
+	height=&#34;838&#34;
+	srcset=&#34;/p/infrastructure-as-codeterraform%E5%88%B6%E9%9C%B8%E4%B9%8B%E9%81%93/images/9_hu9983dde6ce0a080978f363921c7a3d1c_45053_480x0_resize_box_3.png 480w, /p/infrastructure-as-codeterraform%E5%88%B6%E9%9C%B8%E4%B9%8B%E9%81%93/images/9_hu9983dde6ce0a080978f363921c7a3d1c_45053_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;图9:password/host/username&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;100&#34;
+		data-flex-basis=&#34;240px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;3.创建新的api client&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/p/infrastructure-as-codeterraform%E5%88%B6%E9%9C%B8%E4%B9%8B%E9%81%93/images/10.png&#34;
+	width=&#34;827&#34;
+	height=&#34;442&#34;
+	srcset=&#34;/p/infrastructure-as-codeterraform%E5%88%B6%E9%9C%B8%E4%B9%8B%E9%81%93/images/10_hu6953fedb035e463fc3afdfb8b8dcf03c_25540_480x0_resize_box_3.png 480w, /p/infrastructure-as-codeterraform%E5%88%B6%E9%9C%B8%E4%B9%8B%E9%81%93/images/10_hu6953fedb035e463fc3afdfb8b8dcf03c_25540_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;图10:api client&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;187&#34;
+		data-flex-basis=&#34;449px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;代码都很简单..&lt;/p&gt;
+&lt;p&gt;还有很多很多代码，下次再写吧&amp;hellip;..&lt;/p&gt;
+&lt;p&gt;进入第二部分，Terraform的使用。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/p/infrastructure-as-codeterraform%E5%88%B6%E9%9C%B8%E4%B9%8B%E9%81%93/images/11.png&#34;
+	width=&#34;838&#34;
+	height=&#34;332&#34;
+	srcset=&#34;/p/infrastructure-as-codeterraform%E5%88%B6%E9%9C%B8%E4%B9%8B%E9%81%93/images/11_hu47851f08e4c5c3f87109e6dfa35bcb90_89656_480x0_resize_box_3.png 480w, /p/infrastructure-as-codeterraform%E5%88%B6%E9%9C%B8%E4%B9%8B%E9%81%93/images/11_hu47851f08e4c5c3f87109e6dfa35bcb90_89656_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;图11: terraform use&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;252&#34;
+		data-flex-basis=&#34;605px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;定义你的基础设施&lt;/li&gt;
+&lt;li&gt;配置&lt;/li&gt;
+&lt;li&gt;初始化init，上面很大部分讲的就是初始化的过程&lt;/li&gt;
+&lt;li&gt;Plan，预览，会告知你对资源的操作&lt;/li&gt;
+&lt;li&gt;Apply执行&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;!-- raw HTML omitted --&gt;值得注意的是，在plan阶段，&lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;p&gt;&lt;!-- raw HTML omitted --&gt;黄色的波浪线字符是更改modify现有资源 。&lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;p&gt;&lt;!-- raw HTML omitted --&gt;而绿色的加号则是create新资源。&lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;p&gt;&lt;!-- raw HTML omitted --&gt;红色的减号是delete旧资源。&lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;p&gt;这边都很简单，就再说一个有趣的概念。&lt;/p&gt;
+&lt;p&gt;Date Resource，HCL语言中向服务器查询资源的具体信息，可以让你查询到现有的资源和组件，它有着非常有意思的用法。譬如coffee就作为HashiCups的date resource，&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/p/infrastructure-as-codeterraform%E5%88%B6%E9%9C%B8%E4%B9%8B%E9%81%93/images/12.png&#34;
+	width=&#34;685&#34;
+	height=&#34;938&#34;
+	srcset=&#34;/p/infrastructure-as-codeterraform%E5%88%B6%E9%9C%B8%E4%B9%8B%E9%81%93/images/12_huff6aba65195ef77d0ebb274144c7b094_119986_480x0_resize_box_3.png 480w, /p/infrastructure-as-codeterraform%E5%88%B6%E9%9C%B8%E4%B9%8B%E9%81%93/images/12_huff6aba65195ef77d0ebb274144c7b094_119986_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;图12: data source&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;73&#34;
+		data-flex-basis=&#34;175px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;一杯咖啡，name、price、teaser，似乎还少了拉花&amp;hellip;..&lt;/p&gt;
+&lt;p&gt;感谢阅读。&lt;/p&gt;
+&lt;p&gt;参考资料：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;https://learn.hashicorp.com/terraform?utm_source=terraform_io&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;https://learn.hashicorp.com/terraform?utm_source=terraform_io&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;https://www.terraform.io/internals/graph&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;https://www.terraform.io/internals/graph&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;https://learn.hashicorp.com/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;https://learn.hashicorp.com/&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;https://github.com/hashicorp/terraform&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;https://github.com/hashicorp/terraform&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+        </item>
+        <item>
         <title>2021 vlog</title>
         <link>/p/2021-vlog/</link>
         <pubDate>Wed, 26 Jan 2022 00:00:00 +0000</pubDate>
@@ -766,7 +1021,7 @@
         <item>
         <title>Golang问题解析（一）</title>
         <link>/p/golang%E9%97%AE%E9%A2%98%E8%A7%A3%E6%9E%90%E4%B8%80/</link>
-        <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+        <pubDate>Sun, 11 Apr 2021 00:00:00 +0000</pubDate>
         
         <guid>/p/golang%E9%97%AE%E9%A2%98%E8%A7%A3%E6%9E%90%E4%B8%80/</guid>
         <description>&lt;h2 id=&#34;前言&#34;&gt;前言&lt;/h2&gt;

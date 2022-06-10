@@ -1,0 +1,852 @@
+<!DOCTYPE html>
+<html lang="en-us" dir="ltr">
+    <head><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='Tool for infrastructure provisioning，是Terraform的本质。'><title>Infrastructure As Code：Terraform制霸之道</title>
+
+<link rel='canonical' href='/p/infrastructure-as-codeterraform%E5%88%B6%E9%9C%B8%E4%B9%8B%E9%81%93/'>
+
+<link rel="stylesheet" href="/scss/style.min.450926226e724574a6b936335ea06111f8aeb253d932c86cb2cc807341cd2889.css"><meta property='og:title' content='Infrastructure As Code：Terraform制霸之道'>
+<meta property='og:description' content='Tool for infrastructure provisioning，是Terraform的本质。'>
+<meta property='og:url' content='/p/infrastructure-as-codeterraform%E5%88%B6%E9%9C%B8%E4%B9%8B%E9%81%93/'>
+<meta property='og:site_name' content='panzd'>
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='Devops' /><meta property='article:published_time' content='2022-05-19T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2022-05-19T00:00:00&#43;00:00'/>
+<meta name="twitter:title" content="Infrastructure As Code：Terraform制霸之道">
+<meta name="twitter:description" content="Tool for infrastructure provisioning，是Terraform的本质。">
+    </head>
+    <body class="
+    article-page
+    ">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "auto");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky ">
+    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="Toggle Menu">
+        <span class="hamburger-box">
+            <span class="hamburger-inner"></span>
+        </span>
+    </button>
+
+    <header>
+        
+            
+            <figure class="site-avatar">
+                <a href="/">
+                
+                    
+                    
+                    
+                        
+                        <img src="/img/avatar_hucb79f288fbfc5ef8a2d525cd76ba88b6_49364_300x0_resize_box_3.png" width="300"
+                            height="300" class="site-logo" loading="lazy" alt="Avatar">
+                    
+                
+                </a>
+                
+                    <span class="emoji">😊</span>
+                
+            </figure>
+            
+        
+        
+        <div class="site-meta">
+            <h1 class="site-name"><a href="/">panzd</a></h1>
+            <h2 class="site-description">微信公众号：溪见</h2>
+        </div>
+    </header><ol class="social-menu">
+            
+                <li>
+                    <a 
+                        href='https://github.com/panzd'
+                        target="_blank"
+                        title="GitHub"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-github" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a 
+                        href='mailto:%20donggnij@foxmail.com'
+                        target="_blank"
+                        title="Mail"
+                    >
+                        
+                        
+                            <?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 19.1.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 64 64" enable-background="new 0 0 64 64" xml:space="preserve">
+<path id="Mail" d="M58.0034485,8H5.9965506c-3.3136795,0-5.9999995,2.6862001-5.9999995,6v36c0,3.3137016,2.6863203,6,5.9999995,6
+	h52.006897c3.3137016,0,6-2.6862984,6-6V14C64.0034485,10.6862001,61.3171501,8,58.0034485,8z M62.0034485,49.1108017
+	L43.084549,30.1919994l18.9188995-12.0555992V49.1108017z M5.9965506,10h52.006897c2.2056007,0,4,1.7943001,4,4v1.7664003
+	L34.4677505,33.3134003c-1.4902,0.9492989-3.3935013,0.9199982-4.8495998-0.0703011L1.9965508,14.4694996V14
+	C1.9965508,11.7943001,3.7910507,10,5.9965506,10z M1.9965508,16.8852005L21.182251,29.9251003L1.9965508,49.1108017V16.8852005z
+	 M58.0034485,54H5.9965506c-1.6473999,0-3.0638998-1.0021019-3.6760998-2.4278984l20.5199013-20.5200024l5.6547985,3.843401
+	c1.0859013,0.7383003,2.3418007,1.1083984,3.5995998,1.1083984c1.1953011,0,2.3925018-0.3339996,3.4463005-1.0048981
+	l5.8423996-3.7230015l20.2961006,20.2961025C61.0673485,52.9978981,59.6508713,54,58.0034485,54z"/>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+</svg>
+
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a 
+                        href='https://weibo.com/u/3528852115'
+                        target="_blank"
+                        title="Weibo"
+                    >
+                        
+                        
+                            <!--wb-->
+<svg class="Zi Zi--Weibo Login-socialIcon" fill="none" viewBox="0 0 24 24" width="24" height="24">
+<path fill="none"
+ d="M15.518 3.06c8.834-.854 7.395 7.732 7.394 7.731-.625 1.439-1.673.309-1.673.309.596-7.519-5.692-6.329-5.692-6.329-.898-1.067-.029-1.711-.029-1.711zm4.131 6.985c-.661 1.01-1.377.126-1.376.126.205-3.179-2.396-2.598-2.396-2.598-.719-.765-.091-1.346-.091-1.346 4.882-.551 3.863 3.818 3.863 3.818zM5.317 7.519s4.615-3.86 6.443-1.328c0 0 .662 1.08-.111 2.797.003-.003 3.723-1.96 5.408.159 0 0 .848 1.095-.191 2.649 0 0 2.918-.099 2.918 2.715 0 2.811-4.104 6.44-9.315 6.44-5.214 0-8.026-2.092-8.596-3.102 0 0-3.475-4.495 3.444-10.33zm10.448 7.792s.232-4.411-5.71-4.207c-6.652.231-6.579 4.654-6.579 4.654.021.39.097 3.713 5.842 3.713 5.98 0 6.447-4.16 6.447-4.16zm-9.882.86s-.059-3.632 3.804-3.561c3.412.06 3.206 3.165 3.206 3.165s-.026 2.979-3.684 2.979c-3.288 0-3.326-2.583-3.326-2.583zm2.528 1.037c.672 0 1.212-.447 1.212-.998 0-.551-.543-.998-1.212-.998-.672 0-1.215.447-1.215.998 0 .551.546.998 1.215.998z" fill-rule="evenodd">
+ </path></svg>
+
+                        
+                    </a>
+                </li>
+            
+        </ol><ol class="menu" id="main-menu">
+        
+        
+        
+
+        <li >
+            <a href='/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <polyline points="5 12 3 12 12 3 21 12 19 12" />
+  <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
+  <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
+</svg>
+
+
+
+                
+                <span>Home</span>
+            </a>
+        </li>
+        
+        
+
+        <li >
+            <a href='/about/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="7" r="4" />
+  <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
+</svg>
+
+
+
+                
+                <span>About</span>
+            </a>
+        </li>
+        
+        
+
+        <li >
+            <a href='/archives/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <rect x="3" y="4" width="18" height="4" rx="2" />
+  <path d="M5 8v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-10" />
+  <line x1="10" y1="12" x2="14" y2="12" />
+</svg>
+
+
+
+                
+                <span>Archives</span>
+            </a>
+        </li>
+        
+        
+
+        <li >
+            <a href='/search/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="10" cy="10" r="7" />
+  <line x1="21" y1="21" x2="15" y2="15" />
+</svg>
+
+
+
+                
+                <span>Search</span>
+            </a>
+        </li>
+        
+
+        <div class="menu-bottom-section">
+            
+            
+                <li id="dark-mode-toggle">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="8" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="16" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                    <span>Dark Mode</span>
+                </li>
+            
+        </div>
+    </ol>
+</aside>
+<main class="main full-width">
+    <article class="main-article">
+    <header class="article-header">
+
+    <div class="article-details">
+    
+    <header class="article-category">
+        
+            <a href="/categories/article/" >
+                Article
+            </a>
+        
+    </header>
+    
+
+    <div class="article-title-wrapper">
+        <h2 class="article-title">
+            <a href="/p/infrastructure-as-codeterraform%E5%88%B6%E9%9C%B8%E4%B9%8B%E9%81%93/">Infrastructure As Code：Terraform制霸之道</a>
+        </h2>
+    
+        
+        <h3 class="article-subtitle">
+            Tool for infrastructure provisioning，是Terraform的本质。
+        </h3>
+        
+    </div>
+
+    
+    <footer class="article-time">
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published">May 19, 2022</time>
+            </div>
+        
+
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+                <time class="article-time--reading">
+                    2 minute read
+                </time>
+            </div>
+        
+    </footer>
+    
+
+    
+</div>
+</header>
+
+    <section class="article-content">
+    
+    
+    <h2 id="前言">前言:</h2>
+<p>如果你习惯别人帮你烤肉，那你便无法拒绝terraform。便捷是它的利器，普适是它的价值。你唯一要做的，就是确保最终的状态是你想要的。</p>
+<p>Infrastructure as code (IaC)，IaC allows you to build, change, and manage your infrastructurein a safe, consistent and repeatable way by defining resourceconfigurations that you can version, reuse,and share.</p>
+<p><!-- raw HTML omitted -->Tool for infrastructure provisioning，是Terraform的本质。<!-- raw HTML omitted --></p>
+<p>在那么多基础设施供应工具中，脱颖而出，必有Terraform的独到之处。首先是要挑战广为应用的Ansible，其以playbook模式而强大，playbook通过多个task（服务，任务）集合完成一类功能，让远端主机达到预期的状态，它像是一款用shell写的To-do-list工具。而Terraform关心的是配置文件的最终状态，而不是操作流程。</p>
+<p><!-- raw HTML omitted -->Terraform的优势是什么？<!-- raw HTML omitted --></p>
+<ul>
+<li>
+<p>适用于多云平台。</p>
+</li>
+<li>
+<p>HCL语言更容易理解，也写地更快。Human-Readable~</p>
+</li>
+<li>
+<p>Terraform可以在每次你apply之后，追踪到资源的改变。</p>
+</li>
+<li>
+<p>每次修改都可以提交，简而言之有版本控制，更加安全。</p>
+</li>
+</ul>
+<p><!-- raw HTML omitted -->只需要定义你最终想要的状态应该是什么，这很重要。<!-- raw HTML omitted --></p>
+<p><!-- raw HTML omitted -->Terraform<!-- raw HTML omitted --></p>
+<p>provisions,updates, and destroys infrastructure resources such as physical machines, VMs,network switches, containers, and more.</p>
+<p><!-- raw HTML omitted -->Configurations<!-- raw HTML omitted --></p>
+<p>arecode written for Terraform, using the human-readable HashiCorp ConfigurationLanguage (HCL) to describe the desired state of infrastructure resources.</p>
+<p><!-- raw HTML omitted -->Providers<!-- raw HTML omitted --></p>
+<p>arethe plugins that Terraform uses to manage those resources. Every supportedservice or infrastructure platform has a provider that defines which resourcesare available and performs API calls to manage those resources.</p>
+<p><!-- raw HTML omitted -->Modules<!-- raw HTML omitted --></p>
+<p>arereusable Terraform configurations that can be called and configured by otherconfigurations. Most modulesmanage a few closely related resources from a single provider.</p>
+<p><!-- raw HTML omitted -->The Terraform Registry<!-- raw HTML omitted --></p>
+<p>makesit easy to use any provider or module. To use a provider or module from thisregistry, just add it to your configuration; when you run <code>terraform init</code>,Terraform will automatically download everything it needs.</p>
+<p><img src="/p/infrastructure-as-codeterraform%E5%88%B6%E9%9C%B8%E4%B9%8B%E9%81%93/images/1.png"
+	width="865"
+	height="291"
+	srcset="/p/infrastructure-as-codeterraform%E5%88%B6%E9%9C%B8%E4%B9%8B%E9%81%93/images/1_hu15e22027b7a30da23287fb354f70391b_35070_480x0_resize_box_3.png 480w, /p/infrastructure-as-codeterraform%E5%88%B6%E9%9C%B8%E4%B9%8B%E9%81%93/images/1_hu15e22027b7a30da23287fb354f70391b_35070_1024x0_resize_box_3.png 1024w"
+	loading="lazy"
+	
+		alt="图1:terraform构成"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="297"
+		data-flex-basis="713px"
+	
+></p>
+<p>可以看到，Terraform 由Terraform Core和Terraform Plugins组成。</p>
+<p>Terraform Core reads the configuration and builds the resource dependency graph.
+Resource dependency graph使得HCL中可以无视资源的顺序写出资源，无论是subnet、route table，还是associations，Terraform可以找出资源的依赖，并将其正确无误地创建。而你要做的是配好ID，然后等待。</p>
+<p><img src="/p/infrastructure-as-codeterraform%E5%88%B6%E9%9C%B8%E4%B9%8B%E9%81%93/images/2.png"
+	width="1035"
+	height="973"
+	srcset="/p/infrastructure-as-codeterraform%E5%88%B6%E9%9C%B8%E4%B9%8B%E9%81%93/images/2_hu894f48a7c3d0ce4b214f12ba121998ab_162379_480x0_resize_box_3.png 480w, /p/infrastructure-as-codeterraform%E5%88%B6%E9%9C%B8%E4%B9%8B%E9%81%93/images/2_hu894f48a7c3d0ce4b214f12ba121998ab_162379_1024x0_resize_box_3.png 1024w"
+	loading="lazy"
+	
+		alt="图2:graph"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="106"
+		data-flex-basis="255px"
+	
+></p>
+<p><!-- raw HTML omitted -->Terraform Plugins (providers and provisioners) bridge Terraform Core and their respective target APIs. <!-- raw HTML omitted --></p>
+<p>Terraform provider plugins implement resources via basic CRUD (create, read, update, and delete) APIs to communicate with third party services.通过第三方服务调用CRUD API，如果以HashiCups为例，它的接口通过REST API，与Ansible一致。</p>
+<p>&ldquo;Terraform-plugin-framework is a module for building Terraform providers. It is built on terraform-plugin-go. It aims to provide as much of the power, predictability, and versatility of terraform-plugin-go as it can while abstracting away implementation details and repetitive, verbose tasks.&rdquo;
+而其核心则是tfsdk，tfsdk包让Terraform能够与provider通信。</p>
+<p>可以来看一下代码，我们拿hashicup provider 举例！</p>
+<p><img src="/p/infrastructure-as-codeterraform%E5%88%B6%E9%9C%B8%E4%B9%8B%E9%81%93/images/3.png"
+	width="812"
+	height="473"
+	srcset="/p/infrastructure-as-codeterraform%E5%88%B6%E9%9C%B8%E4%B9%8B%E9%81%93/images/3_hu564cf84b38de2a9701cb84e7522c7dc0_22860_480x0_resize_box_3.png 480w, /p/infrastructure-as-codeterraform%E5%88%B6%E9%9C%B8%E4%B9%8B%E9%81%93/images/3_hu564cf84b38de2a9701cb84e7522c7dc0_22860_1024x0_resize_box_3.png 1024w"
+	loading="lazy"
+	
+		alt="图3:provider"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="171"
+		data-flex-basis="412px"
+	
+></p>
+<p>New方法来调用provider的一个实例</p>
+<p><img src="/p/infrastructure-as-codeterraform%E5%88%B6%E9%9C%B8%E4%B9%8B%E9%81%93/images/4.png"
+	width="752"
+	height="110"
+	srcset="/p/infrastructure-as-codeterraform%E5%88%B6%E9%9C%B8%E4%B9%8B%E9%81%93/images/4_huacb106471642e9f22e97aa73cd2fbfb5_7513_480x0_resize_box_3.png 480w, /p/infrastructure-as-codeterraform%E5%88%B6%E9%9C%B8%E4%B9%8B%E9%81%93/images/4_huacb106471642e9f22e97aa73cd2fbfb5_7513_1024x0_resize_box_3.png 1024w"
+	loading="lazy"
+	
+		alt="图4:new"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="683"
+		data-flex-basis="1640px"
+	
+></p>
+<p>而provider的struct，较为简单。作为一个api client去请求数据，而不是Terraform直接向api递交请求，如同SDKv2一样。</p>
+<p><img src="/p/infrastructure-as-codeterraform%E5%88%B6%E9%9C%B8%E4%B9%8B%E9%81%93/images/5.png"
+	width="794"
+	height="146"
+	srcset="/p/infrastructure-as-codeterraform%E5%88%B6%E9%9C%B8%E4%B9%8B%E9%81%93/images/5_hu9e6a7af1b082a361f42266bc28646463_8716_480x0_resize_box_3.png 480w, /p/infrastructure-as-codeterraform%E5%88%B6%E9%9C%B8%E4%B9%8B%E9%81%93/images/5_hu9e6a7af1b082a361f42266bc28646463_8716_1024x0_resize_box_3.png 1024w"
+	loading="lazy"
+	
+		alt="图5:struct"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="543"
+		data-flex-basis="1305px"
+	
+></p>
+<p>我们可以看下具体的providerData，</p>
+<p><img src="/p/infrastructure-as-codeterraform%E5%88%B6%E9%9C%B8%E4%B9%8B%E9%81%93/images/6.png"
+	width="940"
+	height="959"
+	srcset="/p/infrastructure-as-codeterraform%E5%88%B6%E9%9C%B8%E4%B9%8B%E9%81%93/images/6_hu214d86d4127fbab8d08d95ed7d47a2e1_53650_480x0_resize_box_3.png 480w, /p/infrastructure-as-codeterraform%E5%88%B6%E9%9C%B8%E4%B9%8B%E9%81%93/images/6_hu214d86d4127fbab8d08d95ed7d47a2e1_53650_1024x0_resize_box_3.png 1024w"
+	loading="lazy"
+	
+		alt="图6:providerData"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="98"
+		data-flex-basis="235px"
+	
+></p>
+<p>而接下来的congfigure方法则api client的配置加入到provider。</p>
+<p><img src="/p/infrastructure-as-codeterraform%E5%88%B6%E9%9C%B8%E4%B9%8B%E9%81%93/images/7.png"
+	width="952"
+	height="156"
+	srcset="/p/infrastructure-as-codeterraform%E5%88%B6%E9%9C%B8%E4%B9%8B%E9%81%93/images/7_hue6b78f7d1a500bf7357a05c2c43364ee_12664_480x0_resize_box_3.png 480w, /p/infrastructure-as-codeterraform%E5%88%B6%E9%9C%B8%E4%B9%8B%E9%81%93/images/7_hue6b78f7d1a500bf7357a05c2c43364ee_12664_1024x0_resize_box_3.png 1024w"
+	loading="lazy"
+	
+		alt="图7:congfigure"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="610"
+		data-flex-basis="1464px"
+	
+></p>
+<p>ctx context.Context：属于golang标准库的一部分，我们很熟悉，通常用作生成api 请求。</p>
+<p>req tfsdk.ConfigureProviderRequest：作为配置步骤中的请求，它需要在tfsdk库中的request struct，并且与其他runtime信息一样，会在Terraform configuration block中列举出来。</p>
+<p>resp *tfsdk.ConfigureProviderResponse：注意它是一个指针。作为对请求的响应，还可以返回error和warning。</p>
+<p>下面，我们来看下请求方法的细节，</p>
+<p>从配置中获取provider数据</p>
+<p><img src="/p/infrastructure-as-codeterraform%E5%88%B6%E9%9C%B8%E4%B9%8B%E9%81%93/images/8.png"
+	width="787"
+	height="297"
+	srcset="/p/infrastructure-as-codeterraform%E5%88%B6%E9%9C%B8%E4%B9%8B%E9%81%93/images/8_hud0d8b42d5fc5b4ff9cefdb041d087849_19229_480x0_resize_box_3.png 480w, /p/infrastructure-as-codeterraform%E5%88%B6%E9%9C%B8%E4%B9%8B%E9%81%93/images/8_hud0d8b42d5fc5b4ff9cefdb041d087849_19229_1024x0_resize_box_3.png 1024w"
+	loading="lazy"
+	
+		alt="图8:provider.go"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="264"
+		data-flex-basis="635px"
+	
+></p>
+<p>2.验证username，password，host的存在。</p>
+<p><img src="/p/infrastructure-as-codeterraform%E5%88%B6%E9%9C%B8%E4%B9%8B%E9%81%93/images/9.png"
+	width="840"
+	height="838"
+	srcset="/p/infrastructure-as-codeterraform%E5%88%B6%E9%9C%B8%E4%B9%8B%E9%81%93/images/9_hu9983dde6ce0a080978f363921c7a3d1c_45053_480x0_resize_box_3.png 480w, /p/infrastructure-as-codeterraform%E5%88%B6%E9%9C%B8%E4%B9%8B%E9%81%93/images/9_hu9983dde6ce0a080978f363921c7a3d1c_45053_1024x0_resize_box_3.png 1024w"
+	loading="lazy"
+	
+		alt="图9:password/host/username"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="100"
+		data-flex-basis="240px"
+	
+></p>
+<p>3.创建新的api client</p>
+<p><img src="/p/infrastructure-as-codeterraform%E5%88%B6%E9%9C%B8%E4%B9%8B%E9%81%93/images/10.png"
+	width="827"
+	height="442"
+	srcset="/p/infrastructure-as-codeterraform%E5%88%B6%E9%9C%B8%E4%B9%8B%E9%81%93/images/10_hu6953fedb035e463fc3afdfb8b8dcf03c_25540_480x0_resize_box_3.png 480w, /p/infrastructure-as-codeterraform%E5%88%B6%E9%9C%B8%E4%B9%8B%E9%81%93/images/10_hu6953fedb035e463fc3afdfb8b8dcf03c_25540_1024x0_resize_box_3.png 1024w"
+	loading="lazy"
+	
+		alt="图10:api client"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="187"
+		data-flex-basis="449px"
+	
+></p>
+<p>代码都很简单..</p>
+<p>还有很多很多代码，下次再写吧&hellip;..</p>
+<p>进入第二部分，Terraform的使用。</p>
+<p><img src="/p/infrastructure-as-codeterraform%E5%88%B6%E9%9C%B8%E4%B9%8B%E9%81%93/images/11.png"
+	width="838"
+	height="332"
+	srcset="/p/infrastructure-as-codeterraform%E5%88%B6%E9%9C%B8%E4%B9%8B%E9%81%93/images/11_hu47851f08e4c5c3f87109e6dfa35bcb90_89656_480x0_resize_box_3.png 480w, /p/infrastructure-as-codeterraform%E5%88%B6%E9%9C%B8%E4%B9%8B%E9%81%93/images/11_hu47851f08e4c5c3f87109e6dfa35bcb90_89656_1024x0_resize_box_3.png 1024w"
+	loading="lazy"
+	
+		alt="图11: terraform use"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="252"
+		data-flex-basis="605px"
+	
+></p>
+<ul>
+<li>定义你的基础设施</li>
+<li>配置</li>
+<li>初始化init，上面很大部分讲的就是初始化的过程</li>
+<li>Plan，预览，会告知你对资源的操作</li>
+<li>Apply执行</li>
+</ul>
+<p><!-- raw HTML omitted -->值得注意的是，在plan阶段，<!-- raw HTML omitted --></p>
+<p><!-- raw HTML omitted -->黄色的波浪线字符是更改modify现有资源 。<!-- raw HTML omitted --></p>
+<p><!-- raw HTML omitted -->而绿色的加号则是create新资源。<!-- raw HTML omitted --></p>
+<p><!-- raw HTML omitted -->红色的减号是delete旧资源。<!-- raw HTML omitted --></p>
+<p>这边都很简单，就再说一个有趣的概念。</p>
+<p>Date Resource，HCL语言中向服务器查询资源的具体信息，可以让你查询到现有的资源和组件，它有着非常有意思的用法。譬如coffee就作为HashiCups的date resource，</p>
+<p><img src="/p/infrastructure-as-codeterraform%E5%88%B6%E9%9C%B8%E4%B9%8B%E9%81%93/images/12.png"
+	width="685"
+	height="938"
+	srcset="/p/infrastructure-as-codeterraform%E5%88%B6%E9%9C%B8%E4%B9%8B%E9%81%93/images/12_huff6aba65195ef77d0ebb274144c7b094_119986_480x0_resize_box_3.png 480w, /p/infrastructure-as-codeterraform%E5%88%B6%E9%9C%B8%E4%B9%8B%E9%81%93/images/12_huff6aba65195ef77d0ebb274144c7b094_119986_1024x0_resize_box_3.png 1024w"
+	loading="lazy"
+	
+		alt="图12: data source"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="73"
+		data-flex-basis="175px"
+	
+></p>
+<p>一杯咖啡，name、price、teaser，似乎还少了拉花&hellip;..</p>
+<p>感谢阅读。</p>
+<p>参考资料：</p>
+<ul>
+<li><a class="link" href="https://learn.hashicorp.com/terraform?utm_source=terraform_io"  target="_blank" rel="noopener"
+    >https://learn.hashicorp.com/terraform?utm_source=terraform_io</a></li>
+<li><a class="link" href="https://www.terraform.io/internals/graph"  target="_blank" rel="noopener"
+    >https://www.terraform.io/internals/graph</a></li>
+<li><a class="link" href="https://learn.hashicorp.com/"  target="_blank" rel="noopener"
+    >https://learn.hashicorp.com/</a></li>
+<li><a class="link" href="https://github.com/hashicorp/terraform"  target="_blank" rel="noopener"
+    >https://github.com/hashicorp/terraform</a></li>
+</ul>
+
+</section>
+
+
+    <footer class="article-footer">
+    
+    <section class="article-tags">
+        
+            <a href="/tags/devops/">Devops</a>
+        
+    </section>
+
+
+    
+    <section class="article-copyright">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M14.5 9a3.5 4 0 1 0 0 6" />
+</svg>
+
+
+
+        <span>Licensed under CC BY-NC-SA 4.0</span>
+    </section>
+    </footer>
+
+
+    
+</article>
+
+    
+
+    
+
+<aside class="related-contents--wrapper">
+    <h2 class="section-title">Related contents</h2>
+    <div class="related-contents">
+        <div class="flex article-list--tile">
+            
+                
+<article class="">
+    <a href="/p/golang-defer%E7%9A%84%E6%8E%A2%E7%B4%A2/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">Golang defer的探索</h2>
+        </div>
+    </a>
+</article>
+            
+                
+<article class="">
+    <a href="/p/linux-screen/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">Linux Screen</h2>
+        </div>
+    </a>
+</article>
+            
+                
+<article class="">
+    <a href="/p/windows%E5%90%AF%E5%8A%A8%E4%B8%AD%E7%9A%84bcd%E6%96%87%E4%BB%B6%E8%A7%A3%E6%9E%90/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">Windows启动中的BCD文件解析</h2>
+        </div>
+    </a>
+</article>
+            
+                
+<article class="">
+    <a href="/p/golang%E9%97%AE%E9%A2%98%E8%A7%A3%E6%9E%90%E4%B8%80/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">Golang问题解析（一）</h2>
+        </div>
+    </a>
+</article>
+            
+        </div>
+    </div>
+</aside>
+
+     
+    
+        
+    <div class="disqus-container">
+    <div id="disqus_thread"></div>
+<script type="application/javascript">
+    window.disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "hugo-theme-stack" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+</div>
+
+<style>
+    .disqus-container {
+        background-color: var(--card-background);
+        border-radius: var(--card-border-radius);
+        box-shadow: var(--shadow-l1);
+        padding: var(--card-padding);
+    }
+</style>
+
+<script>
+    window.addEventListener('onColorSchemeChange', (e) => {
+        if (DISQUS) {
+            DISQUS.reset({
+                reload: true
+            });
+        }
+    })
+</script>
+
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy; 
+        
+            2018 - 
+        
+        2022 panzd
+    </section>
+    
+    <section class="powerby">
+        Built with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> <br />
+        Theme <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.11.0">Stack</a></b> designed by <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a>
+    </section>
+</footer>
+
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.css"integrity="sha256-c0uckgykQ9v5k&#43;IqViZOZKc47Jn7KQil4/MP3ySA3F8="crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.css"integrity="sha256-SBLU4vv6CA6lHsZ1XyTdhyjJxCjPif/TRkjnsyGAGnE="crossorigin="anonymous"
+            >
+
+            </main>
+    
+
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.5/dist/vibrant.min.js"integrity="sha256-5NovOZc4iwiAWTYIFiIM7DxKUXKWvpVEuMEPLzcm5/g="crossorigin="anonymous"
+                
+                >
+            </script><script type="text/javascript" src="/ts/main.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+    </body>
+</html>
