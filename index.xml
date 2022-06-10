@@ -65,7 +65,7 @@
         <pubDate>Sat, 15 Jan 2022 00:00:00 +0000</pubDate>
         
         <guid>/p/golang-defer%E7%9A%84%E6%8E%A2%E7%B4%A2/</guid>
-        <description>&lt;p&gt;本文主要分析了defer在代码里的各种情况，本文先发于掘金论坛上。&lt;/p&gt;
+        <description>&lt;p&gt;本文主要分析了defer在代码里的各种情况，本文先发于掘金论坛上。欢迎关注我的掘金账号：panzd&lt;/p&gt;
 &lt;hr&gt;
 &lt;h2 id=&#34;1defer执行顺序&#34;&gt;1.defer执行顺序&lt;/h2&gt;
 &lt;p&gt;defer关键字的插入顺序时从后向前的，而defer关键字执行是从前向后的，所以后来的defer会优先执行。
@@ -587,14 +587,18 @@
 &lt;p&gt;所幸，我发现了linux上的screen程序，非常好用。&lt;/p&gt;
 &lt;h2 id=&#34;介绍&#34;&gt;介绍&lt;/h2&gt;
 &lt;p&gt;&amp;ldquo;Screen or GNU Screen is a terminal multiplexer.&amp;ldquo;也就是说Screen是一款终端复用器。我们可以开始一个screen会话，然后在里面可以打开任意数量的虚拟终端。在Screen中运行的进程将在其窗口不可见时继续运行，即使断开SSH连接。&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;/images/1.png&#34;
-	
-	
-	
+&lt;p&gt;&lt;img src=&#34;/p/linux-screen/images/1.webp&#34;
+	width=&#34;407&#34;
+	height=&#34;37&#34;
+	srcset=&#34;/p/linux-screen/images/1_hue47b270dc1c34840fbdd547d761a942c_4714_480x0_resize_q75_h2_box_2.webp 480w, /p/linux-screen/images/1_hue47b270dc1c34840fbdd547d761a942c_4714_1024x0_resize_q75_h2_box_2.webp 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 		alt=&#34;图1&#34;
 	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;1100&#34;
+		data-flex-basis=&#34;2640px&#34;
 	
 &gt;&lt;/p&gt;
 &lt;p&gt;至于安装就很简单，在Centos上只需要运行：&lt;/p&gt;
@@ -610,14 +614,18 @@
 &lt;p&gt;则重新进入之前创建的session里面。&lt;/p&gt;
 &lt;h2 id=&#34;具体命令&#34;&gt;具体命令&lt;/h2&gt;
 &lt;p&gt;我们进入screen session后，可以使用 Ctr+a 然后 ？查看screen的命令：&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;/images/2.png&#34;
-	
-	
-	
+&lt;p&gt;&lt;img src=&#34;/p/linux-screen/images/2.webp&#34;
+	width=&#34;1262&#34;
+	height=&#34;771&#34;
+	srcset=&#34;/p/linux-screen/images/2_hub7fb6d23aec651ec17c7aa3f2897c766_32866_480x0_resize_q75_h2_box_2.webp 480w, /p/linux-screen/images/2_hub7fb6d23aec651ec17c7aa3f2897c766_32866_1024x0_resize_q75_h2_box_2.webp 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 		alt=&#34;图2&#34;
 	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;163&#34;
+		data-flex-basis=&#34;392px&#34;
 	
 &gt;&lt;/p&gt;
 &lt;p&gt;非常的清晰&lt;/p&gt;
@@ -632,14 +640,18 @@
 &lt;p&gt;而0-9在screen里面则可以跳转到session窗口。&lt;/p&gt;
 &lt;h2 id=&#34;screen-设置&#34;&gt;screen 设置&lt;/h2&gt;
 &lt;p&gt;当screen开始时，它会从/etc/screenrc和~/.screenrc读取它的设置参数。我们可以根据这两个文件更改默认screen设置。&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;/images/3.png&#34;
-	
-	
-	
+&lt;p&gt;&lt;img src=&#34;/p/linux-screen/images/3.webp&#34;
+	width=&#34;628&#34;
+	height=&#34;579&#34;
+	srcset=&#34;/p/linux-screen/images/3_hu57b15d45b7583a669d680fad7a259983_42154_480x0_resize_q75_h2_box_2.webp 480w, /p/linux-screen/images/3_hu57b15d45b7583a669d680fad7a259983_42154_1024x0_resize_q75_h2_box_2.webp 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 		alt=&#34;图3&#34;
 	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;108&#34;
+		data-flex-basis=&#34;260px&#34;
 	
 &gt;&lt;/p&gt;
 &lt;p&gt;如果没有&lt;code&gt;~/.screenrc&lt;/code&gt;的话，可以创建，用来自定义配置。&lt;/p&gt;
@@ -651,12 +663,339 @@
 &lt;p&gt;Screen User’s Manual(url=https://www.gnu.org/software/screen/manual/screen.html)&lt;/p&gt;</description>
         </item>
         <item>
+        <title>Windows启动中的BCD文件解析</title>
+        <link>/p/windows%E5%90%AF%E5%8A%A8%E4%B8%AD%E7%9A%84bcd%E6%96%87%E4%BB%B6%E8%A7%A3%E6%9E%90/</link>
+        <pubDate>Sat, 18 Dec 2021 00:00:00 +0000</pubDate>
+        
+        <guid>/p/windows%E5%90%AF%E5%8A%A8%E4%B8%AD%E7%9A%84bcd%E6%96%87%E4%BB%B6%E8%A7%A3%E6%9E%90/</guid>
+        <description>&lt;hr&gt;
+&lt;h2 id=&#34;前言&#34;&gt;前言&lt;/h2&gt;
+&lt;p&gt;在我的惠普电脑蓝屏后, 出现了&amp;quot;Oxc000007b&amp;quot;问题, 提示缺少winload.efi文件,在我查阅资料后, 发现是UEFI的Windows Boot Manager程序读取文件的路径失效了, 上次这台双系统电脑出现这个问题是四年前了。而与之相关的正是bcd文件, 可以找到UEFI模式中所有的启动信息。&lt;/p&gt;
+&lt;h2 id=&#34;介绍&#34;&gt;介绍&lt;/h2&gt;
+&lt;p&gt;&lt;img src=&#34;/p/windows%E5%90%AF%E5%8A%A8%E4%B8%AD%E7%9A%84bcd%E6%96%87%E4%BB%B6%E8%A7%A3%E6%9E%90/images/1.png&#34;
+	width=&#34;889&#34;
+	height=&#34;129&#34;
+	srcset=&#34;/p/windows%E5%90%AF%E5%8A%A8%E4%B8%AD%E7%9A%84bcd%E6%96%87%E4%BB%B6%E8%A7%A3%E6%9E%90/images/1_hu5698fac716ca6a2bd1eab26cd5b6df50_14543_480x0_resize_box_3.png 480w, /p/windows%E5%90%AF%E5%8A%A8%E4%B8%AD%E7%9A%84bcd%E6%96%87%E4%BB%B6%E8%A7%A3%E6%9E%90/images/1_hu5698fac716ca6a2bd1eab26cd5b6df50_14543_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;图1&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;689&#34;
+		data-flex-basis=&#34;1653px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;在官方的解释中, 可以看到&amp;quot;启动配置数据(BCD)文件提供了一个用于描述启动应用程序和启动应用程序设置的存储区。BCDEdit是一个用于管理BCD的命令行工具。它可以用于各种目的，包括创建新存储、修改现有存储和添加引导菜单选项。&amp;quot;&lt;/p&gt;
+&lt;p&gt;我们可以在&lt;code&gt;&amp;quot;%WINDIR%\System32&amp;quot;&lt;/code&gt;文件夹中找到bcdedit.exe, 如果是像我一样无法进入系统的话, 则可以在windows开机时,进入系统恢复选项(像我的惠普则是按着F11),再选择进入高级选项, 再进入命令行提示符。&lt;/p&gt;
+&lt;p&gt;此时便进入到cmd命令行界面, &amp;ldquo;X:\Windows\System32&amp;rdquo;, 在这里输入命令:&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;bcdedit /enum all&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;意思是在命令行中列出所有的UEFI信息&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/p/windows%E5%90%AF%E5%8A%A8%E4%B8%AD%E7%9A%84bcd%E6%96%87%E4%BB%B6%E8%A7%A3%E6%9E%90/images/2.png&#34;
+	width=&#34;856&#34;
+	height=&#34;131&#34;
+	srcset=&#34;/p/windows%E5%90%AF%E5%8A%A8%E4%B8%AD%E7%9A%84bcd%E6%96%87%E4%BB%B6%E8%A7%A3%E6%9E%90/images/2_hua8885bdbe4522b1348c5e04fa47f0c48_11762_480x0_resize_box_3.png 480w, /p/windows%E5%90%AF%E5%8A%A8%E4%B8%AD%E7%9A%84bcd%E6%96%87%E4%BB%B6%E8%A7%A3%E6%9E%90/images/2_hua8885bdbe4522b1348c5e04fa47f0c48_11762_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;图2&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;653&#34;
+		data-flex-basis=&#34;1568px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;h2 id=&#34;实践&#34;&gt;实践&lt;/h2&gt;
+&lt;p&gt;在界面中,我们可以看到标识符&lt;!-- raw HTML omitted --&gt;, 这便是windows启动管理器。&lt;/p&gt;
+&lt;p&gt;而在左侧&amp;quot;device&amp;quot;对应着右侧的&amp;quot;partition=C:&amp;quot;, 表面EFI信息存在此windows下的C盘中。&amp;ldquo;path&amp;quot;则对应着路径, &amp;ldquo;default&amp;quot;则是默认的加载项, 对应着windows启动加载器。而下面一串长长的字符则表示从休眠状态中恢复的选项, 并没有用set去改变它的本名。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/p/windows%E5%90%AF%E5%8A%A8%E4%B8%AD%E7%9A%84bcd%E6%96%87%E4%BB%B6%E8%A7%A3%E6%9E%90/images/3.jpg&#34;
+	width=&#34;1080&#34;
+	height=&#34;810&#34;
+	srcset=&#34;/p/windows%E5%90%AF%E5%8A%A8%E4%B8%AD%E7%9A%84bcd%E6%96%87%E4%BB%B6%E8%A7%A3%E6%9E%90/images/3_hu8cf1016981656dcefff526e7fe913993_142115_480x0_resize_q75_box.jpg 480w, /p/windows%E5%90%AF%E5%8A%A8%E4%B8%AD%E7%9A%84bcd%E6%96%87%E4%BB%B6%E8%A7%A3%E6%9E%90/images/3_hu8cf1016981656dcefff526e7fe913993_142115_1024x0_resize_q75_box.jpg 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;图3&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;133&#34;
+		data-flex-basis=&#34;320px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;通常而言, efi文件的信息都是当前windows系统下的C盘中, 但在我的双系统中则是存在&amp;quot;HarddiskVolume2&amp;quot;中, 这是因为之前装双系统的时候分盘导致的。下面让我们再来看一下,&amp;ldquo;winload.efi&amp;quot;文件存在的路径:&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/p/windows%E5%90%AF%E5%8A%A8%E4%B8%AD%E7%9A%84bcd%E6%96%87%E4%BB%B6%E8%A7%A3%E6%9E%90/images/4.jpg&#34;
+	width=&#34;1080&#34;
+	height=&#34;810&#34;
+	srcset=&#34;/p/windows%E5%90%AF%E5%8A%A8%E4%B8%AD%E7%9A%84bcd%E6%96%87%E4%BB%B6%E8%A7%A3%E6%9E%90/images/4_hu6daddb52bff8f0e409680cadd10aed2e_124938_480x0_resize_q75_box.jpg 480w, /p/windows%E5%90%AF%E5%8A%A8%E4%B8%AD%E7%9A%84bcd%E6%96%87%E4%BB%B6%E8%A7%A3%E6%9E%90/images/4_hu6daddb52bff8f0e409680cadd10aed2e_124938_1024x0_resize_q75_box.jpg 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;图4&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;133&#34;
+		data-flex-basis=&#34;320px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;可以看到winload.efi存放的路径,&amp;ldquo;C:Windows\system32&amp;quot;。而之前出错的问题也是bootmgr找不到此路径下的winload.efi文件。在这里我们可以用bcdedit.exe来更改device和path。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/p/windows%E5%90%AF%E5%8A%A8%E4%B8%AD%E7%9A%84bcd%E6%96%87%E4%BB%B6%E8%A7%A3%E6%9E%90/images/5.png&#34;
+	width=&#34;887&#34;
+	height=&#34;389&#34;
+	srcset=&#34;/p/windows%E5%90%AF%E5%8A%A8%E4%B8%AD%E7%9A%84bcd%E6%96%87%E4%BB%B6%E8%A7%A3%E6%9E%90/images/5_hu895729006ea45f3f839f89f55d5e2a1e_26365_480x0_resize_box_3.png 480w, /p/windows%E5%90%AF%E5%8A%A8%E4%B8%AD%E7%9A%84bcd%E6%96%87%E4%BB%B6%E8%A7%A3%E6%9E%90/images/5_hu895729006ea45f3f839f89f55d5e2a1e_26365_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;图5&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;228&#34;
+		data-flex-basis=&#34;547px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;让我们来试试将&amp;rdquo;&lt;!-- raw HTML omitted --&gt;&amp;ldquo;的路径更改为&amp;quot;HarddiskVolume2&amp;rdquo;。关于harddiskVolume的信息, 可以从硬盘信息拿到。&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;bcdedit /set {bootmgr} device partition=HarddiskVolume2&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;此时,我们看到修改已经完成。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/p/windows%E5%90%AF%E5%8A%A8%E4%B8%AD%E7%9A%84bcd%E6%96%87%E4%BB%B6%E8%A7%A3%E6%9E%90/images/6.jpg&#34;
+	width=&#34;1080&#34;
+	height=&#34;810&#34;
+	srcset=&#34;/p/windows%E5%90%AF%E5%8A%A8%E4%B8%AD%E7%9A%84bcd%E6%96%87%E4%BB%B6%E8%A7%A3%E6%9E%90/images/6_huc3e7bdc4ad54a6ff0f146e93a6818f85_128375_480x0_resize_q75_box.jpg 480w, /p/windows%E5%90%AF%E5%8A%A8%E4%B8%AD%E7%9A%84bcd%E6%96%87%E4%BB%B6%E8%A7%A3%E6%9E%90/images/6_huc3e7bdc4ad54a6ff0f146e93a6818f85_128375_1024x0_resize_q75_box.jpg 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;图6&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;133&#34;
+		data-flex-basis=&#34;320px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;此时,作为双系统的电脑已经能找到winload.efi文件加载。&lt;/p&gt;
+&lt;h2 id=&#34;深入&#34;&gt;深入&lt;/h2&gt;
+&lt;p&gt;让我们再关注到bcdedit的其他命令:&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/p/windows%E5%90%AF%E5%8A%A8%E4%B8%AD%E7%9A%84bcd%E6%96%87%E4%BB%B6%E8%A7%A3%E6%9E%90/images/7.png&#34;
+	width=&#34;859&#34;
+	height=&#34;457&#34;
+	srcset=&#34;/p/windows%E5%90%AF%E5%8A%A8%E4%B8%AD%E7%9A%84bcd%E6%96%87%E4%BB%B6%E8%A7%A3%E6%9E%90/images/7_hufa7d23d96580be4525468a2727b78448_41573_480x0_resize_box_3.png 480w, /p/windows%E5%90%AF%E5%8A%A8%E4%B8%AD%E7%9A%84bcd%E6%96%87%E4%BB%B6%E8%A7%A3%E6%9E%90/images/7_hufa7d23d96580be4525468a2727b78448_41573_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;图7&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;187&#34;
+		data-flex-basis=&#34;451px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;这里也是常用命令,包括创建一个新的boot设置数据存储等等。一般用作对efi信息的备份。&lt;/p&gt;</description>
+        </item>
+        <item>
         <title>Archives</title>
         <link>/archives/</link>
         <pubDate>Tue, 28 May 2019 00:00:00 +0000</pubDate>
         
         <guid>/archives/</guid>
         <description></description>
+        </item>
+        <item>
+        <title>Golang问题解析（一）</title>
+        <link>/p/golang%E9%97%AE%E9%A2%98%E8%A7%A3%E6%9E%90%E4%B8%80/</link>
+        <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+        
+        <guid>/p/golang%E9%97%AE%E9%A2%98%E8%A7%A3%E6%9E%90%E4%B8%80/</guid>
+        <description>&lt;h2 id=&#34;前言&#34;&gt;前言&lt;/h2&gt;
+&lt;p&gt;主要是对之前的困惑的地方尝试解答，但并不完全准确，还是需要继续深入理解&lt;/p&gt;
+&lt;h3 id=&#34;1map-是否并发安全&#34;&gt;1.map 是否并发安全？&lt;/h3&gt;
+&lt;p&gt;map对象必须在使用之前初始化。如果不初始化就直接赋值的话，会出现panic异常。&lt;/p&gt;
+&lt;p&gt;map的类型是map[key]，key类型必须是可比较的,不能是slice、map和函数值。&lt;/p&gt;
+&lt;p&gt;Go语言内建的map对象不是线程安全的，并发读写的时候运行时会有检查，遇到并发问题就会导致panic。&lt;/p&gt;
+&lt;h3 id=&#34;2map-循环是有序的还是无序的&#34;&gt;2.map 循环是有序的还是无序的？&lt;/h3&gt;
+&lt;p&gt;遍历一个map对象的时候，迭代的元素的顺序是不确定的，无法保证两次遍历的顺序是一样的，也不能保证现在的顺序和插入的顺序一致。&lt;/p&gt;
+&lt;p&gt;如果想要按照key的顺序获取map的值，需要先取出所有的key进行排序，然后按照这个排序的key依次获取对应的值。&lt;/p&gt;
+&lt;p&gt;而如果想要保证元素有序，比如按照元素插入的顺序进行遍历，可以使用辅助的数据结构，比如&lt;code&gt;orderedmap&lt;/code&gt;，来记录插入顺序。&lt;/p&gt;
+&lt;h3 id=&#34;3怎么处理对map-进行并发访问&#34;&gt;3.怎么处理对map 进行并发访问？&lt;/h3&gt;
+&lt;p&gt;加读写锁：扩展map，支持并发读写&lt;/p&gt;
+&lt;p&gt;分片加锁：更高效的并发map。尽量减少锁的粒度和锁的持有时间。&lt;/p&gt;
+&lt;p&gt;减少锁的粒度常用的方法就是分片（Shard）。由不同的线程去获取。Go知名的分片并发map的实现是&lt;code&gt;orcaman/concurrent-map&lt;/code&gt;。它默认采用32个分片。&lt;/p&gt;
+&lt;h3 id=&#34;4map-中删除一个-key它的内存会释放么&#34;&gt;4.map 中删除一个 key，它的内存会释放么？&lt;/h3&gt;
+&lt;p&gt;如果删除的元素是值类型，如int，float，bool，string，数组，struct，map的内存不会自动释放。&lt;/p&gt;
+&lt;p&gt;如果删除的元素是引用类型，如指针，slice，map，chan等，map的内存会自动释放，但释放的内存是子元素应用类型的内存占用。&lt;/p&gt;
+&lt;p&gt;&lt;!-- raw HTML omitted --&gt;将map设置为nil后，内存被回收&lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;h3 id=&#34;5nil-map-和空-map-有何不同&#34;&gt;5.nil map 和空 map 有何不同？&lt;/h3&gt;
+&lt;p&gt;nil map和空map基本一致，在操作上又不同。&lt;/p&gt;
+&lt;p&gt;都可以读取值，但是都是空值。&lt;/p&gt;
+&lt;p&gt;空map可以赋值，nil map不可以。&lt;/p&gt;
+&lt;p&gt;虽然都是空的，但是也可以使用delete进行删除操作。&lt;/p&gt;
+&lt;h3 id=&#34;6nil切片nil-slice和空切片empty-slice有什么不同&#34;&gt;6.nil切片（nil slice）和空切片（empty slice）有什么不同？&lt;/h3&gt;
+&lt;p&gt;由于slice内置结构存在指针，因此不同的是指针是否被开辟空间。&lt;/p&gt;
+&lt;p&gt;nil slice 完全就是空未被初始化，内置指针数组未开辟空间，则 &lt;code&gt;nil slice == nil&lt;/code&gt; 成立&lt;/p&gt;
+&lt;p&gt;empty slice 可以理解为空数据，已经开辟内存空间，内置指针数组已经开辟空间有指向内存地址，&lt;code&gt;empty slice == nil&lt;/code&gt; 不成立，判空需要用&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;len(empty slice) == 0&lt;/code&gt;&lt;/p&gt;
+&lt;h3 id=&#34;7函数调用需要传入结构体时传指针还是值怎么区分什么时候用哪种&#34;&gt;7.函数调用需要传入结构体时，传指针还是值？怎么区分什么时候用哪种？&lt;/h3&gt;
+&lt;p&gt;go里面没有引用类型，所有的函数传递都是值传递&lt;/p&gt;
+&lt;p&gt;像slice，map，channel由于其内置结构里存在指针，因此传递以上类型会被修改原先数据。&lt;/p&gt;
+&lt;p&gt;传值情况：不想改变原来数据，只需要数据进行使用。&lt;/p&gt;
+&lt;p&gt;传指针情况：想要改变原来数据或者想要高效率，则传递指针更高效。&lt;/p&gt;
+&lt;h3 id=&#34;8go-如何实现原子操作&#34;&gt;8.Go 如何实现原子操作？&lt;/h3&gt;
+&lt;p&gt;CompareAndSwap(CAS)，go中的Cas操作，是借用了CPU提供的原子性指令来实现，在sync/atomic包中。&lt;/p&gt;
+&lt;p&gt;四大操作，Swap(交换)，Add(增加或减少)，Load(原子读取)，Store(原子写入)。&lt;/p&gt;
+&lt;h3 id=&#34;9原子操作与互斥锁的区别&#34;&gt;9.原子操作与互斥锁的区别？&lt;/h3&gt;
+&lt;p&gt;互斥锁是一种数据结构，用来让一个线程执行程序的关键部分，完成互斥的多个操作。&lt;/p&gt;
+&lt;p&gt;原子操作是无锁的，常常直接通过CPU指令直接实现。&lt;/p&gt;
+&lt;p&gt;原子操作中的CAS趋于乐观锁，CAS操作并不那么容易成功，需要判断，然后尝试处理。&lt;/p&gt;
+&lt;p&gt;可以把互斥锁理解为悲观锁，共享资源每次只给一个线程使用，其它线程阻塞，用完后再把资源转让给其它线程。&lt;/p&gt;
+&lt;h3 id=&#34;10mutex是悲观锁还是乐观锁悲观锁乐观锁是什么&#34;&gt;10.Mutex是悲观锁还是乐观锁？悲观锁、乐观锁是什么？&lt;/h3&gt;
+&lt;p&gt;mutex互斥锁类似悲观锁，总是&lt;!-- raw HTML omitted --&gt;假设会有并发的操作要修改被操作的值&lt;!-- raw HTML omitted --&gt;，所以使用锁将相关操作放入到临界区加以保存。&lt;/p&gt;
+&lt;p&gt;CAS操作做法趋于乐观锁，总是假设被操作的值未曾改变（即与旧值相等），并一旦确认这个假设的真实性就立即进行值替换。&lt;/p&gt;
+&lt;p&gt;在被操作值被频繁变更的情况下，CAS操作并不那么容易成功所以需要不断进行尝试，直到成功为止。&lt;/p&gt;
+&lt;h3 id=&#34;11mutex有几种模式&#34;&gt;11.Mutex有几种模式？&lt;/h3&gt;
+&lt;p&gt;正常模式，锁的等待者会按照先进先出的顺序获取锁。&lt;/p&gt;
+&lt;p&gt;一旦Goroutine超过1ms没有获取到锁，它会切换到饥饿模式。&lt;/p&gt;
+&lt;p&gt;饥饿模式目的是保证互斥锁的公平性。&lt;/p&gt;
+&lt;p&gt;如果一个Goroutine获得了互斥锁并且它在队列末尾或者它等待的时间小于1ms,当前互斥锁就会切换到正常模式。&lt;/p&gt;
+&lt;p&gt;正常模式提供了更好的性能，而饥饿模式能避免Goroutine由于陷入等待无法获取锁而造成的高尾延迟。&lt;/p&gt;
+&lt;h3 id=&#34;12怎么控制并发数&#34;&gt;12.怎么控制并发数？&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;WaitGroup位于sync包下，某任务需要多 goroutine 协同工作，每个 goroutine 只能做该任务的一部分，只有全部的 goroutine 都完成，任务才算是完成。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Channel+Select。定义一个全局变量，在其它地方通过修改这个变量进行通知，后台 goroutine 会不停的检查这个变量，如果发现变量发生了变化，即自行关闭。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Context：多层级groutine之间的信号传播（包括元数据传播，取消信号传播、超时控制等。依次退出所占的资源。&lt;/p&gt;
+&lt;h3 id=&#34;13go语言中的gc算法的实现&#34;&gt;13.Go语言中的GC算法的实现？&lt;/h3&gt;
+&lt;p&gt;标记清除(mark-sweep)算法是最常见的垃圾收集算法。分为mark和sweep&lt;/p&gt;
+&lt;!-- raw HTML omitted --&gt;
+&lt;!-- raw HTML omitted --&gt;
+&lt;!-- raw HTML omitted --&gt;
+&lt;!-- raw HTML omitted --&gt;
+&lt;!-- raw HTML omitted --&gt;
+&lt;p&gt;三色标记法的标记阶段结束后，应用程序的堆中不存在任何灰色对象。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;如果不应该被回收的对象却被回收了，这在内存管理中叫做“悬挂指针”，&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;即指针没有指向特定类型的合法对象。&lt;/p&gt;
+&lt;h3 id=&#34;14gc-的触发时机&#34;&gt;14.GC 的触发时机？&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;系统触发：运行时自行根据内置的条件，维护整个应用程序的可用性。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;手动触发：开发者在业务代码中自行调用 runtime.GC 方法来触发 GC 行为&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;系统触发主要存在三种场景：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;gcTriggerHeap：当所分配的堆大小达到阈值（由控制器计算的触发堆的大小）时，将会触发。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;gcTriggerTime：当距离上一个 GC 周期的时间超过一定时间时，将会触发。-时间周期以 runtime.forcegcperiod 变量为准，默认 2 分钟。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;gcTriggerCycle：如果没有开启 GC，则启动 GC。&lt;/p&gt;
+&lt;h3 id=&#34;15如何优雅的实现一个-goroutine-池划重点&#34;&gt;15.如何优雅的实现一个 goroutine 池？(划重点！！！）&lt;/h3&gt;
+&lt;p&gt;使用goroutine和channel实现一个计算int64随机数各位数和的程序。&lt;/p&gt;
+&lt;p&gt;开启一个goroutine循环生成int64类型的随机数，发送到jobChan&lt;/p&gt;
+&lt;p&gt;开启24个goroutine从jobChan中取出随机数计算各位数的和，将结果发送到resultChan。&lt;/p&gt;
+&lt;p&gt;主goroutine从resultChan取出结果并打印到终端输出&lt;/p&gt;
+&lt;p&gt;限制生成个数，有缓冲区：&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/p/golang%E9%97%AE%E9%A2%98%E8%A7%A3%E6%9E%90%E4%B8%80/images/1.png&#34;
+	width=&#34;865&#34;
+	height=&#34;1176&#34;
+	srcset=&#34;/p/golang%E9%97%AE%E9%A2%98%E8%A7%A3%E6%9E%90%E4%B8%80/images/1_hu46346664f0da95eb3b0eab2a15b3b2cc_271655_480x0_resize_box_3.png 480w, /p/golang%E9%97%AE%E9%A2%98%E8%A7%A3%E6%9E%90%E4%B8%80/images/1_hu46346664f0da95eb3b0eab2a15b3b2cc_271655_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;图1&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;73&#34;
+		data-flex-basis=&#34;176px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;h3 id=&#34;16goroutine为什么会导致内存泄漏&#34;&gt;16.Goroutine为什么会导致内存泄漏？&lt;/h3&gt;
+&lt;p&gt;&lt;!-- raw HTML omitted --&gt;内存泄漏（Memory Leak）是指程序中己动态分配的堆内存由于某种原因程序未释放或无法释放，造成系统内存的浪费，导致程序运行速度减慢甚至系统崩溃等严重后果。&lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;我们创建的Goroutine没有在我们预期的时刻关闭，导致Goroutine的数量在服务端一直累积增加，最终影响到服务的性能。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Goroutine本身的堆栈大小是2KB，我们开启一个新的Goroutine，至少会占用2KB的内存大小。当长时间的累积，数量较大时，比如开启了100万个Goroutine，那么至少就会占用2GB的内存。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Goroutine中的变量若指向了堆内存区，那么，当该Goroutine未被销毁，系统会认为该部分内存还不能被垃圾回收，那么就可能会占用大量的堆区内存空间。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;17知道golang的内存逃逸吗什么情况下会发生内存逃逸&#34;&gt;17.知道Golang的内存逃逸吗？什么情况下会发生内存逃逸？&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;Golang程序变量会携带有一组校验数据，用来证明它的整个生命周期是否在运行时完全可知。如果变量通过了这些校验，它就可以在栈上分配。否则就说它逃逸了，必须在堆上分配。完全可知才能在栈上分配。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;逃逸分析是编译器在静态编译的时候，分析对象的生命周期及引用情况来决定对象内存分配到堆上还是栈上，由于栈内存分配较堆快且栈内存回收较快（无需GC），编译器以此来优化程序性能。在函数中申请一个新的对象：&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;如果分配在栈中，则函数执行结束后可自动将内存回收。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;如果分配在堆中，则函数执行结束后可交给GC进行处理。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;逃逸策略：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;   如果函数外部没有引用，则优先放到栈中；
+
+   如果函数外部存在引用，则必定放到堆中。 
+&lt;/code&gt;&lt;/pre&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;指针逃逸&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;栈空间不足逃逸&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;动态类型逃逸&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;闭包引用对象逃逸&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;总结：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;栈上分配内存比在堆上分配内存有更高的效率
+
+栈上分配的内存不需要GC处理
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;堆上分配的内存使用完毕会交给GC处理&lt;/p&gt;
+&lt;p&gt;逃逸分析的目的是决定分配地址是栈还是堆&lt;/p&gt;
+&lt;p&gt;逃逸分析在编译阶段进行&lt;/p&gt;
+&lt;h3 id=&#34;18两数传递指针真的比传值的效率高吗&#34;&gt;18.两数传递指针真的比传值的效率高吗？&lt;/h3&gt;
+&lt;p&gt;我们知道传递指针可以减少底层值的复制，可以提高效率，
+但是如果复制的数据量小，由于指针传递会产生逃逸，则可能会使用堆，
+也可能增加 GC 的负担，所以传递指针不一定是高效的。&lt;/p&gt;
+&lt;h3 id=&#34;19请简述-go-是如何分配内存的&#34;&gt;19.请简述 Go 是如何分配内存的？&lt;/h3&gt;
+&lt;p&gt;内存空间包含两个重要的区域：栈（stack）和堆（heap）。&lt;/p&gt;
+&lt;p&gt;对于小对象（&amp;lt;=32kb），go runtime首先从,Cache开始，然后是Central，最后Heap。&lt;/p&gt;
+&lt;p&gt;对于大对象（&amp;gt;32KB），直接从堆中获取。&lt;/p&gt;
+&lt;p&gt;heap:全局根对象。负责向操作系统申请内存,管理由垃圾回收器收回的空闲 span 内存块。&lt;/p&gt;
+&lt;p&gt;central:从Heap 获取空闲 span,并按需要将其切分成 Object 块。Heap 管理着多个central对象,每个central负责处理一种等级的内存分配需求。&lt;/p&gt;
+&lt;p&gt;cache:运行行期,每个 cache 都与某个具体线程相绑定,实现无锁内存分配操作。其内部有个以等级为序号的数组,持有多个切分好的 span 对象。缺少空间时,向等级对应的 central 获取新的 span 即可。&lt;/p&gt;
+&lt;h3 id=&#34;20struct结构体能不能比较&#34;&gt;20.struct结构体能不能比较？&lt;/h3&gt;
+&lt;p&gt;结构体不可以比较，但是同一类型的结构体的值可以比较是否相等的（不可以比较大小）：&lt;/p&gt;
+&lt;p&gt;结构体所有字段的值都相等，两个结构体才相等。&lt;/p&gt;
+&lt;p&gt;比较的两个结构体必须是相同类型才可以，也就是说他们字段的顺序、名称、类型、标签都相同才可以。而切片和字典不可以比较。&lt;/p&gt;
+&lt;p&gt;参考链接：&lt;/p&gt;
+&lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://draveness.me/golang&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;https://draveness.me/golang&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://blog.learngoprogramming.com&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;https://blog.learngoprogramming.com&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://golang.org/doc/faq&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;https://golang.org/doc/faq&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://github.com/golang/go/wiki/Articles&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;https://github.com/golang/go/wiki/Articles&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://golang.org/doc/effective_go.html&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;https://golang.org/doc/effective_go.html&lt;/a&gt;&lt;/p&gt;
+</description>
         </item>
         <item>
         <title>Search</title>

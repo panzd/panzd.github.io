@@ -1,17 +1,17 @@
 <!DOCTYPE html>
 <html lang="en-us" dir="ltr">
     <head><meta charset='utf-8'>
-<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='linux screen基本使用'><title>Linux Screen</title>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='记录自己的Golang学习过程'><title>Golang问题解析（一）</title>
 
-<link rel='canonical' href='/p/linux-screen/'>
+<link rel='canonical' href='/p/golang%E9%97%AE%E9%A2%98%E8%A7%A3%E6%9E%90%E4%B8%80/'>
 
-<link rel="stylesheet" href="/scss/style.min.450926226e724574a6b936335ea06111f8aeb253d932c86cb2cc807341cd2889.css"><meta property='og:title' content='Linux Screen'>
-<meta property='og:description' content='linux screen基本使用'>
-<meta property='og:url' content='/p/linux-screen/'>
+<link rel="stylesheet" href="/scss/style.min.450926226e724574a6b936335ea06111f8aeb253d932c86cb2cc807341cd2889.css"><meta property='og:title' content='Golang问题解析（一）'>
+<meta property='og:description' content='记录自己的Golang学习过程'>
+<meta property='og:url' content='/p/golang%E9%97%AE%E9%A2%98%E8%A7%A3%E6%9E%90%E4%B8%80/'>
 <meta property='og:site_name' content='panzd'>
-<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='Linux' /><meta property='article:published_time' content='2022-01-15T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2022-01-15T00:00:00&#43;00:00'/>
-<meta name="twitter:title" content="Linux Screen">
-<meta name="twitter:description" content="linux screen基本使用">
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='Golang' />
+<meta name="twitter:title" content="Golang问题解析（一）">
+<meta name="twitter:description" content="记录自己的Golang学习过程">
     </head>
     <body class="
     article-page
@@ -295,31 +295,18 @@
 
     <div class="article-title-wrapper">
         <h2 class="article-title">
-            <a href="/p/linux-screen/">Linux Screen</a>
+            <a href="/p/golang%E9%97%AE%E9%A2%98%E8%A7%A3%E6%9E%90%E4%B8%80/">Golang问题解析（一）</a>
         </h2>
     
         
         <h3 class="article-subtitle">
-            linux screen基本使用
+            记录自己的Golang学习过程
         </h3>
         
     </div>
 
     
     <footer class="article-time">
-        
-            <div>
-                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-  <path stroke="none" d="M0 0h24v24H0z"/>
-  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
-  <circle cx="18" cy="18" r="4" />
-  <path d="M15 3v4" />
-  <path d="M7 3v4" />
-  <path d="M3 11h16" />
-  <path d="M18 16.496v1.504l1 1" />
-</svg>
-                <time class="article-time--published">Jan 15, 2022</time>
-            </div>
         
 
         
@@ -347,86 +334,200 @@
     <section class="article-content">
     
     
-    <hr>
-<h2 id="前言">前言</h2>
-<p>之前我想在我的服务器上执行一个长时间运行的任务，我使用x &amp;挂在后台，并使用nohup x &amp;请求shell结束后不清理命令，并且为防止父进程结束，又使用了setsid x &amp;置父程序id为1。SSH会话被终止，但我再次连上去时使用jobs并没有出现我之前的程序。</p>
-<p>所幸，我发现了linux上的screen程序，非常好用。</p>
-<h2 id="介绍">介绍</h2>
-<p>&ldquo;Screen or GNU Screen is a terminal multiplexer.&ldquo;也就是说Screen是一款终端复用器。我们可以开始一个screen会话，然后在里面可以打开任意数量的虚拟终端。在Screen中运行的进程将在其窗口不可见时继续运行，即使断开SSH连接。</p>
-<p><img src="/p/linux-screen/images/1.webp"
-	width="407"
-	height="37"
-	srcset="/p/linux-screen/images/1_hue47b270dc1c34840fbdd547d761a942c_4714_480x0_resize_q75_h2_box_2.webp 480w, /p/linux-screen/images/1_hue47b270dc1c34840fbdd547d761a942c_4714_1024x0_resize_q75_h2_box_2.webp 1024w"
+    <h2 id="前言">前言</h2>
+<p>主要是对之前的困惑的地方尝试解答，但并不完全准确，还是需要继续深入理解</p>
+<h3 id="1map-是否并发安全">1.map 是否并发安全？</h3>
+<p>map对象必须在使用之前初始化。如果不初始化就直接赋值的话，会出现panic异常。</p>
+<p>map的类型是map[key]，key类型必须是可比较的,不能是slice、map和函数值。</p>
+<p>Go语言内建的map对象不是线程安全的，并发读写的时候运行时会有检查，遇到并发问题就会导致panic。</p>
+<h3 id="2map-循环是有序的还是无序的">2.map 循环是有序的还是无序的？</h3>
+<p>遍历一个map对象的时候，迭代的元素的顺序是不确定的，无法保证两次遍历的顺序是一样的，也不能保证现在的顺序和插入的顺序一致。</p>
+<p>如果想要按照key的顺序获取map的值，需要先取出所有的key进行排序，然后按照这个排序的key依次获取对应的值。</p>
+<p>而如果想要保证元素有序，比如按照元素插入的顺序进行遍历，可以使用辅助的数据结构，比如<code>orderedmap</code>，来记录插入顺序。</p>
+<h3 id="3怎么处理对map-进行并发访问">3.怎么处理对map 进行并发访问？</h3>
+<p>加读写锁：扩展map，支持并发读写</p>
+<p>分片加锁：更高效的并发map。尽量减少锁的粒度和锁的持有时间。</p>
+<p>减少锁的粒度常用的方法就是分片（Shard）。由不同的线程去获取。Go知名的分片并发map的实现是<code>orcaman/concurrent-map</code>。它默认采用32个分片。</p>
+<h3 id="4map-中删除一个-key它的内存会释放么">4.map 中删除一个 key，它的内存会释放么？</h3>
+<p>如果删除的元素是值类型，如int，float，bool，string，数组，struct，map的内存不会自动释放。</p>
+<p>如果删除的元素是引用类型，如指针，slice，map，chan等，map的内存会自动释放，但释放的内存是子元素应用类型的内存占用。</p>
+<p><!-- raw HTML omitted -->将map设置为nil后，内存被回收<!-- raw HTML omitted --></p>
+<h3 id="5nil-map-和空-map-有何不同">5.nil map 和空 map 有何不同？</h3>
+<p>nil map和空map基本一致，在操作上又不同。</p>
+<p>都可以读取值，但是都是空值。</p>
+<p>空map可以赋值，nil map不可以。</p>
+<p>虽然都是空的，但是也可以使用delete进行删除操作。</p>
+<h3 id="6nil切片nil-slice和空切片empty-slice有什么不同">6.nil切片（nil slice）和空切片（empty slice）有什么不同？</h3>
+<p>由于slice内置结构存在指针，因此不同的是指针是否被开辟空间。</p>
+<p>nil slice 完全就是空未被初始化，内置指针数组未开辟空间，则 <code>nil slice == nil</code> 成立</p>
+<p>empty slice 可以理解为空数据，已经开辟内存空间，内置指针数组已经开辟空间有指向内存地址，<code>empty slice == nil</code> 不成立，判空需要用</p>
+<p><code>len(empty slice) == 0</code></p>
+<h3 id="7函数调用需要传入结构体时传指针还是值怎么区分什么时候用哪种">7.函数调用需要传入结构体时，传指针还是值？怎么区分什么时候用哪种？</h3>
+<p>go里面没有引用类型，所有的函数传递都是值传递</p>
+<p>像slice，map，channel由于其内置结构里存在指针，因此传递以上类型会被修改原先数据。</p>
+<p>传值情况：不想改变原来数据，只需要数据进行使用。</p>
+<p>传指针情况：想要改变原来数据或者想要高效率，则传递指针更高效。</p>
+<h3 id="8go-如何实现原子操作">8.Go 如何实现原子操作？</h3>
+<p>CompareAndSwap(CAS)，go中的Cas操作，是借用了CPU提供的原子性指令来实现，在sync/atomic包中。</p>
+<p>四大操作，Swap(交换)，Add(增加或减少)，Load(原子读取)，Store(原子写入)。</p>
+<h3 id="9原子操作与互斥锁的区别">9.原子操作与互斥锁的区别？</h3>
+<p>互斥锁是一种数据结构，用来让一个线程执行程序的关键部分，完成互斥的多个操作。</p>
+<p>原子操作是无锁的，常常直接通过CPU指令直接实现。</p>
+<p>原子操作中的CAS趋于乐观锁，CAS操作并不那么容易成功，需要判断，然后尝试处理。</p>
+<p>可以把互斥锁理解为悲观锁，共享资源每次只给一个线程使用，其它线程阻塞，用完后再把资源转让给其它线程。</p>
+<h3 id="10mutex是悲观锁还是乐观锁悲观锁乐观锁是什么">10.Mutex是悲观锁还是乐观锁？悲观锁、乐观锁是什么？</h3>
+<p>mutex互斥锁类似悲观锁，总是<!-- raw HTML omitted -->假设会有并发的操作要修改被操作的值<!-- raw HTML omitted -->，所以使用锁将相关操作放入到临界区加以保存。</p>
+<p>CAS操作做法趋于乐观锁，总是假设被操作的值未曾改变（即与旧值相等），并一旦确认这个假设的真实性就立即进行值替换。</p>
+<p>在被操作值被频繁变更的情况下，CAS操作并不那么容易成功所以需要不断进行尝试，直到成功为止。</p>
+<h3 id="11mutex有几种模式">11.Mutex有几种模式？</h3>
+<p>正常模式，锁的等待者会按照先进先出的顺序获取锁。</p>
+<p>一旦Goroutine超过1ms没有获取到锁，它会切换到饥饿模式。</p>
+<p>饥饿模式目的是保证互斥锁的公平性。</p>
+<p>如果一个Goroutine获得了互斥锁并且它在队列末尾或者它等待的时间小于1ms,当前互斥锁就会切换到正常模式。</p>
+<p>正常模式提供了更好的性能，而饥饿模式能避免Goroutine由于陷入等待无法获取锁而造成的高尾延迟。</p>
+<h3 id="12怎么控制并发数">12.怎么控制并发数？</h3>
+<ul>
+<li>
+<p>WaitGroup位于sync包下，某任务需要多 goroutine 协同工作，每个 goroutine 只能做该任务的一部分，只有全部的 goroutine 都完成，任务才算是完成。</p>
+</li>
+<li>
+<p>Channel+Select。定义一个全局变量，在其它地方通过修改这个变量进行通知，后台 goroutine 会不停的检查这个变量，如果发现变量发生了变化，即自行关闭。</p>
+</li>
+</ul>
+<p>Context：多层级groutine之间的信号传播（包括元数据传播，取消信号传播、超时控制等。依次退出所占的资源。</p>
+<h3 id="13go语言中的gc算法的实现">13.Go语言中的GC算法的实现？</h3>
+<p>标记清除(mark-sweep)算法是最常见的垃圾收集算法。分为mark和sweep</p>
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<p>三色标记法的标记阶段结束后，应用程序的堆中不存在任何灰色对象。</p>
+<ul>
+<li>如果不应该被回收的对象却被回收了，这在内存管理中叫做“悬挂指针”，</li>
+</ul>
+<p>即指针没有指向特定类型的合法对象。</p>
+<h3 id="14gc-的触发时机">14.GC 的触发时机？</h3>
+<ul>
+<li>
+<p>系统触发：运行时自行根据内置的条件，维护整个应用程序的可用性。</p>
+</li>
+<li>
+<p>手动触发：开发者在业务代码中自行调用 runtime.GC 方法来触发 GC 行为</p>
+</li>
+</ul>
+<p>系统触发主要存在三种场景：</p>
+<ul>
+<li>
+<p>gcTriggerHeap：当所分配的堆大小达到阈值（由控制器计算的触发堆的大小）时，将会触发。</p>
+</li>
+<li>
+<p>gcTriggerTime：当距离上一个 GC 周期的时间超过一定时间时，将会触发。-时间周期以 runtime.forcegcperiod 变量为准，默认 2 分钟。</p>
+</li>
+</ul>
+<p>gcTriggerCycle：如果没有开启 GC，则启动 GC。</p>
+<h3 id="15如何优雅的实现一个-goroutine-池划重点">15.如何优雅的实现一个 goroutine 池？(划重点！！！）</h3>
+<p>使用goroutine和channel实现一个计算int64随机数各位数和的程序。</p>
+<p>开启一个goroutine循环生成int64类型的随机数，发送到jobChan</p>
+<p>开启24个goroutine从jobChan中取出随机数计算各位数的和，将结果发送到resultChan。</p>
+<p>主goroutine从resultChan取出结果并打印到终端输出</p>
+<p>限制生成个数，有缓冲区：</p>
+<p><img src="/p/golang%E9%97%AE%E9%A2%98%E8%A7%A3%E6%9E%90%E4%B8%80/images/1.png"
+	width="865"
+	height="1176"
+	srcset="/p/golang%E9%97%AE%E9%A2%98%E8%A7%A3%E6%9E%90%E4%B8%80/images/1_hu46346664f0da95eb3b0eab2a15b3b2cc_271655_480x0_resize_box_3.png 480w, /p/golang%E9%97%AE%E9%A2%98%E8%A7%A3%E6%9E%90%E4%B8%80/images/1_hu46346664f0da95eb3b0eab2a15b3b2cc_271655_1024x0_resize_box_3.png 1024w"
 	loading="lazy"
 	
 		alt="图1"
 	
 	
 		class="gallery-image" 
-		data-flex-grow="1100"
-		data-flex-basis="2640px"
+		data-flex-grow="73"
+		data-flex-basis="176px"
 	
 ></p>
-<p>至于安装就很简单，在Centos上只需要运行：</p>
-<p><code>sudo yum install screen</code></p>
-<h2 id="使用">使用</h2>
-<p>对于screen你需要命名，以区分你的任务。</p>
-<p><code>screen -S session_name</code></p>
-<p>而使用：</p>
-<p><code>screen -ls</code></p>
-<p>则可以查看screen session的id，以便后面的使用。</p>
-<p>使用：</p>
-<p><code>screen -r id</code></p>
-<p>则重新进入之前创建的session里面。</p>
-<h2 id="具体命令">具体命令</h2>
-<p>我们进入screen session后，可以使用 Ctr+a 然后 ？查看screen的命令：</p>
-<p><img src="/p/linux-screen/images/2.webp"
-	width="1262"
-	height="771"
-	srcset="/p/linux-screen/images/2_hub7fb6d23aec651ec17c7aa3f2897c766_32866_480x0_resize_q75_h2_box_2.webp 480w, /p/linux-screen/images/2_hub7fb6d23aec651ec17c7aa3f2897c766_32866_1024x0_resize_q75_h2_box_2.webp 1024w"
-	loading="lazy"
-	
-		alt="图2"
-	
-	
-		class="gallery-image" 
-		data-flex-grow="163"
-		data-flex-basis="392px"
-	
-></p>
-<p>非常的清晰</p>
-<p>一般我们会使用：</p>
-<p>detach：ctrl+a d</p>
-<p>kill： ctrl+a k</p>
-<p>history： ctrl+a { }</p>
-<p>clear：ctrl+a C</p>
-<p>windowslist：ctrl+a &quot;  列出所有窗口。</p>
-<p>split: ctrl+a S 将当前区域水平分割成两个区域。</p>
-<p>other: ctrl+a ctrl+a 在当前窗口和以前窗口之间切换。</p>
-<p>而0-9在screen里面则可以跳转到session窗口。</p>
-<h2 id="screen-设置">screen 设置</h2>
-<p>当screen开始时，它会从/etc/screenrc和~/.screenrc读取它的设置参数。我们可以根据这两个文件更改默认screen设置。</p>
-<p><img src="/p/linux-screen/images/3.webp"
-	width="628"
-	height="579"
-	srcset="/p/linux-screen/images/3_hu57b15d45b7583a669d680fad7a259983_42154_480x0_resize_q75_h2_box_2.webp 480w, /p/linux-screen/images/3_hu57b15d45b7583a669d680fad7a259983_42154_1024x0_resize_q75_h2_box_2.webp 1024w"
-	loading="lazy"
-	
-		alt="图3"
-	
-	
-		class="gallery-image" 
-		data-flex-grow="108"
-		data-flex-basis="260px"
-	
-></p>
-<p>如果没有<code>~/.screenrc</code>的话，可以创建，用来自定义配置。</p>
-<p>以上就是screen的介绍和使用内容。</p>
-<h2 id="结束">结束</h2>
-<p>当我们想要kill一个screen的时候，可以直接用这个命令：</p>
-<p><code>screen -S session_name -X quit</code></p>
-<p>此外，深入的学习请点击screen指南</p>
-<p>Screen User’s Manual(url=https://www.gnu.org/software/screen/manual/screen.html)</p>
+<h3 id="16goroutine为什么会导致内存泄漏">16.Goroutine为什么会导致内存泄漏？</h3>
+<p><!-- raw HTML omitted -->内存泄漏（Memory Leak）是指程序中己动态分配的堆内存由于某种原因程序未释放或无法释放，造成系统内存的浪费，导致程序运行速度减慢甚至系统崩溃等严重后果。<!-- raw HTML omitted --></p>
+<ul>
+<li>
+<p>我们创建的Goroutine没有在我们预期的时刻关闭，导致Goroutine的数量在服务端一直累积增加，最终影响到服务的性能。</p>
+</li>
+<li>
+<p>Goroutine本身的堆栈大小是2KB，我们开启一个新的Goroutine，至少会占用2KB的内存大小。当长时间的累积，数量较大时，比如开启了100万个Goroutine，那么至少就会占用2GB的内存。</p>
+</li>
+<li>
+<p>Goroutine中的变量若指向了堆内存区，那么，当该Goroutine未被销毁，系统会认为该部分内存还不能被垃圾回收，那么就可能会占用大量的堆区内存空间。</p>
+</li>
+</ul>
+<h3 id="17知道golang的内存逃逸吗什么情况下会发生内存逃逸">17.知道Golang的内存逃逸吗？什么情况下会发生内存逃逸？</h3>
+<ul>
+<li>
+<p>Golang程序变量会携带有一组校验数据，用来证明它的整个生命周期是否在运行时完全可知。如果变量通过了这些校验，它就可以在栈上分配。否则就说它逃逸了，必须在堆上分配。完全可知才能在栈上分配。</p>
+</li>
+<li>
+<p>逃逸分析是编译器在静态编译的时候，分析对象的生命周期及引用情况来决定对象内存分配到堆上还是栈上，由于栈内存分配较堆快且栈内存回收较快（无需GC），编译器以此来优化程序性能。在函数中申请一个新的对象：</p>
+</li>
+<li>
+<p>如果分配在栈中，则函数执行结束后可自动将内存回收。</p>
+</li>
+<li>
+<p>如果分配在堆中，则函数执行结束后可交给GC进行处理。</p>
+</li>
+</ul>
+<p>逃逸策略：</p>
+<pre><code>   如果函数外部没有引用，则优先放到栈中；
+
+   如果函数外部存在引用，则必定放到堆中。 
+</code></pre>
+<ul>
+<li>
+<p>指针逃逸</p>
+</li>
+<li>
+<p>栈空间不足逃逸</p>
+</li>
+<li>
+<p>动态类型逃逸</p>
+</li>
+<li>
+<p>闭包引用对象逃逸</p>
+</li>
+</ul>
+<p>总结：</p>
+<pre><code>栈上分配内存比在堆上分配内存有更高的效率
+
+栈上分配的内存不需要GC处理
+</code></pre>
+<p>堆上分配的内存使用完毕会交给GC处理</p>
+<p>逃逸分析的目的是决定分配地址是栈还是堆</p>
+<p>逃逸分析在编译阶段进行</p>
+<h3 id="18两数传递指针真的比传值的效率高吗">18.两数传递指针真的比传值的效率高吗？</h3>
+<p>我们知道传递指针可以减少底层值的复制，可以提高效率，
+但是如果复制的数据量小，由于指针传递会产生逃逸，则可能会使用堆，
+也可能增加 GC 的负担，所以传递指针不一定是高效的。</p>
+<h3 id="19请简述-go-是如何分配内存的">19.请简述 Go 是如何分配内存的？</h3>
+<p>内存空间包含两个重要的区域：栈（stack）和堆（heap）。</p>
+<p>对于小对象（&lt;=32kb），go runtime首先从,Cache开始，然后是Central，最后Heap。</p>
+<p>对于大对象（&gt;32KB），直接从堆中获取。</p>
+<p>heap:全局根对象。负责向操作系统申请内存,管理由垃圾回收器收回的空闲 span 内存块。</p>
+<p>central:从Heap 获取空闲 span,并按需要将其切分成 Object 块。Heap 管理着多个central对象,每个central负责处理一种等级的内存分配需求。</p>
+<p>cache:运行行期,每个 cache 都与某个具体线程相绑定,实现无锁内存分配操作。其内部有个以等级为序号的数组,持有多个切分好的 span 对象。缺少空间时,向等级对应的 central 获取新的 span 即可。</p>
+<h3 id="20struct结构体能不能比较">20.struct结构体能不能比较？</h3>
+<p>结构体不可以比较，但是同一类型的结构体的值可以比较是否相等的（不可以比较大小）：</p>
+<p>结构体所有字段的值都相等，两个结构体才相等。</p>
+<p>比较的两个结构体必须是相同类型才可以，也就是说他们字段的顺序、名称、类型、标签都相同才可以。而切片和字典不可以比较。</p>
+<p>参考链接：</p>
+<p><a class="link" href="https://draveness.me/golang"  target="_blank" rel="noopener"
+    >https://draveness.me/golang</a></p>
+<p><a class="link" href="https://blog.learngoprogramming.com"  target="_blank" rel="noopener"
+    >https://blog.learngoprogramming.com</a></p>
+<p><a class="link" href="https://golang.org/doc/faq"  target="_blank" rel="noopener"
+    >https://golang.org/doc/faq</a></p>
+<p><a class="link" href="https://github.com/golang/go/wiki/Articles"  target="_blank" rel="noopener"
+    >https://github.com/golang/go/wiki/Articles</a></p>
+<p><a class="link" href="https://golang.org/doc/effective_go.html"  target="_blank" rel="noopener"
+    >https://golang.org/doc/effective_go.html</a></p>
+
 </section>
 
 
@@ -434,7 +535,7 @@
     
     <section class="article-tags">
         
-            <a href="/tags/linux/">Linux</a>
+            <a href="/tags/golang/">Golang</a>
         
     </section>
 
@@ -480,24 +581,24 @@
             
                 
 <article class="">
-    <a href="/p/windows%E5%90%AF%E5%8A%A8%E4%B8%AD%E7%9A%84bcd%E6%96%87%E4%BB%B6%E8%A7%A3%E6%9E%90/">
+    <a href="/p/linux-screen/">
         
         
 
         <div class="article-details">
-            <h2 class="article-title">Windows启动中的BCD文件解析</h2>
+            <h2 class="article-title">Linux Screen</h2>
         </div>
     </a>
 </article>
             
                 
 <article class="">
-    <a href="/p/golang%E9%97%AE%E9%A2%98%E8%A7%A3%E6%9E%90%E4%B8%80/">
+    <a href="/p/windows%E5%90%AF%E5%8A%A8%E4%B8%AD%E7%9A%84bcd%E6%96%87%E4%BB%B6%E8%A7%A3%E6%9E%90/">
         
         
 
         <div class="article-details">
-            <h2 class="article-title">Golang问题解析（一）</h2>
+            <h2 class="article-title">Windows启动中的BCD文件解析</h2>
         </div>
     </a>
 </article>
@@ -670,12 +771,30 @@
         <div class="widget--toc">
             <nav id="TableOfContents">
   <ol>
-    <li><a href="#前言">前言</a></li>
-    <li><a href="#介绍">介绍</a></li>
-    <li><a href="#使用">使用</a></li>
-    <li><a href="#具体命令">具体命令</a></li>
-    <li><a href="#screen-设置">screen 设置</a></li>
-    <li><a href="#结束">结束</a></li>
+    <li><a href="#前言">前言</a>
+      <ol>
+        <li><a href="#1map-是否并发安全">1.map 是否并发安全？</a></li>
+        <li><a href="#2map-循环是有序的还是无序的">2.map 循环是有序的还是无序的？</a></li>
+        <li><a href="#3怎么处理对map-进行并发访问">3.怎么处理对map 进行并发访问？</a></li>
+        <li><a href="#4map-中删除一个-key它的内存会释放么">4.map 中删除一个 key，它的内存会释放么？</a></li>
+        <li><a href="#5nil-map-和空-map-有何不同">5.nil map 和空 map 有何不同？</a></li>
+        <li><a href="#6nil切片nil-slice和空切片empty-slice有什么不同">6.nil切片（nil slice）和空切片（empty slice）有什么不同？</a></li>
+        <li><a href="#7函数调用需要传入结构体时传指针还是值怎么区分什么时候用哪种">7.函数调用需要传入结构体时，传指针还是值？怎么区分什么时候用哪种？</a></li>
+        <li><a href="#8go-如何实现原子操作">8.Go 如何实现原子操作？</a></li>
+        <li><a href="#9原子操作与互斥锁的区别">9.原子操作与互斥锁的区别？</a></li>
+        <li><a href="#10mutex是悲观锁还是乐观锁悲观锁乐观锁是什么">10.Mutex是悲观锁还是乐观锁？悲观锁、乐观锁是什么？</a></li>
+        <li><a href="#11mutex有几种模式">11.Mutex有几种模式？</a></li>
+        <li><a href="#12怎么控制并发数">12.怎么控制并发数？</a></li>
+        <li><a href="#13go语言中的gc算法的实现">13.Go语言中的GC算法的实现？</a></li>
+        <li><a href="#14gc-的触发时机">14.GC 的触发时机？</a></li>
+        <li><a href="#15如何优雅的实现一个-goroutine-池划重点">15.如何优雅的实现一个 goroutine 池？(划重点！！！）</a></li>
+        <li><a href="#16goroutine为什么会导致内存泄漏">16.Goroutine为什么会导致内存泄漏？</a></li>
+        <li><a href="#17知道golang的内存逃逸吗什么情况下会发生内存逃逸">17.知道Golang的内存逃逸吗？什么情况下会发生内存逃逸？</a></li>
+        <li><a href="#18两数传递指针真的比传值的效率高吗">18.两数传递指针真的比传值的效率高吗？</a></li>
+        <li><a href="#19请简述-go-是如何分配内存的">19.请简述 Go 是如何分配内存的？</a></li>
+        <li><a href="#20struct结构体能不能比较">20.struct结构体能不能比较？</a></li>
+      </ol>
+    </li>
   </ol>
 </nav>
         </div>

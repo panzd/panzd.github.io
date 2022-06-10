@@ -44,8 +44,16 @@
     <loc>/p/linux-screen/</loc>
     <lastmod>2022-01-15T00:00:00+00:00</lastmod>
   </url><url>
+    <loc>/tags/windows/</loc>
+    <lastmod>2021-12-18T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>/p/windows%E5%90%AF%E5%8A%A8%E4%B8%AD%E7%9A%84bcd%E6%96%87%E4%BB%B6%E8%A7%A3%E6%9E%90/</loc>
+    <lastmod>2021-12-18T00:00:00+00:00</lastmod>
+  </url><url>
     <loc>/archives/</loc>
     <lastmod>2019-05-28T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>/p/golang%E9%97%AE%E9%A2%98%E8%A7%A3%E6%9E%90%E4%B8%80/</loc>
   </url><url>
     <loc>/search/</loc>
   </url>

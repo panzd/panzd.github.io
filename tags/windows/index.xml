@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+    <channel>
+        <title>Windows on panzd</title>
+        <link>/tags/windows/</link>
+        <description>Recent content in Windows on panzd</description>
+        <generator>Hugo -- gohugo.io</generator>
+        <language>en-us</language>
+        <lastBuildDate>Sat, 18 Dec 2021 00:00:00 +0000</lastBuildDate><atom:link href="/tags/windows/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>Windows启动中的BCD文件解析</title>
+        <link>/p/windows%E5%90%AF%E5%8A%A8%E4%B8%AD%E7%9A%84bcd%E6%96%87%E4%BB%B6%E8%A7%A3%E6%9E%90/</link>
+        <pubDate>Sat, 18 Dec 2021 00:00:00 +0000</pubDate>
+        
+        <guid>/p/windows%E5%90%AF%E5%8A%A8%E4%B8%AD%E7%9A%84bcd%E6%96%87%E4%BB%B6%E8%A7%A3%E6%9E%90/</guid>
+        <description>&lt;hr&gt;
+&lt;h2 id=&#34;前言&#34;&gt;前言&lt;/h2&gt;
+&lt;p&gt;在我的惠普电脑蓝屏后, 出现了&amp;quot;Oxc000007b&amp;quot;问题, 提示缺少winload.efi文件,在我查阅资料后, 发现是UEFI的Windows Boot Manager程序读取文件的路径失效了, 上次这台双系统电脑出现这个问题是四年前了。而与之相关的正是bcd文件, 可以找到UEFI模式中所有的启动信息。&lt;/p&gt;
+&lt;h2 id=&#34;介绍&#34;&gt;介绍&lt;/h2&gt;
+&lt;p&gt;&lt;img src=&#34;/p/windows%E5%90%AF%E5%8A%A8%E4%B8%AD%E7%9A%84bcd%E6%96%87%E4%BB%B6%E8%A7%A3%E6%9E%90/images/1.png&#34;
+	width=&#34;889&#34;
+	height=&#34;129&#34;
+	srcset=&#34;/p/windows%E5%90%AF%E5%8A%A8%E4%B8%AD%E7%9A%84bcd%E6%96%87%E4%BB%B6%E8%A7%A3%E6%9E%90/images/1_hu5698fac716ca6a2bd1eab26cd5b6df50_14543_480x0_resize_box_3.png 480w, /p/windows%E5%90%AF%E5%8A%A8%E4%B8%AD%E7%9A%84bcd%E6%96%87%E4%BB%B6%E8%A7%A3%E6%9E%90/images/1_hu5698fac716ca6a2bd1eab26cd5b6df50_14543_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;图1&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;689&#34;
+		data-flex-basis=&#34;1653px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;在官方的解释中, 可以看到&amp;quot;启动配置数据(BCD)文件提供了一个用于描述启动应用程序和启动应用程序设置的存储区。BCDEdit是一个用于管理BCD的命令行工具。它可以用于各种目的，包括创建新存储、修改现有存储和添加引导菜单选项。&amp;quot;&lt;/p&gt;
+&lt;p&gt;我们可以在&lt;code&gt;&amp;quot;%WINDIR%\System32&amp;quot;&lt;/code&gt;文件夹中找到bcdedit.exe, 如果是像我一样无法进入系统的话, 则可以在windows开机时,进入系统恢复选项(像我的惠普则是按着F11),再选择进入高级选项, 再进入命令行提示符。&lt;/p&gt;
+&lt;p&gt;此时便进入到cmd命令行界面, &amp;ldquo;X:\Windows\System32&amp;rdquo;, 在这里输入命令:&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;bcdedit /enum all&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;意思是在命令行中列出所有的UEFI信息&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/p/windows%E5%90%AF%E5%8A%A8%E4%B8%AD%E7%9A%84bcd%E6%96%87%E4%BB%B6%E8%A7%A3%E6%9E%90/images/2.png&#34;
+	width=&#34;856&#34;
+	height=&#34;131&#34;
+	srcset=&#34;/p/windows%E5%90%AF%E5%8A%A8%E4%B8%AD%E7%9A%84bcd%E6%96%87%E4%BB%B6%E8%A7%A3%E6%9E%90/images/2_hua8885bdbe4522b1348c5e04fa47f0c48_11762_480x0_resize_box_3.png 480w, /p/windows%E5%90%AF%E5%8A%A8%E4%B8%AD%E7%9A%84bcd%E6%96%87%E4%BB%B6%E8%A7%A3%E6%9E%90/images/2_hua8885bdbe4522b1348c5e04fa47f0c48_11762_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;图2&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;653&#34;
+		data-flex-basis=&#34;1568px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;h2 id=&#34;实践&#34;&gt;实践&lt;/h2&gt;
+&lt;p&gt;在界面中,我们可以看到标识符&lt;!-- raw HTML omitted --&gt;, 这便是windows启动管理器。&lt;/p&gt;
+&lt;p&gt;而在左侧&amp;quot;device&amp;quot;对应着右侧的&amp;quot;partition=C:&amp;quot;, 表面EFI信息存在此windows下的C盘中。&amp;ldquo;path&amp;quot;则对应着路径, &amp;ldquo;default&amp;quot;则是默认的加载项, 对应着windows启动加载器。而下面一串长长的字符则表示从休眠状态中恢复的选项, 并没有用set去改变它的本名。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/p/windows%E5%90%AF%E5%8A%A8%E4%B8%AD%E7%9A%84bcd%E6%96%87%E4%BB%B6%E8%A7%A3%E6%9E%90/images/3.jpg&#34;
+	width=&#34;1080&#34;
+	height=&#34;810&#34;
+	srcset=&#34;/p/windows%E5%90%AF%E5%8A%A8%E4%B8%AD%E7%9A%84bcd%E6%96%87%E4%BB%B6%E8%A7%A3%E6%9E%90/images/3_hu8cf1016981656dcefff526e7fe913993_142115_480x0_resize_q75_box.jpg 480w, /p/windows%E5%90%AF%E5%8A%A8%E4%B8%AD%E7%9A%84bcd%E6%96%87%E4%BB%B6%E8%A7%A3%E6%9E%90/images/3_hu8cf1016981656dcefff526e7fe913993_142115_1024x0_resize_q75_box.jpg 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;图3&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;133&#34;
+		data-flex-basis=&#34;320px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;通常而言, efi文件的信息都是当前windows系统下的C盘中, 但在我的双系统中则是存在&amp;quot;HarddiskVolume2&amp;quot;中, 这是因为之前装双系统的时候分盘导致的。下面让我们再来看一下,&amp;ldquo;winload.efi&amp;quot;文件存在的路径:&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/p/windows%E5%90%AF%E5%8A%A8%E4%B8%AD%E7%9A%84bcd%E6%96%87%E4%BB%B6%E8%A7%A3%E6%9E%90/images/4.jpg&#34;
+	width=&#34;1080&#34;
+	height=&#34;810&#34;
+	srcset=&#34;/p/windows%E5%90%AF%E5%8A%A8%E4%B8%AD%E7%9A%84bcd%E6%96%87%E4%BB%B6%E8%A7%A3%E6%9E%90/images/4_hu6daddb52bff8f0e409680cadd10aed2e_124938_480x0_resize_q75_box.jpg 480w, /p/windows%E5%90%AF%E5%8A%A8%E4%B8%AD%E7%9A%84bcd%E6%96%87%E4%BB%B6%E8%A7%A3%E6%9E%90/images/4_hu6daddb52bff8f0e409680cadd10aed2e_124938_1024x0_resize_q75_box.jpg 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;图4&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;133&#34;
+		data-flex-basis=&#34;320px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;可以看到winload.efi存放的路径,&amp;ldquo;C:Windows\system32&amp;quot;。而之前出错的问题也是bootmgr找不到此路径下的winload.efi文件。在这里我们可以用bcdedit.exe来更改device和path。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/p/windows%E5%90%AF%E5%8A%A8%E4%B8%AD%E7%9A%84bcd%E6%96%87%E4%BB%B6%E8%A7%A3%E6%9E%90/images/5.png&#34;
+	width=&#34;887&#34;
+	height=&#34;389&#34;
+	srcset=&#34;/p/windows%E5%90%AF%E5%8A%A8%E4%B8%AD%E7%9A%84bcd%E6%96%87%E4%BB%B6%E8%A7%A3%E6%9E%90/images/5_hu895729006ea45f3f839f89f55d5e2a1e_26365_480x0_resize_box_3.png 480w, /p/windows%E5%90%AF%E5%8A%A8%E4%B8%AD%E7%9A%84bcd%E6%96%87%E4%BB%B6%E8%A7%A3%E6%9E%90/images/5_hu895729006ea45f3f839f89f55d5e2a1e_26365_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;图5&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;228&#34;
+		data-flex-basis=&#34;547px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;让我们来试试将&amp;rdquo;&lt;!-- raw HTML omitted --&gt;&amp;ldquo;的路径更改为&amp;quot;HarddiskVolume2&amp;rdquo;。关于harddiskVolume的信息, 可以从硬盘信息拿到。&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;bcdedit /set {bootmgr} device partition=HarddiskVolume2&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;此时,我们看到修改已经完成。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/p/windows%E5%90%AF%E5%8A%A8%E4%B8%AD%E7%9A%84bcd%E6%96%87%E4%BB%B6%E8%A7%A3%E6%9E%90/images/6.jpg&#34;
+	width=&#34;1080&#34;
+	height=&#34;810&#34;
+	srcset=&#34;/p/windows%E5%90%AF%E5%8A%A8%E4%B8%AD%E7%9A%84bcd%E6%96%87%E4%BB%B6%E8%A7%A3%E6%9E%90/images/6_huc3e7bdc4ad54a6ff0f146e93a6818f85_128375_480x0_resize_q75_box.jpg 480w, /p/windows%E5%90%AF%E5%8A%A8%E4%B8%AD%E7%9A%84bcd%E6%96%87%E4%BB%B6%E8%A7%A3%E6%9E%90/images/6_huc3e7bdc4ad54a6ff0f146e93a6818f85_128375_1024x0_resize_q75_box.jpg 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;图6&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;133&#34;
+		data-flex-basis=&#34;320px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;此时,作为双系统的电脑已经能找到winload.efi文件加载。&lt;/p&gt;
+&lt;h2 id=&#34;深入&#34;&gt;深入&lt;/h2&gt;
+&lt;p&gt;让我们再关注到bcdedit的其他命令:&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/p/windows%E5%90%AF%E5%8A%A8%E4%B8%AD%E7%9A%84bcd%E6%96%87%E4%BB%B6%E8%A7%A3%E6%9E%90/images/7.png&#34;
+	width=&#34;859&#34;
+	height=&#34;457&#34;
+	srcset=&#34;/p/windows%E5%90%AF%E5%8A%A8%E4%B8%AD%E7%9A%84bcd%E6%96%87%E4%BB%B6%E8%A7%A3%E6%9E%90/images/7_hufa7d23d96580be4525468a2727b78448_41573_480x0_resize_box_3.png 480w, /p/windows%E5%90%AF%E5%8A%A8%E4%B8%AD%E7%9A%84bcd%E6%96%87%E4%BB%B6%E8%A7%A3%E6%9E%90/images/7_hufa7d23d96580be4525468a2727b78448_41573_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;图7&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;187&#34;
+		data-flex-basis=&#34;451px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;这里也是常用命令,包括创建一个新的boot设置数据存储等等。一般用作对efi信息的备份。&lt;/p&gt;</description>
+        </item>
+        
+    </channel>
+</rss>

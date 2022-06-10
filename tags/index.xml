@@ -30,6 +30,14 @@
         <guid>/tags/linux/</guid>
         <description></description>
         </item>
+        <item>
+        <title>Windows</title>
+        <link>/tags/windows/</link>
+        <pubDate>Sat, 18 Dec 2021 00:00:00 +0000</pubDate>
+        
+        <guid>/tags/windows/</guid>
+        <description></description>
+        </item>
         
     </channel>
 </rss>
