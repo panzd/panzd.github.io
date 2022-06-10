@@ -522,6 +522,81 @@
 &lt;/li&gt;
 &lt;/ol&gt;</description>
         </item>
+        <item>
+        <title>Linux Screen</title>
+        <link>/p/linux-screen/</link>
+        <pubDate>Sat, 15 Jan 2022 00:00:00 +0000</pubDate>
+        
+        <guid>/p/linux-screen/</guid>
+        <description>&lt;hr&gt;
+&lt;h2 id=&#34;前言&#34;&gt;前言&lt;/h2&gt;
+&lt;p&gt;之前我想在我的服务器上执行一个长时间运行的任务，我使用x &amp;amp;挂在后台，并使用nohup x &amp;amp;请求shell结束后不清理命令，并且为防止父进程结束，又使用了setsid x &amp;amp;置父程序id为1。SSH会话被终止，但我再次连上去时使用jobs并没有出现我之前的程序。&lt;/p&gt;
+&lt;p&gt;所幸，我发现了linux上的screen程序，非常好用。&lt;/p&gt;
+&lt;h2 id=&#34;介绍&#34;&gt;介绍&lt;/h2&gt;
+&lt;p&gt;&amp;ldquo;Screen or GNU Screen is a terminal multiplexer.&amp;ldquo;也就是说Screen是一款终端复用器。我们可以开始一个screen会话，然后在里面可以打开任意数量的虚拟终端。在Screen中运行的进程将在其窗口不可见时继续运行，即使断开SSH连接。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/images/1.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;图1&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;至于安装就很简单，在Centos上只需要运行：&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;sudo yum install screen&lt;/code&gt;&lt;/p&gt;
+&lt;h2 id=&#34;使用&#34;&gt;使用&lt;/h2&gt;
+&lt;p&gt;对于screen你需要命名，以区分你的任务。&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;screen -S session_name&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;而使用：&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;screen -ls&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;则可以查看screen session的id，以便后面的使用。&lt;/p&gt;
+&lt;p&gt;使用：&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;screen -r id&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;则重新进入之前创建的session里面。&lt;/p&gt;
+&lt;h2 id=&#34;具体命令&#34;&gt;具体命令&lt;/h2&gt;
+&lt;p&gt;我们进入screen session后，可以使用 Ctr+a 然后 ？查看screen的命令：&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/images/2.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;图2&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;非常的清晰&lt;/p&gt;
+&lt;p&gt;一般我们会使用：&lt;/p&gt;
+&lt;p&gt;detach：ctrl+a d&lt;/p&gt;
+&lt;p&gt;kill： ctrl+a k&lt;/p&gt;
+&lt;p&gt;history： ctrl+a { }&lt;/p&gt;
+&lt;p&gt;clear：ctrl+a C&lt;/p&gt;
+&lt;p&gt;windowslist：ctrl+a &amp;quot;  列出所有窗口。&lt;/p&gt;
+&lt;p&gt;split: ctrl+a S 将当前区域水平分割成两个区域。&lt;/p&gt;
+&lt;p&gt;other: ctrl+a ctrl+a 在当前窗口和以前窗口之间切换。&lt;/p&gt;
+&lt;p&gt;而0-9在screen里面则可以跳转到session窗口。&lt;/p&gt;
+&lt;h2 id=&#34;screen-设置&#34;&gt;screen 设置&lt;/h2&gt;
+&lt;p&gt;当screen开始时，它会从/etc/screenrc和~/.screenrc读取它的设置参数。我们可以根据这两个文件更改默认screen设置。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/images/3.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;图3&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;如果没有&lt;code&gt;~/.screenrc&lt;/code&gt;的话，可以创建，用来自定义配置。&lt;/p&gt;
+&lt;p&gt;以上就是screen的介绍和使用内容。&lt;/p&gt;
+&lt;h2 id=&#34;结束&#34;&gt;结束&lt;/h2&gt;
+&lt;p&gt;当我们想要kill一个screen的时候，可以直接用这个命令：&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;screen -S session_name -X quit&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;此外，深入的学习请点击screen指南&lt;/p&gt;
+&lt;p&gt;Screen User’s Manual(url=https://www.gnu.org/software/screen/manual/screen.html)&lt;/p&gt;</description>
+        </item>
         
     </channel>
 </rss>
