@@ -29,17 +29,11 @@
     <loc>/tags/</loc>
     <lastmod>2022-05-19T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>/p/2021-vlog/</loc>
-    <lastmod>2022-01-26T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>/categories/video/</loc>
-    <lastmod>2022-01-26T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>/tags/%E6%88%90%E9%95%BF/</loc>
-    <lastmod>2022-01-26T00:00:00+00:00</lastmod>
-  </url><url>
     <loc>/tags/golang/</loc>
-    <lastmod>2022-01-15T00:00:00+00:00</lastmod>
+    <lastmod>2022-04-11T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>/p/golang%E9%97%AE%E9%A2%98%E8%A7%A3%E6%9E%90%E4%B8%80/</loc>
+    <lastmod>2022-04-11T00:00:00+00:00</lastmod>
   </url><url>
     <loc>/p/golang-defer%E7%9A%84%E6%8E%A2%E7%B4%A2/</loc>
     <lastmod>2022-01-15T00:00:00+00:00</lastmod>
@@ -50,14 +44,20 @@
     <loc>/p/linux-screen/</loc>
     <lastmod>2022-01-15T00:00:00+00:00</lastmod>
   </url><url>
+    <loc>/p/2021-vlog/</loc>
+    <lastmod>2022-01-01T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>/categories/video/</loc>
+    <lastmod>2022-01-01T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>/tags/%E6%88%90%E9%95%BF/</loc>
+    <lastmod>2022-01-01T00:00:00+00:00</lastmod>
+  </url><url>
     <loc>/tags/windows/</loc>
     <lastmod>2021-12-18T00:00:00+00:00</lastmod>
   </url><url>
     <loc>/p/windows%E5%90%AF%E5%8A%A8%E4%B8%AD%E7%9A%84bcd%E6%96%87%E4%BB%B6%E8%A7%A3%E6%9E%90/</loc>
     <lastmod>2021-12-18T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>/p/golang%E9%97%AE%E9%A2%98%E8%A7%A3%E6%9E%90%E4%B8%80/</loc>
-    <lastmod>2021-04-11T00:00:00+00:00</lastmod>
   </url><url>
     <loc>/archives/</loc>
     <lastmod>2019-05-28T00:00:00+00:00</lastmod>
