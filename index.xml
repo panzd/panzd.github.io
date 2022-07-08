@@ -22,6 +22,7 @@
 &lt;p&gt;喜爱的作家：陀思妥耶夫斯基、茨威格、毛姆、雨果&lt;/p&gt;
 &lt;p&gt;最喜欢的作品：《悲惨世界》&lt;/p&gt;
 &lt;p&gt;最喜欢的钢琴曲：《六月船歌》&lt;/p&gt;
+&lt;p&gt;我的邮箱：donggnij@foxmail.com&lt;/p&gt;
 &lt;p&gt;欢迎关注我的微博 ： &lt;a class=&#34;link&#34; href=&#34;https://weibo.com/u/3528852115&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
     &gt;冬瓜爆炒芋头&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://juejin.cn/user/2858385960602231&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
@@ -61,11 +62,11 @@
 &lt;p&gt;&lt;!-- raw HTML omitted --&gt;Terraform&lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
 &lt;p&gt;provisions,updates, and destroys infrastructure resources such as physical machines, VMs,network switches, containers, and more.&lt;/p&gt;
 &lt;p&gt;&lt;!-- raw HTML omitted --&gt;Configurations&lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
-&lt;p&gt;arecode written for Terraform, using the human-readable HashiCorp ConfigurationLanguage (HCL) to describe the desired state of infrastructure resources.&lt;/p&gt;
+&lt;p&gt;arecode written for Terraform, using the human-readable HashiCorp Configuration Language (HCL) to describe the desired state of infrastructure resources.&lt;/p&gt;
 &lt;p&gt;&lt;!-- raw HTML omitted --&gt;Providers&lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
-&lt;p&gt;arethe plugins that Terraform uses to manage those resources. Every supportedservice or infrastructure platform has a provider that defines which resourcesare available and performs API calls to manage those resources.&lt;/p&gt;
+&lt;p&gt;are the plugins that Terraform uses to manage those resources. Every supported service or infrastructure platform has a provider that defines which resources are available and performs API calls to manage those resources.&lt;/p&gt;
 &lt;p&gt;&lt;!-- raw HTML omitted --&gt;Modules&lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
-&lt;p&gt;arereusable Terraform configurations that can be called and configured by otherconfigurations. Most modulesmanage a few closely related resources from a single provider.&lt;/p&gt;
+&lt;p&gt;are reusable Terraform configurations that can be called and configured by other configurations. Most modules manage a few closely related resources from a single provider.&lt;/p&gt;
 &lt;p&gt;&lt;!-- raw HTML omitted --&gt;The Terraform Registry&lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
 &lt;p&gt;makesit easy to use any provider or module. To use a provider or module from thisregistry, just add it to your configuration; when you run &lt;code&gt;terraform init&lt;/code&gt;,Terraform will automatically download everything it needs.&lt;/p&gt;
 &lt;p&gt;&lt;img src=&#34;/p/infrastructure-as-codeterraform%E5%88%B6%E9%9C%B8%E4%B9%8B%E9%81%93/images/1.png&#34;
@@ -1088,7 +1089,8 @@ Resource dependency graph使得HCL中可以无视资源的顺序写出资源，�
 &lt;p&gt;当我们想要kill一个screen的时候，可以直接用这个命令：&lt;/p&gt;
 &lt;p&gt;&lt;code&gt;screen -S session_name -X quit&lt;/code&gt;&lt;/p&gt;
 &lt;p&gt;此外，深入的学习请点击screen指南&lt;/p&gt;
-&lt;p&gt;Screen User’s Manual(url=https://www.gnu.org/software/screen/manual/screen.html)&lt;/p&gt;</description>
+&lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://www.gnu.org/software/screen/manual/screen.html&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Screen User’s Manual&lt;/a&gt;&lt;/p&gt;</description>
         </item>
         <item>
         <title>2021 vlog</title>

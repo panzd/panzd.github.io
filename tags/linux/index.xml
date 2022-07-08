@@ -91,7 +91,8 @@
 &lt;p&gt;当我们想要kill一个screen的时候，可以直接用这个命令：&lt;/p&gt;
 &lt;p&gt;&lt;code&gt;screen -S session_name -X quit&lt;/code&gt;&lt;/p&gt;
 &lt;p&gt;此外，深入的学习请点击screen指南&lt;/p&gt;
-&lt;p&gt;Screen User’s Manual(url=https://www.gnu.org/software/screen/manual/screen.html)&lt;/p&gt;</description>
+&lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://www.gnu.org/software/screen/manual/screen.html&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Screen User’s Manual&lt;/a&gt;&lt;/p&gt;</description>
         </item>
         
     </channel>
