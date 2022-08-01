@@ -6,7 +6,15 @@
         <description>Recent content in Tags on panzd</description>
         <generator>Hugo -- gohugo.io</generator>
         <language>en-us</language>
-        <lastBuildDate>Thu, 19 May 2022 00:00:00 +0000</lastBuildDate><atom:link href="/tags/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Sat, 23 Jul 2022 00:00:00 +0000</lastBuildDate><atom:link href="/tags/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>Paper</title>
+        <link>/tags/paper/</link>
+        <pubDate>Sat, 23 Jul 2022 00:00:00 +0000</pubDate>
+        
+        <guid>/tags/paper/</guid>
+        <description></description>
+        </item>
+        <item>
         <title>Devops</title>
         <link>/tags/devops/</link>
         <pubDate>Thu, 19 May 2022 00:00:00 +0000</pubDate>

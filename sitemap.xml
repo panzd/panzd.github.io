@@ -3,7 +3,25 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>/</loc>
-    <lastmod>2022-06-04T00:00:00+00:00</lastmod>
+    <lastmod>2022-07-23T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>/categories/article/</loc>
+    <lastmod>2022-07-23T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>/categories/</loc>
+    <lastmod>2022-07-23T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>/tags/paper/</loc>
+    <lastmod>2022-07-23T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>/post/</loc>
+    <lastmod>2022-07-23T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>/tags/</loc>
+    <lastmod>2022-07-23T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>/p/%E6%8B%A8%E5%9B%9E1984%E7%9C%8Bimplementing-remote-procedure-calls%E5%A6%82%E4%BD%95%E7%9F%B3%E7%A0%B4%E5%A4%A9%E6%83%8A/</loc>
+    <lastmod>2022-07-23T00:00:00+00:00</lastmod>
   </url><url>
     <loc>/about/</loc>
     <lastmod>2022-06-04T00:00:00+00:00</lastmod>
@@ -11,22 +29,10 @@
     <loc>/page/</loc>
     <lastmod>2022-06-04T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>/categories/article/</loc>
-    <lastmod>2022-05-19T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>/categories/</loc>
-    <lastmod>2022-05-19T00:00:00+00:00</lastmod>
-  </url><url>
     <loc>/tags/devops/</loc>
     <lastmod>2022-05-19T00:00:00+00:00</lastmod>
   </url><url>
     <loc>/p/infrastructure-as-codeterraform%E5%88%B6%E9%9C%B8%E4%B9%8B%E9%81%93/</loc>
-    <lastmod>2022-05-19T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>/post/</loc>
-    <lastmod>2022-05-19T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>/tags/</loc>
     <lastmod>2022-05-19T00:00:00+00:00</lastmod>
   </url><url>
     <loc>/tags/golang/</loc>

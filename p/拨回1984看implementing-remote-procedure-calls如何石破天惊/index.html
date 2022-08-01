@@ -1,0 +1,1042 @@
+<!DOCTYPE html>
+<html lang="en-us" dir="ltr">
+    <head><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='历史总与我们的现在遥遥相和，History doesnot repeat, but it rhymes'><title>拨回1984:看Implementing Remote Procedure Calls如何石破天惊?</title>
+
+<link rel='canonical' href='/p/%E6%8B%A8%E5%9B%9E1984%E7%9C%8Bimplementing-remote-procedure-calls%E5%A6%82%E4%BD%95%E7%9F%B3%E7%A0%B4%E5%A4%A9%E6%83%8A/'>
+
+<link rel="stylesheet" href="/scss/style.min.450926226e724574a6b936335ea06111f8aeb253d932c86cb2cc807341cd2889.css"><meta property='og:title' content='拨回1984:看Implementing Remote Procedure Calls如何石破天惊?'>
+<meta property='og:description' content='历史总与我们的现在遥遥相和，History doesnot repeat, but it rhymes'>
+<meta property='og:url' content='/p/%E6%8B%A8%E5%9B%9E1984%E7%9C%8Bimplementing-remote-procedure-calls%E5%A6%82%E4%BD%95%E7%9F%B3%E7%A0%B4%E5%A4%A9%E6%83%8A/'>
+<meta property='og:site_name' content='panzd'>
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='Paper' /><meta property='article:published_time' content='2022-07-23T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2022-07-23T00:00:00&#43;00:00'/>
+<meta name="twitter:title" content="拨回1984:看Implementing Remote Procedure Calls如何石破天惊?">
+<meta name="twitter:description" content="历史总与我们的现在遥遥相和，History doesnot repeat, but it rhymes">
+    </head>
+    <body class="
+    article-page
+    ">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "auto");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky ">
+    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="Toggle Menu">
+        <span class="hamburger-box">
+            <span class="hamburger-inner"></span>
+        </span>
+    </button>
+
+    <header>
+        
+            
+            <figure class="site-avatar">
+                <a href="/">
+                
+                    
+                    
+                    
+                        
+                        <img src="/img/avatar_hucb79f288fbfc5ef8a2d525cd76ba88b6_49364_300x0_resize_box_3.png" width="300"
+                            height="300" class="site-logo" loading="lazy" alt="Avatar">
+                    
+                
+                </a>
+                
+                    <span class="emoji">😊</span>
+                
+            </figure>
+            
+        
+        
+        <div class="site-meta">
+            <h1 class="site-name"><a href="/">panzd</a></h1>
+            <h2 class="site-description">微信公众号：溪见</h2>
+        </div>
+    </header><ol class="social-menu">
+            
+                <li>
+                    <a 
+                        href='https://github.com/panzd'
+                        target="_blank"
+                        title="GitHub"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-github" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a 
+                        href='mailto:%20donggnij@foxmail.com'
+                        target="_blank"
+                        title="Mail"
+                    >
+                        
+                        
+                            <?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 19.1.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 64 64" enable-background="new 0 0 64 64" xml:space="preserve">
+<path id="Mail" d="M58.0034485,8H5.9965506c-3.3136795,0-5.9999995,2.6862001-5.9999995,6v36c0,3.3137016,2.6863203,6,5.9999995,6
+	h52.006897c3.3137016,0,6-2.6862984,6-6V14C64.0034485,10.6862001,61.3171501,8,58.0034485,8z M62.0034485,49.1108017
+	L43.084549,30.1919994l18.9188995-12.0555992V49.1108017z M5.9965506,10h52.006897c2.2056007,0,4,1.7943001,4,4v1.7664003
+	L34.4677505,33.3134003c-1.4902,0.9492989-3.3935013,0.9199982-4.8495998-0.0703011L1.9965508,14.4694996V14
+	C1.9965508,11.7943001,3.7910507,10,5.9965506,10z M1.9965508,16.8852005L21.182251,29.9251003L1.9965508,49.1108017V16.8852005z
+	 M58.0034485,54H5.9965506c-1.6473999,0-3.0638998-1.0021019-3.6760998-2.4278984l20.5199013-20.5200024l5.6547985,3.843401
+	c1.0859013,0.7383003,2.3418007,1.1083984,3.5995998,1.1083984c1.1953011,0,2.3925018-0.3339996,3.4463005-1.0048981
+	l5.8423996-3.7230015l20.2961006,20.2961025C61.0673485,52.9978981,59.6508713,54,58.0034485,54z"/>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+</svg>
+
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a 
+                        href='https://weibo.com/u/3528852115'
+                        target="_blank"
+                        title="Weibo"
+                    >
+                        
+                        
+                            <!--wb-->
+<svg class="Zi Zi--Weibo Login-socialIcon" fill="none" viewBox="0 0 24 24" width="24" height="24">
+<path fill="none"
+ d="M15.518 3.06c8.834-.854 7.395 7.732 7.394 7.731-.625 1.439-1.673.309-1.673.309.596-7.519-5.692-6.329-5.692-6.329-.898-1.067-.029-1.711-.029-1.711zm4.131 6.985c-.661 1.01-1.377.126-1.376.126.205-3.179-2.396-2.598-2.396-2.598-.719-.765-.091-1.346-.091-1.346 4.882-.551 3.863 3.818 3.863 3.818zM5.317 7.519s4.615-3.86 6.443-1.328c0 0 .662 1.08-.111 2.797.003-.003 3.723-1.96 5.408.159 0 0 .848 1.095-.191 2.649 0 0 2.918-.099 2.918 2.715 0 2.811-4.104 6.44-9.315 6.44-5.214 0-8.026-2.092-8.596-3.102 0 0-3.475-4.495 3.444-10.33zm10.448 7.792s.232-4.411-5.71-4.207c-6.652.231-6.579 4.654-6.579 4.654.021.39.097 3.713 5.842 3.713 5.98 0 6.447-4.16 6.447-4.16zm-9.882.86s-.059-3.632 3.804-3.561c3.412.06 3.206 3.165 3.206 3.165s-.026 2.979-3.684 2.979c-3.288 0-3.326-2.583-3.326-2.583zm2.528 1.037c.672 0 1.212-.447 1.212-.998 0-.551-.543-.998-1.212-.998-.672 0-1.215.447-1.215.998 0 .551.546.998 1.215.998z" fill-rule="evenodd">
+ </path></svg>
+
+                        
+                    </a>
+                </li>
+            
+        </ol><ol class="menu" id="main-menu">
+        
+        
+        
+
+        <li >
+            <a href='/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <polyline points="5 12 3 12 12 3 21 12 19 12" />
+  <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
+  <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
+</svg>
+
+
+
+                
+                <span>Home</span>
+            </a>
+        </li>
+        
+        
+
+        <li >
+            <a href='/about/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="7" r="4" />
+  <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
+</svg>
+
+
+
+                
+                <span>About</span>
+            </a>
+        </li>
+        
+        
+
+        <li >
+            <a href='/archives/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <rect x="3" y="4" width="18" height="4" rx="2" />
+  <path d="M5 8v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-10" />
+  <line x1="10" y1="12" x2="14" y2="12" />
+</svg>
+
+
+
+                
+                <span>Archives</span>
+            </a>
+        </li>
+        
+        
+
+        <li >
+            <a href='/search/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="10" cy="10" r="7" />
+  <line x1="21" y1="21" x2="15" y2="15" />
+</svg>
+
+
+
+                
+                <span>Search</span>
+            </a>
+        </li>
+        
+
+        <div class="menu-bottom-section">
+            
+            
+                <li id="dark-mode-toggle">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="8" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="16" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                    <span>Dark Mode</span>
+                </li>
+            
+        </div>
+    </ol>
+</aside>
+<main class="main full-width">
+    <article class="main-article">
+    <header class="article-header">
+
+    <div class="article-details">
+    
+    <header class="article-category">
+        
+            <a href="/categories/article/" >
+                Article
+            </a>
+        
+    </header>
+    
+
+    <div class="article-title-wrapper">
+        <h2 class="article-title">
+            <a href="/p/%E6%8B%A8%E5%9B%9E1984%E7%9C%8Bimplementing-remote-procedure-calls%E5%A6%82%E4%BD%95%E7%9F%B3%E7%A0%B4%E5%A4%A9%E6%83%8A/">拨回1984:看Implementing Remote Procedure Calls如何石破天惊?</a>
+        </h2>
+    
+        
+        <h3 class="article-subtitle">
+            历史总与我们的现在遥遥相和，History doesnot repeat, but it rhymes
+        </h3>
+        
+    </div>
+
+    
+    <footer class="article-time">
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published">Jul 23, 2022</time>
+            </div>
+        
+
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+                <time class="article-time--reading">
+                    3 minute read
+                </time>
+            </div>
+        
+    </footer>
+    
+
+    
+</div>
+</header>
+
+    <section class="article-content">
+    
+    
+    <h2 id="前言">前言:</h2>
+<p>前言：其实，现在理解RPC的概念较为简单，但在一个概念在走向成熟的过程中的探索，是值得我们追寻与思考的。要追本溯源，是因为历史总与我们的现在遥遥相和，History doesnot repeat, but it rhymes.</p>
+<p><img src="/p/%E6%8B%A8%E5%9B%9E1984%E7%9C%8Bimplementing-remote-procedure-calls%E5%A6%82%E4%BD%95%E7%9F%B3%E7%A0%B4%E5%A4%A9%E6%83%8A/images/1.png"
+	width="837"
+	height="1190"
+	srcset="/p/%E6%8B%A8%E5%9B%9E1984%E7%9C%8Bimplementing-remote-procedure-calls%E5%A6%82%E4%BD%95%E7%9F%B3%E7%A0%B4%E5%A4%A9%E6%83%8A/images/1_hu2ee4ec36f9ee5d9a87977d32a5cfe505_606913_480x0_resize_box_3.png 480w, /p/%E6%8B%A8%E5%9B%9E1984%E7%9C%8Bimplementing-remote-procedure-calls%E5%A6%82%E4%BD%95%E7%9F%B3%E7%A0%B4%E5%A4%A9%E6%83%8A/images/1_hu2ee4ec36f9ee5d9a87977d32a5cfe505_606913_1024x0_resize_box_3.png 1024w"
+	loading="lazy"
+	
+		alt="图1:RPC论文"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="70"
+		data-flex-basis="168px"
+	
+></p>
+<p>文章的岁数比我大，来自《ACM Transactions on Computer Systems, Vol. 2, No. 1, February 1984》，是在1976年的前人提出概念上的拓展，最后形成的就是RPC规范，可以说是远程调用的实行的起点，一个真正的开启。</p>
+<p>Remote procedure calls (RPC) appear to be a useful paradig m for providing communication across a network between programs written in a high-level language.</p>
+<p>Background不谈了，那时候一切都是刚开始。</p>
+<p><img src="/p/%E6%8B%A8%E5%9B%9E1984%E7%9C%8Bimplementing-remote-procedure-calls%E5%A6%82%E4%BD%95%E7%9F%B3%E7%A0%B4%E5%A4%A9%E6%83%8A/images/2.png"
+	width="897"
+	height="1266"
+	srcset="/p/%E6%8B%A8%E5%9B%9E1984%E7%9C%8Bimplementing-remote-procedure-calls%E5%A6%82%E4%BD%95%E7%9F%B3%E7%A0%B4%E5%A4%A9%E6%83%8A/images/2_hu6111bb09c69bb1c4206e25a3ddb17c6c_808998_480x0_resize_box_3.png 480w, /p/%E6%8B%A8%E5%9B%9E1984%E7%9C%8Bimplementing-remote-procedure-calls%E5%A6%82%E4%BD%95%E7%9F%B3%E7%A0%B4%E5%A4%A9%E6%83%8A/images/2_hu6111bb09c69bb1c4206e25a3ddb17c6c_808998_1024x0_resize_box_3.png 1024w"
+	loading="lazy"
+	
+		alt="图2:RPC论文"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="70"
+		data-flex-basis="170px"
+	
+></p>
+<p>环境也不谈了，和现在相差很大，但需要理解PUP协议的内容，应为接下来，会谈到很多次。</p>
+<p>The PUP family of protocols provides uniform access to any computer onthis internetwork. Previous PUP protocols include simple unreliable (but high-probability) datagram service, and reliable flow-controlled byte streams.</p>
+<h4 id="aims">Aims</h4>
+<p><img src="/p/%E6%8B%A8%E5%9B%9E1984%E7%9C%8Bimplementing-remote-procedure-calls%E5%A6%82%E4%BD%95%E7%9F%B3%E7%A0%B4%E5%A4%A9%E6%83%8A/images/3.png"
+	width="764"
+	height="1121"
+	srcset="/p/%E6%8B%A8%E5%9B%9E1984%E7%9C%8Bimplementing-remote-procedure-calls%E5%A6%82%E4%BD%95%E7%9F%B3%E7%A0%B4%E5%A4%A9%E6%83%8A/images/3_hu283983beb60fcd079cdf6912815e24ee_666214_480x0_resize_box_3.png 480w, /p/%E6%8B%A8%E5%9B%9E1984%E7%9C%8Bimplementing-remote-procedure-calls%E5%A6%82%E4%BD%95%E7%9F%B3%E7%A0%B4%E5%A4%A9%E6%83%8A/images/3_hu283983beb60fcd079cdf6912815e24ee_666214_1024x0_resize_box_3.png 1024w"
+	loading="lazy"
+	
+		alt="图3:RPC论文"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="68"
+		data-flex-basis="163px"
+	
+></p>
+<p>RPC的初衷就是让分布式计算更加方便。在此之前，困难重重，机器、网络、协议、传输路径等等，有点像是带着导航的&quot;漂流瓶&quot;。</p>
+<p>RPC will, we hope, remove unnecessary difficulties, leaving only the fundamental difficulties of building distributed systems: timing, inde-</p>
+<p>pendent failure of components, and the coexistence of independent execution environments.</p>
+<p>主要有两个目标，减少困难和避免失败。</p>
+<p><img src="/p/%E6%8B%A8%E5%9B%9E1984%E7%9C%8Bimplementing-remote-procedure-calls%E5%A6%82%E4%BD%95%E7%9F%B3%E7%A0%B4%E5%A4%A9%E6%83%8A/images/4.png"
+	width="774"
+	height="1094"
+	srcset="/p/%E6%8B%A8%E5%9B%9E1984%E7%9C%8Bimplementing-remote-procedure-calls%E5%A6%82%E4%BD%95%E7%9F%B3%E7%A0%B4%E5%A4%A9%E6%83%8A/images/4_hu8a92472d7e2c4711d4ea4fcf5205b6ac_699583_480x0_resize_box_3.png 480w, /p/%E6%8B%A8%E5%9B%9E1984%E7%9C%8Bimplementing-remote-procedure-calls%E5%A6%82%E4%BD%95%E7%9F%B3%E7%A0%B4%E5%A4%A9%E6%83%8A/images/4_hu8a92472d7e2c4711d4ea4fcf5205b6ac_699583_1024x0_resize_box_3.png 1024w"
+	loading="lazy"
+	
+		alt="图4:RPC论文"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="70"
+		data-flex-basis="169px"
+	
+></p>
+<p>An important issue in design is resolving the tension between powerful semantics and efficiency.</p>
+<p>虽然当时的主流语言Mesa已经没人记住，但数据结构的规范和响应与返回流程，留了下来。以GRPC协议栈为例。</p>
+<p><img src="/p/%E6%8B%A8%E5%9B%9E1984%E7%9C%8Bimplementing-remote-procedure-calls%E5%A6%82%E4%BD%95%E7%9F%B3%E7%A0%B4%E5%A4%A9%E6%83%8A/images/5.png"
+	width="457"
+	height="347"
+	srcset="/p/%E6%8B%A8%E5%9B%9E1984%E7%9C%8Bimplementing-remote-procedure-calls%E5%A6%82%E4%BD%95%E7%9F%B3%E7%A0%B4%E5%A4%A9%E6%83%8A/images/5_hu11d4a4b79304bcc485066818459eedae_91843_480x0_resize_box_3.png 480w, /p/%E6%8B%A8%E5%9B%9E1984%E7%9C%8Bimplementing-remote-procedure-calls%E5%A6%82%E4%BD%95%E7%9F%B3%E7%A0%B4%E5%A4%A9%E6%83%8A/images/5_hu11d4a4b79304bcc485066818459eedae_91843_1024x0_resize_box_3.png 1024w"
+	loading="lazy"
+	
+		alt="图5:RPC论文"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="131"
+		data-flex-basis="316px"
+	
+></p>
+<p>我们可以看到基础设计被沿用了下来，没有使用远程调用最开始的共享地址空间的方式，因为它会产生undue upheaval，主要是因为进程的竞争，会有峰谷值的差异，这会在网络环境中开销加大。We discarded the possibility of emulating some form of shared address space among the computers.</p>
+<p>可以看到TCP和Sockets同为协议栈的基石。</p>
+<p><img src="/p/%E6%8B%A8%E5%9B%9E1984%E7%9C%8Bimplementing-remote-procedure-calls%E5%A6%82%E4%BD%95%E7%9F%B3%E7%A0%B4%E5%A4%A9%E6%83%8A/images/6.png"
+	width="732"
+	height="1098"
+	srcset="/p/%E6%8B%A8%E5%9B%9E1984%E7%9C%8Bimplementing-remote-procedure-calls%E5%A6%82%E4%BD%95%E7%9F%B3%E7%A0%B4%E5%A4%A9%E6%83%8A/images/6_hucd7ac5c2ef712a94ca0f6a7f7fa1a858_729493_480x0_resize_box_3.png 480w, /p/%E6%8B%A8%E5%9B%9E1984%E7%9C%8Bimplementing-remote-procedure-calls%E5%A6%82%E4%BD%95%E7%9F%B3%E7%A0%B4%E5%A4%A9%E6%83%8A/images/6_hucd7ac5c2ef712a94ca0f6a7f7fa1a858_729493_1024x0_resize_box_3.png 1024w"
+	loading="lazy"
+	
+		alt="图6:RPC论文"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="66"
+		data-flex-basis="160px"
+	
+></p>
+<h4 id="structure">Structure</h4>
+<p>它的结构是与 Nelson的论文是相似的，包含五个部分，the user, the user-stub, the RPC communications package (known as RPCRuntime), the server-stub, and the server.</p>
+<p><img src="/p/%E6%8B%A8%E5%9B%9E1984%E7%9C%8Bimplementing-remote-procedure-calls%E5%A6%82%E4%BD%95%E7%9F%B3%E7%A0%B4%E5%A4%A9%E6%83%8A/images/7.png"
+	width="748"
+	height="363"
+	srcset="/p/%E6%8B%A8%E5%9B%9E1984%E7%9C%8Bimplementing-remote-procedure-calls%E5%A6%82%E4%BD%95%E7%9F%B3%E7%A0%B4%E5%A4%A9%E6%83%8A/images/7_hua5bd4f17b5fec3bb503dd17cf9f0077b_34143_480x0_resize_box_3.png 480w, /p/%E6%8B%A8%E5%9B%9E1984%E7%9C%8Bimplementing-remote-procedure-calls%E5%A6%82%E4%BD%95%E7%9F%B3%E7%A0%B4%E5%A4%A9%E6%83%8A/images/7_hua5bd4f17b5fec3bb503dd17cf9f0077b_34143_1024x0_resize_box_3.png 1024w"
+	loading="lazy"
+	
+		alt="图7:RPC论文"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="206"
+		data-flex-basis="494px"
+	
+></p>
+<p>其实现在很容易理解，只是RPCRuntime有了稍许变化，On receipt of these packets, the RPCRuntime in the callee machine passes them to the server-stub.更多是作为Cedar system的标准部分，RPCRuntime is responsible for packet-level communications.</p>
+<p><img src="/p/%E6%8B%A8%E5%9B%9E1984%E7%9C%8Bimplementing-remote-procedure-calls%E5%A6%82%E4%BD%95%E7%9F%B3%E7%A0%B4%E5%A4%A9%E6%83%8A/images/8.png"
+	width="849"
+	height="907"
+	srcset="/p/%E6%8B%A8%E5%9B%9E1984%E7%9C%8Bimplementing-remote-procedure-calls%E5%A6%82%E4%BD%95%E7%9F%B3%E7%A0%B4%E5%A4%A9%E6%83%8A/images/8_hu9b4ce56210d7a325d9708654d7841002_546439_480x0_resize_box_3.png 480w, /p/%E6%8B%A8%E5%9B%9E1984%E7%9C%8Bimplementing-remote-procedure-calls%E5%A6%82%E4%BD%95%E7%9F%B3%E7%A0%B4%E5%A4%A9%E6%83%8A/images/8_hu9b4ce56210d7a325d9708654d7841002_546439_1024x0_resize_box_3.png 1024w"
+	loading="lazy"
+	
+		alt="图8:RPC论文"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="93"
+		data-flex-basis="224px"
+	
+></p>
+<h5 id="naming">Naming</h5>
+<p>The binding operation offered by our RPC package is to bind an importer of an interface to an exporter of an interface. After binding, calls made by the importer invoke procedures implemented by the (remote) exporter. 基本上一个接口由它的类型和接口值组成。</p>
+<p><img src="/p/%E6%8B%A8%E5%9B%9E1984%E7%9C%8Bimplementing-remote-procedure-calls%E5%A6%82%E4%BD%95%E7%9F%B3%E7%A0%B4%E5%A4%A9%E6%83%8A/images/9.png"
+	width="834"
+	height="1250"
+	srcset="/p/%E6%8B%A8%E5%9B%9E1984%E7%9C%8Bimplementing-remote-procedure-calls%E5%A6%82%E4%BD%95%E7%9F%B3%E7%A0%B4%E5%A4%A9%E6%83%8A/images/9_hu53c392a3ee19b715c92c8f4ca463f9e2_792836_480x0_resize_box_3.png 480w, /p/%E6%8B%A8%E5%9B%9E1984%E7%9C%8Bimplementing-remote-procedure-calls%E5%A6%82%E4%BD%95%E7%9F%B3%E7%A0%B4%E5%A4%A9%E6%83%8A/images/9_hu53c392a3ee19b715c92c8f4ca463f9e2_792836_1024x0_resize_box_3.png 1024w"
+	loading="lazy"
+	
+		alt="图9:RPC论文"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="66"
+		data-flex-basis="160px"
+	
+></p>
+<p>这里加载出口主要是用分布式数据库的角度，就分为个人和组织两种入口。</p>
+<p>Grapevine distributed database的思想还是留了下来，one for each type and one for each instance.</p>
+<p><img src="/p/%E6%8B%A8%E5%9B%9E1984%E7%9C%8Bimplementing-remote-procedure-calls%E5%A6%82%E4%BD%95%E7%9F%B3%E7%A0%B4%E5%A4%A9%E6%83%8A/images/10.png"
+	width="855"
+	height="1263"
+	srcset="/p/%E6%8B%A8%E5%9B%9E1984%E7%9C%8Bimplementing-remote-procedure-calls%E5%A6%82%E4%BD%95%E7%9F%B3%E7%A0%B4%E5%A4%A9%E6%83%8A/images/10_hu8c9dacf4b2100ff8119a92d1baea0ca2_842439_480x0_resize_box_3.png 480w, /p/%E6%8B%A8%E5%9B%9E1984%E7%9C%8Bimplementing-remote-procedure-calls%E5%A6%82%E4%BD%95%E7%9F%B3%E7%A0%B4%E5%A4%A9%E6%83%8A/images/10_hu8c9dacf4b2100ff8119a92d1baea0ca2_842439_1024x0_resize_box_3.png 1024w"
+	loading="lazy"
+	
+		alt="图10:RPC论文"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="67"
+		data-flex-basis="162px"
+	
+></p>
+<p>这段比较有意思，主要是讲述了RPCRuntime中的Exportlnterface和Importlnterface。就是分离了编辑机制和绑定机制。These are the basis of the Mesa (and Cedar) separate compilation and binding mechanism.</p>
+<p><img src="/p/%E6%8B%A8%E5%9B%9E1984%E7%9C%8Bimplementing-remote-procedure-calls%E5%A6%82%E4%BD%95%E7%9F%B3%E7%A0%B4%E5%A4%A9%E6%83%8A/images/11.png"
+	width="883"
+	height="1262"
+	srcset="/p/%E6%8B%A8%E5%9B%9E1984%E7%9C%8Bimplementing-remote-procedure-calls%E5%A6%82%E4%BD%95%E7%9F%B3%E7%A0%B4%E5%A4%A9%E6%83%8A/images/11_huf67d560dbabf28bac3bf837b2ffc07e4_461512_480x0_resize_box_3.png 480w, /p/%E6%8B%A8%E5%9B%9E1984%E7%9C%8Bimplementing-remote-procedure-calls%E5%A6%82%E4%BD%95%E7%9F%B3%E7%A0%B4%E5%A4%A9%E6%83%8A/images/11_huf67d560dbabf28bac3bf837b2ffc07e4_461512_1024x0_resize_box_3.png 1024w"
+	loading="lazy"
+	
+		alt="图11:RPC论文"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="69"
+		data-flex-basis="167px"
+	
+></p>
+<p>When the RPCRuntime on the callee machine receivesa new call packet it uses the index to look up its table of current exports(efficiently), verifies that the unique identifier in the packet matches that in thetable, and passes the call packet to the dispatcher procedure specified in the table.它其实是维护了一个表进行查询匹配。</p>
+<p><img src="/p/%E6%8B%A8%E5%9B%9E1984%E7%9C%8Bimplementing-remote-procedure-calls%E5%A6%82%E4%BD%95%E7%9F%B3%E7%A0%B4%E5%A4%A9%E6%83%8A/images/12.png"
+	width="895"
+	height="1286"
+	srcset="/p/%E6%8B%A8%E5%9B%9E1984%E7%9C%8Bimplementing-remote-procedure-calls%E5%A6%82%E4%BD%95%E7%9F%B3%E7%A0%B4%E5%A4%A9%E6%83%8A/images/12_hu9a068c7bda9e6d4fda51f510971019be_803965_480x0_resize_box_3.png 480w, /p/%E6%8B%A8%E5%9B%9E1984%E7%9C%8Bimplementing-remote-procedure-calls%E5%A6%82%E4%BD%95%E7%9F%B3%E7%A0%B4%E5%A4%A9%E6%83%8A/images/12_hu9a068c7bda9e6d4fda51f510971019be_803965_1024x0_resize_box_3.png 1024w"
+	loading="lazy"
+	
+		alt="图12:RPC论文"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="69"
+		data-flex-basis="167px"
+	
+></p>
+<p>他的探讨非常谦虚，讲述了这种模式的重要影响。我们都知道为了避免过多crash发生。Finally, note that this scheme allows calls to be made only on procedures that have been explicitly exported through the RPC mechanism.</p>
+<p><img src="/p/%E6%8B%A8%E5%9B%9E1984%E7%9C%8Bimplementing-remote-procedure-calls%E5%A6%82%E4%BD%95%E7%9F%B3%E7%A0%B4%E5%A4%A9%E6%83%8A/images/13.png"
+	width="835"
+	height="1267"
+	srcset="/p/%E6%8B%A8%E5%9B%9E1984%E7%9C%8Bimplementing-remote-procedure-calls%E5%A6%82%E4%BD%95%E7%9F%B3%E7%A0%B4%E5%A4%A9%E6%83%8A/images/13_hu3441bc07023580e513acfca060819156_721848_480x0_resize_box_3.png 480w, /p/%E6%8B%A8%E5%9B%9E1984%E7%9C%8Bimplementing-remote-procedure-calls%E5%A6%82%E4%BD%95%E7%9F%B3%E7%A0%B4%E5%A4%A9%E6%83%8A/images/13_hu3441bc07023580e513acfca060819156_721848_1024x0_resize_box_3.png 1024w"
+	loading="lazy"
+	
+		alt="图13:RPC论文"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="65"
+		data-flex-basis="158px"
+	
+></p>
+<p><img src="/p/%E6%8B%A8%E5%9B%9E1984%E7%9C%8Bimplementing-remote-procedure-calls%E5%A6%82%E4%BD%95%E7%9F%B3%E7%A0%B4%E5%A4%A9%E6%83%8A/images/14.png"
+	width="872"
+	height="1293"
+	srcset="/p/%E6%8B%A8%E5%9B%9E1984%E7%9C%8Bimplementing-remote-procedure-calls%E5%A6%82%E4%BD%95%E7%9F%B3%E7%A0%B4%E5%A4%A9%E6%83%8A/images/14_hubb07bbfeac7dd1ba844449c4589a609d_718935_480x0_resize_box_3.png 480w, /p/%E6%8B%A8%E5%9B%9E1984%E7%9C%8Bimplementing-remote-procedure-calls%E5%A6%82%E4%BD%95%E7%9F%B3%E7%A0%B4%E5%A4%A9%E6%83%8A/images/14_hubb07bbfeac7dd1ba844449c4589a609d_718935_1024x0_resize_box_3.png 1024w"
+	loading="lazy"
+	
+		alt="图14:RPC论文"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="67"
+		data-flex-basis="161px"
+	
+></p>
+<p>However,the result of a call is sufficient acknowledgment that the call packet was received,and a call packet is sufficient to acknowledge the result packet of the previous call made by that process.就是传递和返回的包如何定义序列和方式。</p>
+<p><img src="/p/%E6%8B%A8%E5%9B%9E1984%E7%9C%8Bimplementing-remote-procedure-calls%E5%A6%82%E4%BD%95%E7%9F%B3%E7%A0%B4%E5%A4%A9%E6%83%8A/images/15.png"
+	width="863"
+	height="1196"
+	srcset="/p/%E6%8B%A8%E5%9B%9E1984%E7%9C%8Bimplementing-remote-procedure-calls%E5%A6%82%E4%BD%95%E7%9F%B3%E7%A0%B4%E5%A4%A9%E6%83%8A/images/15_hu5c5781548f36ded455ef13306a824f74_610316_480x0_resize_box_3.png 480w, /p/%E6%8B%A8%E5%9B%9E1984%E7%9C%8Bimplementing-remote-procedure-calls%E5%A6%82%E4%BD%95%E7%9F%B3%E7%A0%B4%E5%A4%A9%E6%83%8A/images/15_hu5c5781548f36ded455ef13306a824f74_610316_1024x0_resize_box_3.png 1024w"
+	loading="lazy"
+	
+		alt="图15:RPC论文"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="72"
+		data-flex-basis="173px"
+	
+></p>
+<p>这里比较关键，讲到它是如何进行连接的建立与维护。</p>
+<p>that we rely on the unique identifier we introduced when doing remote binding. Without this identifier we would be unable to detect duplicates if a server crashed and then restarted while a caller was still retransmitting a call packet (not very likely, but just plausible). We are also assuming that the call sequence number from an activity does not repeat even if the calling machine is restarted.</p>
+<p>当链接开始的时候，后端也存储了状态信息的关键数量。我们需要确保远程绑定时的标识是唯一的。并且如何调用方重启，同一个活动的调用序列号并不会重复。这种轻量的连接管理在构建大型分布式系统的时候会变得非常重要。这让调用方能意识到caller如果发生crash或者其他严重的连接失败，就能通知到期待中的用户。</p>
+<p>主要思想就是<!-- raw HTML omitted -->最小化连接的消耗并在服务上维持稳定的状态。<!-- raw HTML omitted --></p>
+<p><img src="/p/%E6%8B%A8%E5%9B%9E1984%E7%9C%8Bimplementing-remote-procedure-calls%E5%A6%82%E4%BD%95%E7%9F%B3%E7%A0%B4%E5%A4%A9%E6%83%8A/images/16.png"
+	width="831"
+	height="1259"
+	srcset="/p/%E6%8B%A8%E5%9B%9E1984%E7%9C%8Bimplementing-remote-procedure-calls%E5%A6%82%E4%BD%95%E7%9F%B3%E7%A0%B4%E5%A4%A9%E6%83%8A/images/16_hu7fc958ebcb233b5f1bc049287298af98_759684_480x0_resize_box_3.png 480w, /p/%E6%8B%A8%E5%9B%9E1984%E7%9C%8Bimplementing-remote-procedure-calls%E5%A6%82%E4%BD%95%E7%9F%B3%E7%A0%B4%E5%A4%A9%E6%83%8A/images/16_hu7fc958ebcb233b5f1bc049287298af98_759684_1024x0_resize_box_3.png 1024w"
+	loading="lazy"
+	
+		alt="图16:RPC论文"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="66"
+		data-flex-basis="158px"
+	
+></p>
+<p>下面展示了复杂调用的过程。当涉及到多个数据体或者包的时候，如何维持多个会话的连接反应。</p>
+<p><img src="/p/%E6%8B%A8%E5%9B%9E1984%E7%9C%8Bimplementing-remote-procedure-calls%E5%A6%82%E4%BD%95%E7%9F%B3%E7%A0%B4%E5%A4%A9%E6%83%8A/images/17.png"
+	width="850"
+	height="1264"
+	srcset="/p/%E6%8B%A8%E5%9B%9E1984%E7%9C%8Bimplementing-remote-procedure-calls%E5%A6%82%E4%BD%95%E7%9F%B3%E7%A0%B4%E5%A4%A9%E6%83%8A/images/17_hu2c7d75626a8bbd50ba654e92d68b6bf2_484301_480x0_resize_box_3.png 480w, /p/%E6%8B%A8%E5%9B%9E1984%E7%9C%8Bimplementing-remote-procedure-calls%E5%A6%82%E4%BD%95%E7%9F%B3%E7%A0%B4%E5%A4%A9%E6%83%8A/images/17_hu2c7d75626a8bbd50ba654e92d68b6bf2_484301_1024x0_resize_box_3.png 1024w"
+	loading="lazy"
+	
+		alt="图17:RPC论文"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="67"
+		data-flex-basis="161px"
+	
+></p>
+<h4 id="exception-handling">Exception Handling</h4>
+<p>关于异常的处理。Our RPC package faithfully emulates this mechanism.</p>
+<p><img src="/p/%E6%8B%A8%E5%9B%9E1984%E7%9C%8Bimplementing-remote-procedure-calls%E5%A6%82%E4%BD%95%E7%9F%B3%E7%A0%B4%E5%A4%A9%E6%83%8A/images/18.png"
+	width="832"
+	height="1262"
+	srcset="/p/%E6%8B%A8%E5%9B%9E1984%E7%9C%8Bimplementing-remote-procedure-calls%E5%A6%82%E4%BD%95%E7%9F%B3%E7%A0%B4%E5%A4%A9%E6%83%8A/images/18_hu724102012a1ebf109c123e7a38925965_701591_480x0_resize_box_3.png 480w, /p/%E6%8B%A8%E5%9B%9E1984%E7%9C%8Bimplementing-remote-procedure-calls%E5%A6%82%E4%BD%95%E7%9F%B3%E7%A0%B4%E5%A4%A9%E6%83%8A/images/18_hu724102012a1ebf109c123e7a38925965_701591_1024x0_resize_box_3.png 1024w"
+	loading="lazy"
+	
+		alt="图18:RPC论文"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="65"
+		data-flex-basis="158px"
+	
+></p>
+<p><img src="/p/%E6%8B%A8%E5%9B%9E1984%E7%9C%8Bimplementing-remote-procedure-calls%E5%A6%82%E4%BD%95%E7%9F%B3%E7%A0%B4%E5%A4%A9%E6%83%8A/images/19.png"
+	width="811"
+	height="1231"
+	srcset="/p/%E6%8B%A8%E5%9B%9E1984%E7%9C%8Bimplementing-remote-procedure-calls%E5%A6%82%E4%BD%95%E7%9F%B3%E7%A0%B4%E5%A4%A9%E6%83%8A/images/19_hu356cc739e6529dfecbfa0a09a1f48525_765174_480x0_resize_box_3.png 480w, /p/%E6%8B%A8%E5%9B%9E1984%E7%9C%8Bimplementing-remote-procedure-calls%E5%A6%82%E4%BD%95%E7%9F%B3%E7%A0%B4%E5%A4%A9%E6%83%8A/images/19_hu356cc739e6529dfecbfa0a09a1f48525_765174_1024x0_resize_box_3.png 1024w"
+	loading="lazy"
+	
+		alt="图19:RPC论文"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="65"
+		data-flex-basis="158px"
+	
+></p>
+<p>The first step in reducing cost is maintaining in each machine a stock of idle server processes willing to handle incoming packets. 关于懒连接该如何处理。</p>
+<h4 id="关于安全">关于安全</h4>
+<p><img src="/p/%E6%8B%A8%E5%9B%9E1984%E7%9C%8Bimplementing-remote-procedure-calls%E5%A6%82%E4%BD%95%E7%9F%B3%E7%A0%B4%E5%A4%A9%E6%83%8A/images/20.png"
+	width="897"
+	height="1206"
+	srcset="/p/%E6%8B%A8%E5%9B%9E1984%E7%9C%8Bimplementing-remote-procedure-calls%E5%A6%82%E4%BD%95%E7%9F%B3%E7%A0%B4%E5%A4%A9%E6%83%8A/images/20_hucdc72b2e58044906e4ee476b2c6a4410_666026_480x0_resize_box_3.png 480w, /p/%E6%8B%A8%E5%9B%9E1984%E7%9C%8Bimplementing-remote-procedure-calls%E5%A6%82%E4%BD%95%E7%9F%B3%E7%A0%B4%E5%A4%A9%E6%83%8A/images/20_hucdc72b2e58044906e4ee476b2c6a4410_666026_1024x0_resize_box_3.png 1024w"
+	loading="lazy"
+	
+		alt="图20:RPC论文"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="74"
+		data-flex-basis="178px"
+	
+></p>
+<p>它的时间，正确率这类。</p>
+<p><img src="/p/%E6%8B%A8%E5%9B%9E1984%E7%9C%8Bimplementing-remote-procedure-calls%E5%A6%82%E4%BD%95%E7%9F%B3%E7%A0%B4%E5%A4%A9%E6%83%8A/images/21.png"
+	width="876"
+	height="1224"
+	srcset="/p/%E6%8B%A8%E5%9B%9E1984%E7%9C%8Bimplementing-remote-procedure-calls%E5%A6%82%E4%BD%95%E7%9F%B3%E7%A0%B4%E5%A4%A9%E6%83%8A/images/21_hu2ee4a93603ba01d7aeb6bcaff7b871ca_638055_480x0_resize_box_3.png 480w, /p/%E6%8B%A8%E5%9B%9E1984%E7%9C%8Bimplementing-remote-procedure-calls%E5%A6%82%E4%BD%95%E7%9F%B3%E7%A0%B4%E5%A4%A9%E6%83%8A/images/21_hu2ee4a93603ba01d7aeb6bcaff7b871ca_638055_1024x0_resize_box_3.png 1024w"
+	loading="lazy"
+	
+		alt="图21:RPC论文"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="71"
+		data-flex-basis="171px"
+	
+></p>
+<p>最后是状态的讨论。</p>
+<p><img src="/p/%E6%8B%A8%E5%9B%9E1984%E7%9C%8Bimplementing-remote-procedure-calls%E5%A6%82%E4%BD%95%E7%9F%B3%E7%A0%B4%E5%A4%A9%E6%83%8A/images/22.png"
+	width="883"
+	height="1215"
+	srcset="/p/%E6%8B%A8%E5%9B%9E1984%E7%9C%8Bimplementing-remote-procedure-calls%E5%A6%82%E4%BD%95%E7%9F%B3%E7%A0%B4%E5%A4%A9%E6%83%8A/images/22_hub299d4ee11a9a58f9804fc76b6096144_717756_480x0_resize_box_3.png 480w, /p/%E6%8B%A8%E5%9B%9E1984%E7%9C%8Bimplementing-remote-procedure-calls%E5%A6%82%E4%BD%95%E7%9F%B3%E7%A0%B4%E5%A4%A9%E6%83%8A/images/22_hub299d4ee11a9a58f9804fc76b6096144_717756_1024x0_resize_box_3.png 1024w"
+	loading="lazy"
+	
+		alt="图22:RPC论文"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="72"
+		data-flex-basis="174px"
+	
+></p>
+<p><img src="/p/%E6%8B%A8%E5%9B%9E1984%E7%9C%8Bimplementing-remote-procedure-calls%E5%A6%82%E4%BD%95%E7%9F%B3%E7%A0%B4%E5%A4%A9%E6%83%8A/images/23.png"
+	width="844"
+	height="1093"
+	srcset="/p/%E6%8B%A8%E5%9B%9E1984%E7%9C%8Bimplementing-remote-procedure-calls%E5%A6%82%E4%BD%95%E7%9F%B3%E7%A0%B4%E5%A4%A9%E6%83%8A/images/23_hub935c3fe147689335a2b57b9ac4dd504_571123_480x0_resize_box_3.png 480w, /p/%E6%8B%A8%E5%9B%9E1984%E7%9C%8Bimplementing-remote-procedure-calls%E5%A6%82%E4%BD%95%E7%9F%B3%E7%A0%B4%E5%A4%A9%E6%83%8A/images/23_hub935c3fe147689335a2b57b9ac4dd504_571123_1024x0_resize_box_3.png 1024w"
+	loading="lazy"
+	
+		alt="图23:RPC论文"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="77"
+		data-flex-basis="185px"
+	
+></p>
+<p>我们可以看下，现在主流的gRPC和REST的差别。他们都诞生于同一个思想。</p>
+<p><img src="/p/%E6%8B%A8%E5%9B%9E1984%E7%9C%8Bimplementing-remote-procedure-calls%E5%A6%82%E4%BD%95%E7%9F%B3%E7%A0%B4%E5%A4%A9%E6%83%8A/images/24.png"
+	width="870"
+	height="399"
+	srcset="/p/%E6%8B%A8%E5%9B%9E1984%E7%9C%8Bimplementing-remote-procedure-calls%E5%A6%82%E4%BD%95%E7%9F%B3%E7%A0%B4%E5%A4%A9%E6%83%8A/images/24_hu4c79bd84141293d5ba5258bbcded6ded_107065_480x0_resize_box_3.png 480w, /p/%E6%8B%A8%E5%9B%9E1984%E7%9C%8Bimplementing-remote-procedure-calls%E5%A6%82%E4%BD%95%E7%9F%B3%E7%A0%B4%E5%A4%A9%E6%83%8A/images/24_hu4c79bd84141293d5ba5258bbcded6ded_107065_1024x0_resize_box_3.png 1024w"
+	loading="lazy"
+	
+		alt="图24:RPC论文"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="218"
+		data-flex-basis="523px"
+	
+></p>
+<p>最后，让我们回顾下本文的思想。</p>
+<p>The techniques for managing transport level connections so as to minimize the communication costs and the state that must be maintained by a server are important in our experience of servers dealing with large numbers of users. Our binding semantics are quite powerful, but conceptually simple for a programmer familiar with single machine binding.</p>
+<!-- raw HTML omitted -->
+<p>简单而有力量。simple and  powerful.</p>
+<p>这是一个新事物的产生，对世界带来的改变。</p>
+<p>也是指导我们学习和研究的中心思想。</p>
+<p>对世界来说，减枝要比生枝更加有益，也更值得赞扬。</p>
+<!-- raw HTML omitted -->
+
+</section>
+
+
+    <footer class="article-footer">
+    
+    <section class="article-tags">
+        
+            <a href="/tags/paper/">Paper</a>
+        
+    </section>
+
+
+    
+    <section class="article-copyright">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M14.5 9a3.5 4 0 1 0 0 6" />
+</svg>
+
+
+
+        <span>Licensed under CC BY-NC-SA 4.0</span>
+    </section>
+    </footer>
+
+
+    
+</article>
+
+    
+
+    
+
+<aside class="related-contents--wrapper">
+    <h2 class="section-title">Related contents</h2>
+    <div class="related-contents">
+        <div class="flex article-list--tile">
+            
+                
+<article class="">
+    <a href="/p/infrastructure-as-codeterraform%E5%88%B6%E9%9C%B8%E4%B9%8B%E9%81%93/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">Infrastructure As Code：Terraform制霸之道</h2>
+        </div>
+    </a>
+</article>
+            
+                
+<article class="">
+    <a href="/p/golang%E9%97%AE%E9%A2%98%E8%A7%A3%E6%9E%90%E4%B8%80/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">Golang问题解析（一）</h2>
+        </div>
+    </a>
+</article>
+            
+                
+<article class="">
+    <a href="/p/golang-defer%E7%9A%84%E6%8E%A2%E7%B4%A2/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">Golang defer的探索</h2>
+        </div>
+    </a>
+</article>
+            
+                
+<article class="">
+    <a href="/p/linux-screen/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">Linux Screen</h2>
+        </div>
+    </a>
+</article>
+            
+                
+<article class="">
+    <a href="/p/windows%E5%90%AF%E5%8A%A8%E4%B8%AD%E7%9A%84bcd%E6%96%87%E4%BB%B6%E8%A7%A3%E6%9E%90/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">Windows启动中的BCD文件解析</h2>
+        </div>
+    </a>
+</article>
+            
+        </div>
+    </div>
+</aside>
+
+     
+    
+        
+    <div class="disqus-container">
+    <div id="disqus_thread"></div>
+<script type="application/javascript">
+    window.disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "hugo-theme-stack" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+</div>
+
+<style>
+    .disqus-container {
+        background-color: var(--card-background);
+        border-radius: var(--card-border-radius);
+        box-shadow: var(--shadow-l1);
+        padding: var(--card-padding);
+    }
+</style>
+
+<script>
+    window.addEventListener('onColorSchemeChange', (e) => {
+        if (DISQUS) {
+            DISQUS.reset({
+                reload: true
+            });
+        }
+    })
+</script>
+
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy; 
+        
+            2018 - 
+        
+        2022 panzd
+    </section>
+    
+    <section class="powerby">
+        Built with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> <br />
+        Theme <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.11.0">Stack</a></b> designed by <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a>
+    </section>
+</footer>
+
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.css"integrity="sha256-c0uckgykQ9v5k&#43;IqViZOZKc47Jn7KQil4/MP3ySA3F8="crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.css"integrity="sha256-SBLU4vv6CA6lHsZ1XyTdhyjJxCjPif/TRkjnsyGAGnE="crossorigin="anonymous"
+            >
+
+            </main>
+    <aside class="sidebar right-sidebar sticky">
+        
+            
+                
+    <section class="widget archives">
+        <div class="widget-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <line x1="5" y1="9" x2="19" y2="9" />
+  <line x1="5" y1="15" x2="19" y2="15" />
+  <line x1="11" y1="4" x2="7" y2="20" />
+  <line x1="17" y1="4" x2="13" y2="20" />
+</svg>
+
+
+
+        </div>
+        <h2 class="widget-title section-title">Table of contents</h2>
+        
+        <div class="widget--toc">
+            <nav id="TableOfContents">
+  <ol>
+    <li><a href="#前言">前言:</a>
+      <ol>
+        <li>
+          <ol>
+            <li><a href="#aims">Aims</a></li>
+            <li><a href="#structure">Structure</a></li>
+            <li><a href="#exception-handling">Exception Handling</a></li>
+            <li><a href="#关于安全">关于安全</a></li>
+          </ol>
+        </li>
+      </ol>
+    </li>
+  </ol>
+</nav>
+        </div>
+    </section>
+
+            
+        
+    </aside>
+
+
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.5/dist/vibrant.min.js"integrity="sha256-5NovOZc4iwiAWTYIFiIM7DxKUXKWvpVEuMEPLzcm5/g="crossorigin="anonymous"
+                
+                >
+            </script><script type="text/javascript" src="/ts/main.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+    </body>
+</html>
