@@ -39,7 +39,7 @@
 &lt;p&gt;are code written for Terraform, using the human-readable HashiCorp Configuration Language (HCL) to describe the desired state of infrastructure resources.&lt;/p&gt;
 &lt;p&gt;&lt;!-- raw HTML omitted --&gt;Providers&lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
 &lt;p&gt;are the plugins that Terraform uses to manage those resources. Every supported service or infrastructure platform has a provider that defines which resources are available and performs API calls to manage those resources.&lt;/p&gt;
-&lt;p&gt;&lt;!-- raw HTML omitted --&gt;Modules&lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;p&gt;&lt;!-- raw HTML omitted --&gt; Modules &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
 &lt;p&gt;are reusable Terraform configurations that can be called and configured by other configurations. Most modules manage a few closely related resources from a single provider.&lt;/p&gt;
 &lt;p&gt;&lt;!-- raw HTML omitted --&gt;The Terraform Registry&lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
 &lt;p&gt;makes it easy to use any provider or module. To use a provider or module from thisregistry, just add it to your configuration; when you run &lt;code&gt;terraform init&lt;/code&gt;, Terraform will automatically download everything it needs.&lt;/p&gt;

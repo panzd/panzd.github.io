@@ -1,0 +1,1222 @@
+<!DOCTYPE html>
+<html lang="en-us" dir="ltr">
+    <head><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='Is Parallel Programming Hard, And, If So,What Can You Do About It?'><title>我当然知道并行编程很难，但你总可以做些什么（一）</title>
+
+<link rel='canonical' href='/p/%E6%88%91%E5%BD%93%E7%84%B6%E7%9F%A5%E9%81%93%E5%B9%B6%E8%A1%8C%E7%BC%96%E7%A8%8B%E5%BE%88%E9%9A%BE%E4%BD%86%E4%BD%A0%E6%80%BB%E5%8F%AF%E4%BB%A5%E5%81%9A%E4%BA%9B%E4%BB%80%E4%B9%88%E4%B8%80/'>
+
+<link rel="stylesheet" href="/scss/style.min.450926226e724574a6b936335ea06111f8aeb253d932c86cb2cc807341cd2889.css"><meta property='og:title' content='我当然知道并行编程很难，但你总可以做些什么（一）'>
+<meta property='og:description' content='Is Parallel Programming Hard, And, If So,What Can You Do About It?'>
+<meta property='og:url' content='/p/%E6%88%91%E5%BD%93%E7%84%B6%E7%9F%A5%E9%81%93%E5%B9%B6%E8%A1%8C%E7%BC%96%E7%A8%8B%E5%BE%88%E9%9A%BE%E4%BD%86%E4%BD%A0%E6%80%BB%E5%8F%AF%E4%BB%A5%E5%81%9A%E4%BA%9B%E4%BB%80%E4%B9%88%E4%B8%80/'>
+<meta property='og:site_name' content='panzd'>
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='Book' /><meta property='article:tag' content='Translate' /><meta property='article:published_time' content='2022-07-30T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2022-07-30T00:00:00&#43;00:00'/>
+<meta name="twitter:title" content="我当然知道并行编程很难，但你总可以做些什么（一）">
+<meta name="twitter:description" content="Is Parallel Programming Hard, And, If So,What Can You Do About It?">
+    </head>
+    <body class="
+    article-page
+    ">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "auto");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky ">
+    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="Toggle Menu">
+        <span class="hamburger-box">
+            <span class="hamburger-inner"></span>
+        </span>
+    </button>
+
+    <header>
+        
+            
+            <figure class="site-avatar">
+                <a href="/">
+                
+                    
+                    
+                    
+                        
+                        <img src="/img/avatar_hucb79f288fbfc5ef8a2d525cd76ba88b6_49364_300x0_resize_box_3.png" width="300"
+                            height="300" class="site-logo" loading="lazy" alt="Avatar">
+                    
+                
+                </a>
+                
+                    <span class="emoji">😊</span>
+                
+            </figure>
+            
+        
+        
+        <div class="site-meta">
+            <h1 class="site-name"><a href="/">panzd</a></h1>
+            <h2 class="site-description">微信公众号：溪见</h2>
+        </div>
+    </header><ol class="social-menu">
+            
+                <li>
+                    <a 
+                        href='https://github.com/panzd'
+                        target="_blank"
+                        title="GitHub"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-github" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a 
+                        href='mailto:%20donggnij@foxmail.com'
+                        target="_blank"
+                        title="Mail"
+                    >
+                        
+                        
+                            <?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 19.1.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 64 64" enable-background="new 0 0 64 64" xml:space="preserve">
+<path id="Mail" d="M58.0034485,8H5.9965506c-3.3136795,0-5.9999995,2.6862001-5.9999995,6v36c0,3.3137016,2.6863203,6,5.9999995,6
+	h52.006897c3.3137016,0,6-2.6862984,6-6V14C64.0034485,10.6862001,61.3171501,8,58.0034485,8z M62.0034485,49.1108017
+	L43.084549,30.1919994l18.9188995-12.0555992V49.1108017z M5.9965506,10h52.006897c2.2056007,0,4,1.7943001,4,4v1.7664003
+	L34.4677505,33.3134003c-1.4902,0.9492989-3.3935013,0.9199982-4.8495998-0.0703011L1.9965508,14.4694996V14
+	C1.9965508,11.7943001,3.7910507,10,5.9965506,10z M1.9965508,16.8852005L21.182251,29.9251003L1.9965508,49.1108017V16.8852005z
+	 M58.0034485,54H5.9965506c-1.6473999,0-3.0638998-1.0021019-3.6760998-2.4278984l20.5199013-20.5200024l5.6547985,3.843401
+	c1.0859013,0.7383003,2.3418007,1.1083984,3.5995998,1.1083984c1.1953011,0,2.3925018-0.3339996,3.4463005-1.0048981
+	l5.8423996-3.7230015l20.2961006,20.2961025C61.0673485,52.9978981,59.6508713,54,58.0034485,54z"/>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+</svg>
+
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a 
+                        href='https://weibo.com/u/3528852115'
+                        target="_blank"
+                        title="Weibo"
+                    >
+                        
+                        
+                            <!--wb-->
+<svg class="Zi Zi--Weibo Login-socialIcon" fill="none" viewBox="0 0 24 24" width="24" height="24">
+<path fill="none"
+ d="M15.518 3.06c8.834-.854 7.395 7.732 7.394 7.731-.625 1.439-1.673.309-1.673.309.596-7.519-5.692-6.329-5.692-6.329-.898-1.067-.029-1.711-.029-1.711zm4.131 6.985c-.661 1.01-1.377.126-1.376.126.205-3.179-2.396-2.598-2.396-2.598-.719-.765-.091-1.346-.091-1.346 4.882-.551 3.863 3.818 3.863 3.818zM5.317 7.519s4.615-3.86 6.443-1.328c0 0 .662 1.08-.111 2.797.003-.003 3.723-1.96 5.408.159 0 0 .848 1.095-.191 2.649 0 0 2.918-.099 2.918 2.715 0 2.811-4.104 6.44-9.315 6.44-5.214 0-8.026-2.092-8.596-3.102 0 0-3.475-4.495 3.444-10.33zm10.448 7.792s.232-4.411-5.71-4.207c-6.652.231-6.579 4.654-6.579 4.654.021.39.097 3.713 5.842 3.713 5.98 0 6.447-4.16 6.447-4.16zm-9.882.86s-.059-3.632 3.804-3.561c3.412.06 3.206 3.165 3.206 3.165s-.026 2.979-3.684 2.979c-3.288 0-3.326-2.583-3.326-2.583zm2.528 1.037c.672 0 1.212-.447 1.212-.998 0-.551-.543-.998-1.212-.998-.672 0-1.215.447-1.215.998 0 .551.546.998 1.215.998z" fill-rule="evenodd">
+ </path></svg>
+
+                        
+                    </a>
+                </li>
+            
+        </ol><ol class="menu" id="main-menu">
+        
+        
+        
+
+        <li >
+            <a href='/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <polyline points="5 12 3 12 12 3 21 12 19 12" />
+  <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
+  <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
+</svg>
+
+
+
+                
+                <span>Home</span>
+            </a>
+        </li>
+        
+        
+
+        <li >
+            <a href='/about/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="7" r="4" />
+  <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
+</svg>
+
+
+
+                
+                <span>About</span>
+            </a>
+        </li>
+        
+        
+
+        <li >
+            <a href='/archives/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <rect x="3" y="4" width="18" height="4" rx="2" />
+  <path d="M5 8v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-10" />
+  <line x1="10" y1="12" x2="14" y2="12" />
+</svg>
+
+
+
+                
+                <span>Archives</span>
+            </a>
+        </li>
+        
+        
+
+        <li >
+            <a href='/search/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="10" cy="10" r="7" />
+  <line x1="21" y1="21" x2="15" y2="15" />
+</svg>
+
+
+
+                
+                <span>Search</span>
+            </a>
+        </li>
+        
+
+        <div class="menu-bottom-section">
+            
+            
+                <li id="dark-mode-toggle">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="8" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="16" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                    <span>Dark Mode</span>
+                </li>
+            
+        </div>
+    </ol>
+</aside>
+<main class="main full-width">
+    <article class="main-article">
+    <header class="article-header">
+
+    <div class="article-details">
+    
+    <header class="article-category">
+        
+            <a href="/categories/article/" >
+                Article
+            </a>
+        
+    </header>
+    
+
+    <div class="article-title-wrapper">
+        <h2 class="article-title">
+            <a href="/p/%E6%88%91%E5%BD%93%E7%84%B6%E7%9F%A5%E9%81%93%E5%B9%B6%E8%A1%8C%E7%BC%96%E7%A8%8B%E5%BE%88%E9%9A%BE%E4%BD%86%E4%BD%A0%E6%80%BB%E5%8F%AF%E4%BB%A5%E5%81%9A%E4%BA%9B%E4%BB%80%E4%B9%88%E4%B8%80/">我当然知道并行编程很难，但你总可以做些什么（一）</a>
+        </h2>
+    
+        
+        <h3 class="article-subtitle">
+            Is Parallel Programming Hard, And, If So,What Can You Do About It?
+        </h3>
+        
+    </div>
+
+    
+    <footer class="article-time">
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published">Jul 30, 2022</time>
+            </div>
+        
+
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+                <time class="article-time--reading">
+                    6 minute read
+                </time>
+            </div>
+        
+    </footer>
+    
+
+    
+</div>
+</header>
+
+    <section class="article-content">
+    
+    
+    <h3 id="前言">前言</h3>
+<p>这是A Week系列的第四期。</p>
+<p>主要是开了一个新坑，讲讲McKenney大师写的Parallel Programming，因为本书在国内尚无正式的译本，所以多写了一些翻译和理解。</p>
+<h3 id="chapter-1">Chapter 1</h3>
+<p>Is Parallel Programming Hard, And, If So,What Can You Do About It?</p>
+<p>作者Paul E. McKenney是世界并行编程专家，Linux 内核中 RCU 实现和 rcutorture 测试模块的维护者，也是RCU的发明人。</p>
+<p><img src="/p/%E6%88%91%E5%BD%93%E7%84%B6%E7%9F%A5%E9%81%93%E5%B9%B6%E8%A1%8C%E7%BC%96%E7%A8%8B%E5%BE%88%E9%9A%BE%E4%BD%86%E4%BD%A0%E6%80%BB%E5%8F%AF%E4%BB%A5%E5%81%9A%E4%BA%9B%E4%BB%80%E4%B9%88%E4%B8%80/images/1.png"
+	width="1041"
+	height="1269"
+	srcset="/p/%E6%88%91%E5%BD%93%E7%84%B6%E7%9F%A5%E9%81%93%E5%B9%B6%E8%A1%8C%E7%BC%96%E7%A8%8B%E5%BE%88%E9%9A%BE%E4%BD%86%E4%BD%A0%E6%80%BB%E5%8F%AF%E4%BB%A5%E5%81%9A%E4%BA%9B%E4%BB%80%E4%B9%88%E4%B8%80/images/1_hua00c9ba27f69b973f7600fa46519f41d_19235_480x0_resize_box_3.png 480w, /p/%E6%88%91%E5%BD%93%E7%84%B6%E7%9F%A5%E9%81%93%E5%B9%B6%E8%A1%8C%E7%BC%96%E7%A8%8B%E5%BE%88%E9%9A%BE%E4%BD%86%E4%BD%A0%E6%80%BB%E5%8F%AF%E4%BB%A5%E5%81%9A%E4%BA%9B%E4%BB%80%E4%B9%88%E4%B8%80/images/1_hua00c9ba27f69b973f7600fa46519f41d_19235_1024x0_resize_box_3.png 1024w"
+	loading="lazy"
+	
+		alt="图1:paralle1"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="82"
+		data-flex-basis="196px"
+	
+></p>
+<p>在一开始有关于使用本书的指南，主要是一些代码和习题的初衷。</p>
+<p><img src="/p/%E6%88%91%E5%BD%93%E7%84%B6%E7%9F%A5%E9%81%93%E5%B9%B6%E8%A1%8C%E7%BC%96%E7%A8%8B%E5%BE%88%E9%9A%BE%E4%BD%86%E4%BD%A0%E6%80%BB%E5%8F%AF%E4%BB%A5%E5%81%9A%E4%BA%9B%E4%BB%80%E4%B9%88%E4%B8%80/images/2.png"
+	width="1034"
+	height="1299"
+	srcset="/p/%E6%88%91%E5%BD%93%E7%84%B6%E7%9F%A5%E9%81%93%E5%B9%B6%E8%A1%8C%E7%BC%96%E7%A8%8B%E5%BE%88%E9%9A%BE%E4%BD%86%E4%BD%A0%E6%80%BB%E5%8F%AF%E4%BB%A5%E5%81%9A%E4%BA%9B%E4%BB%80%E4%B9%88%E4%B8%80/images/2_hu438be327d74213170c2bdc52caf4348a_389247_480x0_resize_box_3.png 480w, /p/%E6%88%91%E5%BD%93%E7%84%B6%E7%9F%A5%E9%81%93%E5%B9%B6%E8%A1%8C%E7%BC%96%E7%A8%8B%E5%BE%88%E9%9A%BE%E4%BD%86%E4%BD%A0%E6%80%BB%E5%8F%AF%E4%BB%A5%E5%81%9A%E4%BA%9B%E4%BB%80%E4%B9%88%E4%B8%80/images/2_hu438be327d74213170c2bdc52caf4348a_389247_1024x0_resize_box_3.png 1024w"
+	loading="lazy"
+	
+		alt="图2:paralle1"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="79"
+		data-flex-basis="191px"
+	
+></p>
+<p>下面进入正式的章节：</p>
+<h3 id="chapter-2--introduction">Chapter 2  Introduction</h3>
+<p><img src="/p/%E6%88%91%E5%BD%93%E7%84%B6%E7%9F%A5%E9%81%93%E5%B9%B6%E8%A1%8C%E7%BC%96%E7%A8%8B%E5%BE%88%E9%9A%BE%E4%BD%86%E4%BD%A0%E6%80%BB%E5%8F%AF%E4%BB%A5%E5%81%9A%E4%BA%9B%E4%BB%80%E4%B9%88%E4%B8%80/images/3.png"
+	width="991"
+	height="1302"
+	srcset="/p/%E6%88%91%E5%BD%93%E7%84%B6%E7%9F%A5%E9%81%93%E5%B9%B6%E8%A1%8C%E7%BC%96%E7%A8%8B%E5%BE%88%E9%9A%BE%E4%BD%86%E4%BD%A0%E6%80%BB%E5%8F%AF%E4%BB%A5%E5%81%9A%E4%BA%9B%E4%BB%80%E4%B9%88%E4%B8%80/images/3_hu285600c88e656690ba32a0059ec2d53c_359569_480x0_resize_box_3.png 480w, /p/%E6%88%91%E5%BD%93%E7%84%B6%E7%9F%A5%E9%81%93%E5%B9%B6%E8%A1%8C%E7%BC%96%E7%A8%8B%E5%BE%88%E9%9A%BE%E4%BD%86%E4%BD%A0%E6%80%BB%E5%8F%AF%E4%BB%A5%E5%81%9A%E4%BA%9B%E4%BB%80%E4%B9%88%E4%B8%80/images/3_hu285600c88e656690ba32a0059ec2d53c_359569_1024x0_resize_box_3.png 1024w"
+	loading="lazy"
+	
+		alt="图3:paralle1"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="76"
+		data-flex-basis="182px"
+	
+></p>
+<p>New technologies that are difficult to use at introduction invariably become easier over time.新事物总是在开始很难，但随着长时间的普及而变得简单。</p>
+<p>It instead examines the reasons why parallel programming is difficult, and then works to help the reader to overcome these difficulties.</p>
+<p>因为并行编程确实很难，但是这些困难都会克服的。</p>
+<p>包括以下几个方面：</p>
+<ol>
+<li>
+<p>The historic high cost and relative rarity of parallel systems.</p>
+</li>
+<li>
+<p>The typical researcher&rsquo;s and practitioner&rsquo;s lack of experience with parallel systems.</p>
+</li>
+<li>
+<p>The paucity of publicly accessible parallel code.</p>
+</li>
+<li>
+<p>The lack of a widely understood engineering discipline of parallel programming.</p>
+</li>
+<li>
+<p>The high overhead of communication relative to that of processing, even in tightly coupled shared-memory computers.</p>
+</li>
+</ol>
+<p>除了因为是未知性较高，部分也是因为关联性复杂、运算代价高、通信繁琐。</p>
+<p><img src="/p/%E6%88%91%E5%BD%93%E7%84%B6%E7%9F%A5%E9%81%93%E5%B9%B6%E8%A1%8C%E7%BC%96%E7%A8%8B%E5%BE%88%E9%9A%BE%E4%BD%86%E4%BD%A0%E6%80%BB%E5%8F%AF%E4%BB%A5%E5%81%9A%E4%BA%9B%E4%BB%80%E4%B9%88%E4%B8%80/images/4.png"
+	width="948"
+	height="1150"
+	srcset="/p/%E6%88%91%E5%BD%93%E7%84%B6%E7%9F%A5%E9%81%93%E5%B9%B6%E8%A1%8C%E7%BC%96%E7%A8%8B%E5%BE%88%E9%9A%BE%E4%BD%86%E4%BD%A0%E6%80%BB%E5%8F%AF%E4%BB%A5%E5%81%9A%E4%BA%9B%E4%BB%80%E4%B9%88%E4%B8%80/images/4_hu7868d8d79ca74133abc0b105391f5205_461861_480x0_resize_box_3.png 480w, /p/%E6%88%91%E5%BD%93%E7%84%B6%E7%9F%A5%E9%81%93%E5%B9%B6%E8%A1%8C%E7%BC%96%E7%A8%8B%E5%BE%88%E9%9A%BE%E4%BD%86%E4%BD%A0%E6%80%BB%E5%8F%AF%E4%BB%A5%E5%81%9A%E4%BA%9B%E4%BB%80%E4%B9%88%E4%B8%80/images/4_hu7868d8d79ca74133abc0b105391f5205_461861_1024x0_resize_box_3.png 1024w"
+	loading="lazy"
+	
+		alt="图4:paralle1"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="82"
+		data-flex-basis="197px"
+	
+></p>
+<p>虽然现存的大部分是并发编程，但随着计算机体系结构的发展，以及操作系统内核、数据库系统和消息处理系统的提升，并行编程的潜力将得到释放，虽然相对的通信成本还过高，但颇有点&quot;苦尽甘来&quot;的感觉。</p>
+<p>并行编程的三个目标：</p>
+<ol>
+<li>
+<p>Performance.性能</p>
+</li>
+<li>
+<p>Productivity.生产力</p>
+</li>
+<li>
+<p>Generality.普适性</p>
+</li>
+</ol>
+<p>他们之间是三角关系，永远在平衡和拉扯中。</p>
+<p><img src="/p/%E6%88%91%E5%BD%93%E7%84%B6%E7%9F%A5%E9%81%93%E5%B9%B6%E8%A1%8C%E7%BC%96%E7%A8%8B%E5%BE%88%E9%9A%BE%E4%BD%86%E4%BD%A0%E6%80%BB%E5%8F%AF%E4%BB%A5%E5%81%9A%E4%BA%9B%E4%BB%80%E4%B9%88%E4%B8%80/images/5.png"
+	width="970"
+	height="1243"
+	srcset="/p/%E6%88%91%E5%BD%93%E7%84%B6%E7%9F%A5%E9%81%93%E5%B9%B6%E8%A1%8C%E7%BC%96%E7%A8%8B%E5%BE%88%E9%9A%BE%E4%BD%86%E4%BD%A0%E6%80%BB%E5%8F%AF%E4%BB%A5%E5%81%9A%E4%BA%9B%E4%BB%80%E4%B9%88%E4%B8%80/images/5_hua54e89b65d13d3ddbd250be3f365ecd6_475090_480x0_resize_box_3.png 480w, /p/%E6%88%91%E5%BD%93%E7%84%B6%E7%9F%A5%E9%81%93%E5%B9%B6%E8%A1%8C%E7%BC%96%E7%A8%8B%E5%BE%88%E9%9A%BE%E4%BD%86%E4%BD%A0%E6%80%BB%E5%8F%AF%E4%BB%A5%E5%81%9A%E4%BA%9B%E4%BB%80%E4%B9%88%E4%B8%80/images/5_hua54e89b65d13d3ddbd250be3f365ecd6_475090_1024x0_resize_box_3.png 1024w"
+	loading="lazy"
+	
+		alt="图5:paralle1"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="78"
+		data-flex-basis="187px"
+	
+></p>
+<p>Parallelism is the way to go for those wanting to avail themselves of the full performance of their systems.并行是为了发挥机器的全部性能。</p>
+<p><img src="/p/%E6%88%91%E5%BD%93%E7%84%B6%E7%9F%A5%E9%81%93%E5%B9%B6%E8%A1%8C%E7%BC%96%E7%A8%8B%E5%BE%88%E9%9A%BE%E4%BD%86%E4%BD%A0%E6%80%BB%E5%8F%AF%E4%BB%A5%E5%81%9A%E4%BA%9B%E4%BB%80%E4%B9%88%E4%B8%80/images/6.png"
+	width="982"
+	height="1266"
+	srcset="/p/%E6%88%91%E5%BD%93%E7%84%B6%E7%9F%A5%E9%81%93%E5%B9%B6%E8%A1%8C%E7%BC%96%E7%A8%8B%E5%BE%88%E9%9A%BE%E4%BD%86%E4%BD%A0%E6%80%BB%E5%8F%AF%E4%BB%A5%E5%81%9A%E4%BA%9B%E4%BB%80%E4%B9%88%E4%B8%80/images/6_hu615a8454f68ec8e3e87c7e5871dada6f_493569_480x0_resize_box_3.png 480w, /p/%E6%88%91%E5%BD%93%E7%84%B6%E7%9F%A5%E9%81%93%E5%B9%B6%E8%A1%8C%E7%BC%96%E7%A8%8B%E5%BE%88%E9%9A%BE%E4%BD%86%E4%BD%A0%E6%80%BB%E5%8F%AF%E4%BB%A5%E5%81%9A%E4%BA%9B%E4%BB%80%E4%B9%88%E4%B8%80/images/6_hu615a8454f68ec8e3e87c7e5871dada6f_493569_1024x0_resize_box_3.png 1024w"
+	loading="lazy"
+	
+		alt="图6:paralle1"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="77"
+		data-flex-basis="186px"
+	
+></p>
+<p>One of the inescapable consequences of the rapid decrease in the cost of hardware is that software productivity becomes increasingly important.硬件成本下降后，软件生产力的重要性得到了提高。</p>
+<p>In fact, this economic force explains much of the maniacal focus on portability, which can be seen as an important special case of generality.为了兼容，总是要失去一些性能的。</p>
+<p><img src="/p/%E6%88%91%E5%BD%93%E7%84%B6%E7%9F%A5%E9%81%93%E5%B9%B6%E8%A1%8C%E7%BC%96%E7%A8%8B%E5%BE%88%E9%9A%BE%E4%BD%86%E4%BD%A0%E6%80%BB%E5%8F%AF%E4%BB%A5%E5%81%9A%E4%BA%9B%E4%BB%80%E4%B9%88%E4%B8%80/images/7.png"
+	width="1007"
+	height="1216"
+	srcset="/p/%E6%88%91%E5%BD%93%E7%84%B6%E7%9F%A5%E9%81%93%E5%B9%B6%E8%A1%8C%E7%BC%96%E7%A8%8B%E5%BE%88%E9%9A%BE%E4%BD%86%E4%BD%A0%E6%80%BB%E5%8F%AF%E4%BB%A5%E5%81%9A%E4%BA%9B%E4%BB%80%E4%B9%88%E4%B8%80/images/7_hude90fb5a7378e2a4b488beec3e06f7f5_454599_480x0_resize_box_3.png 480w, /p/%E6%88%91%E5%BD%93%E7%84%B6%E7%9F%A5%E9%81%93%E5%B9%B6%E8%A1%8C%E7%BC%96%E7%A8%8B%E5%BE%88%E9%9A%BE%E4%BD%86%E4%BD%A0%E6%80%BB%E5%8F%AF%E4%BB%A5%E5%81%9A%E4%BA%9B%E4%BB%80%E4%B9%88%E4%B8%80/images/7_hude90fb5a7378e2a4b488beec3e06f7f5_454599_1024x0_resize_box_3.png 1024w"
+	loading="lazy"
+	
+		alt="图7:paralle1"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="82"
+		data-flex-basis="198px"
+	
+></p>
+<p>总是要在performance, productivity, and generality中取得平衡，包括C/C++、Java、MPI等。</p>
+<p><img src="/p/%E6%88%91%E5%BD%93%E7%84%B6%E7%9F%A5%E9%81%93%E5%B9%B6%E8%A1%8C%E7%BC%96%E7%A8%8B%E5%BE%88%E9%9A%BE%E4%BD%86%E4%BD%A0%E6%80%BB%E5%8F%AF%E4%BB%A5%E5%81%9A%E4%BA%9B%E4%BB%80%E4%B9%88%E4%B8%80/images/8.png"
+	width="925"
+	height="1131"
+	srcset="/p/%E6%88%91%E5%BD%93%E7%84%B6%E7%9F%A5%E9%81%93%E5%B9%B6%E8%A1%8C%E7%BC%96%E7%A8%8B%E5%BE%88%E9%9A%BE%E4%BD%86%E4%BD%A0%E6%80%BB%E5%8F%AF%E4%BB%A5%E5%81%9A%E4%BA%9B%E4%BB%80%E4%B9%88%E4%B8%80/images/8_hu16f2123f54421e00e88a90e910c62ed8_454545_480x0_resize_box_3.png 480w, /p/%E6%88%91%E5%BD%93%E7%84%B6%E7%9F%A5%E9%81%93%E5%B9%B6%E8%A1%8C%E7%BC%96%E7%A8%8B%E5%BE%88%E9%9A%BE%E4%BD%86%E4%BD%A0%E6%80%BB%E5%8F%AF%E4%BB%A5%E5%81%9A%E4%BA%9B%E4%BB%80%E4%B9%88%E4%B8%80/images/8_hu16f2123f54421e00e88a90e910c62ed8_454545_1024x0_resize_box_3.png 1024w"
+	loading="lazy"
+	
+		alt="图8:paralle1"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="81"
+		data-flex-basis="196px"
+	
+></p>
+<p>但也有其他的方法来提高性能：</p>
+<ol>
+<li>
+<p>Run multiple instances of a sequential application.</p>
+</li>
+<li>
+<p>Make the application use existing parallel software.</p>
+</li>
+<li>
+<p>Optimize the serial application.</p>
+</li>
+</ol>
+<p>1.If your program is analyzing a large number of different scenarios, or is analyzing a large number of independent data sets, one easy and effective approach is to create a single sequential program that carries out a single analysis, then use any of a number of scripting environments (for example the bash shell) to run a number of instances of</p>
+<p>that sequential program in parallel.</p>
+<p>用单一的结果运算脚本并行地去计算数据集的结果。</p>
+<p>2.There is no longer any shortage of parallel software environments that can present a single-threaded programmingenvironment, including relational databases [Dat82], web-application servers, and map-reduce environments.</p>
+<p>除了加入GPU外，还可以加入关系型数据库、web应用服务和map-reduce环境。</p>
+<p>3.随着摩尔定律不能再来显著的单线程性能改进，并行编程将是打破性能瓶颈最好的选择。但数据结构与算法的选择仍然很重要，数据布局的调整也会提高性能，减少CPU等待磁盘的时间.</p>
+<p>Of course, the easier it is to parallelize your program, the more attractive parallelization becomes as an optimization.</p>
+<p><img src="/p/%E6%88%91%E5%BD%93%E7%84%B6%E7%9F%A5%E9%81%93%E5%B9%B6%E8%A1%8C%E7%BC%96%E7%A8%8B%E5%BE%88%E9%9A%BE%E4%BD%86%E4%BD%A0%E6%80%BB%E5%8F%AF%E4%BB%A5%E5%81%9A%E4%BA%9B%E4%BB%80%E4%B9%88%E4%B8%80/images/9.png"
+	width="960"
+	height="1177"
+	srcset="/p/%E6%88%91%E5%BD%93%E7%84%B6%E7%9F%A5%E9%81%93%E5%B9%B6%E8%A1%8C%E7%BC%96%E7%A8%8B%E5%BE%88%E9%9A%BE%E4%BD%86%E4%BD%A0%E6%80%BB%E5%8F%AF%E4%BB%A5%E5%81%9A%E4%BA%9B%E4%BB%80%E4%B9%88%E4%B8%80/images/9_hud92f35e78cadc617729dee973d28780a_497421_480x0_resize_box_3.png 480w, /p/%E6%88%91%E5%BD%93%E7%84%B6%E7%9F%A5%E9%81%93%E5%B9%B6%E8%A1%8C%E7%BC%96%E7%A8%8B%E5%BE%88%E9%9A%BE%E4%BD%86%E4%BD%A0%E6%80%BB%E5%8F%AF%E4%BB%A5%E5%81%9A%E4%BA%9B%E4%BB%80%E4%B9%88%E4%B8%80/images/9_hud92f35e78cadc617729dee973d28780a_497421_1024x0_resize_box_3.png 1024w"
+	loading="lazy"
+	
+		alt="图9:paralle1"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="81"
+		data-flex-basis="195px"
+	
+></p>
+<p>But parallel programming involves two-way communication, with a program&rsquo;s performance and scalability being the communication from the machine to the human. In short, the human writes a program telling the computer what to do, and the computer critiques this program via the resulting performance and scalability. Therefore, appeals</p>
+<p>to abstractions or to mathematical analyses will often be of severely limited utility.</p>
+<p>但并行编程不仅是写代码，也会涉及到two-way communication双向通信，以及可伸缩性，还需要有抽象和数学分析能力。So，人为因素占比较大。</p>
+<p><img src="/p/%E6%88%91%E5%BD%93%E7%84%B6%E7%9F%A5%E9%81%93%E5%B9%B6%E8%A1%8C%E7%BC%96%E7%A8%8B%E5%BE%88%E9%9A%BE%E4%BD%86%E4%BD%A0%E6%80%BB%E5%8F%AF%E4%BB%A5%E5%81%9A%E4%BA%9B%E4%BB%80%E4%B9%88%E4%B8%80/images/10.png"
+	width="412"
+	height="297"
+	srcset="/p/%E6%88%91%E5%BD%93%E7%84%B6%E7%9F%A5%E9%81%93%E5%B9%B6%E8%A1%8C%E7%BC%96%E7%A8%8B%E5%BE%88%E9%9A%BE%E4%BD%86%E4%BD%A0%E6%80%BB%E5%8F%AF%E4%BB%A5%E5%81%9A%E4%BA%9B%E4%BB%80%E4%B9%88%E4%B8%80/images/10_hu6b5422d33dcd2460c37207b9bee29afc_32337_480x0_resize_box_3.png 480w, /p/%E6%88%91%E5%BD%93%E7%84%B6%E7%9F%A5%E9%81%93%E5%B9%B6%E8%A1%8C%E7%BC%96%E7%A8%8B%E5%BE%88%E9%9A%BE%E4%BD%86%E4%BD%A0%E6%80%BB%E5%8F%AF%E4%BB%A5%E5%81%9A%E4%BA%9B%E4%BB%80%E4%B9%88%E4%B8%80/images/10_hu6b5422d33dcd2460c37207b9bee29afc_32337_1024x0_resize_box_3.png 1024w"
+	loading="lazy"
+	
+		alt="图10:paralle1"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="138"
+		data-flex-basis="332px"
+	
+></p>
+<p>如图所言：对软件开发人员的要求较高。</p>
+<p><img src="/p/%E6%88%91%E5%BD%93%E7%84%B6%E7%9F%A5%E9%81%93%E5%B9%B6%E8%A1%8C%E7%BC%96%E7%A8%8B%E5%BE%88%E9%9A%BE%E4%BD%86%E4%BD%A0%E6%80%BB%E5%8F%AF%E4%BB%A5%E5%81%9A%E4%BA%9B%E4%BB%80%E4%B9%88%E4%B8%80/images/11.png"
+	width="883"
+	height="1133"
+	srcset="/p/%E6%88%91%E5%BD%93%E7%84%B6%E7%9F%A5%E9%81%93%E5%B9%B6%E8%A1%8C%E7%BC%96%E7%A8%8B%E5%BE%88%E9%9A%BE%E4%BD%86%E4%BD%A0%E6%80%BB%E5%8F%AF%E4%BB%A5%E5%81%9A%E4%BA%9B%E4%BB%80%E4%B9%88%E4%B8%80/images/11_hu946adf600afee0b3e013142ba538a9a5_465826_480x0_resize_box_3.png 480w, /p/%E6%88%91%E5%BD%93%E7%84%B6%E7%9F%A5%E9%81%93%E5%B9%B6%E8%A1%8C%E7%BC%96%E7%A8%8B%E5%BE%88%E9%9A%BE%E4%BD%86%E4%BD%A0%E6%80%BB%E5%8F%AF%E4%BB%A5%E5%81%9A%E4%BA%9B%E4%BB%80%E4%B9%88%E4%B8%80/images/11_hu946adf600afee0b3e013142ba538a9a5_465826_1024x0_resize_box_3.png 1024w"
+	loading="lazy"
+	
+		alt="图11:paralle1"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="77"
+		data-flex-basis="187px"
+	
+></p>
+<p>Work Partitioning</p>
+<p>良好的并行程序设计拥有适合的数据结构，而它所需要的state spaces以及I/O devices都很合理，也不会引起cpu caches，但糟糕的并行程序会引起争夺，及难以理解。</p>
+<p>Parallel Access Control</p>
+<p>The first parallel-access-control issue is whether the form of access to a given resource depends on that resource&rsquo;s location.</p>
+<p>The other parallel-access-control issue is how threads coordinate access to the resources.</p>
+<p>同步永远会涉及到权限机制，deadlock, livelock, transaction rollback这些问题永远都在。</p>
+<p>Resource Partitioning and Replication</p>
+<p>The most effective parallel algorithms and systems exploit resource parallelism, so much so that it is usually wise to begin parallelization by partitioning your write-intensive resources and replicating frequently accessed read-mostly resources.</p>
+<p>对写入密集型资源进行分区，以便于并行化资源的访问和复制，并随着时间动态改变。dynamically change the partitioning over time.</p>
+<p><img src="/p/%E6%88%91%E5%BD%93%E7%84%B6%E7%9F%A5%E9%81%93%E5%B9%B6%E8%A1%8C%E7%BC%96%E7%A8%8B%E5%BE%88%E9%9A%BE%E4%BD%86%E4%BD%A0%E6%80%BB%E5%8F%AF%E4%BB%A5%E5%81%9A%E4%BA%9B%E4%BB%80%E4%B9%88%E4%B8%80/images/12.png"
+	width="409"
+	height="298"
+	srcset="/p/%E6%88%91%E5%BD%93%E7%84%B6%E7%9F%A5%E9%81%93%E5%B9%B6%E8%A1%8C%E7%BC%96%E7%A8%8B%E5%BE%88%E9%9A%BE%E4%BD%86%E4%BD%A0%E6%80%BB%E5%8F%AF%E4%BB%A5%E5%81%9A%E4%BA%9B%E4%BB%80%E4%B9%88%E4%B8%80/images/12_hu6c5978912781ce6536b7ba9c1b4f8024_34345_480x0_resize_box_3.png 480w, /p/%E6%88%91%E5%BD%93%E7%84%B6%E7%9F%A5%E9%81%93%E5%B9%B6%E8%A1%8C%E7%BC%96%E7%A8%8B%E5%BE%88%E9%9A%BE%E4%BD%86%E4%BD%A0%E6%80%BB%E5%8F%AF%E4%BB%A5%E5%81%9A%E4%BA%9B%E4%BB%80%E4%B9%88%E4%B8%80/images/12_hu6c5978912781ce6536b7ba9c1b4f8024_34345_1024x0_resize_box_3.png 1024w"
+	loading="lazy"
+	
+		alt="图12:paralle1"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="137"
+		data-flex-basis="329px"
+	
+></p>
+<p>So,这就是并行编程的挑战。</p>
+<p>Interacting With Hardware</p>
+<p>Hardware interaction is normally the domain of the operating system, the compiler, libraries, or other software-environment infrastructure.</p>
+<p>但涉及到性能的方向，我们就会想要压榨干机器的所有潜力，所以必须要理解与硬件的交互。以下都需要有所理解。</p>
+<p>cache geometry,</p>
+<p>system topology,</p>
+<p>interconnect protocol of the target hardware.</p>
+<p><img src="/p/%E6%88%91%E5%BD%93%E7%84%B6%E7%9F%A5%E9%81%93%E5%B9%B6%E8%A1%8C%E7%BC%96%E7%A8%8B%E5%BE%88%E9%9A%BE%E4%BD%86%E4%BD%A0%E6%80%BB%E5%8F%AF%E4%BB%A5%E5%81%9A%E4%BA%9B%E4%BB%80%E4%B9%88%E4%B8%80/images/13.png"
+	width="950"
+	height="1156"
+	srcset="/p/%E6%88%91%E5%BD%93%E7%84%B6%E7%9F%A5%E9%81%93%E5%B9%B6%E8%A1%8C%E7%BC%96%E7%A8%8B%E5%BE%88%E9%9A%BE%E4%BD%86%E4%BD%A0%E6%80%BB%E5%8F%AF%E4%BB%A5%E5%81%9A%E4%BA%9B%E4%BB%80%E4%B9%88%E4%B8%80/images/13_hu6f09b9fd039a2e8fa8268119daf5404b_455936_480x0_resize_box_3.png 480w, /p/%E6%88%91%E5%BD%93%E7%84%B6%E7%9F%A5%E9%81%93%E5%B9%B6%E8%A1%8C%E7%BC%96%E7%A8%8B%E5%BE%88%E9%9A%BE%E4%BD%86%E4%BD%A0%E6%80%BB%E5%8F%AF%E4%BB%A5%E5%81%9A%E4%BA%9B%E4%BB%80%E4%B9%88%E4%B8%80/images/13_hu6f09b9fd039a2e8fa8268119daf5404b_455936_1024x0_resize_box_3.png 1024w"
+	loading="lazy"
+	
+		alt="图13:paralle1"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="82"
+		data-flex-basis="197px"
+	
+></p>
+<p>Writing concurrent programs has a reputation for being exotic and difficult. I believe it is neither. You need a system that provides you with good primitives and suitable libraries, you need a basic caution and carefulness, you need an armory of useful techniques, and you need</p>
+<p>to know of the common pitfalls. I hope that this paper has helped you towards sharing my belief.</p>
+<p><img src="/p/%E6%88%91%E5%BD%93%E7%84%B6%E7%9F%A5%E9%81%93%E5%B9%B6%E8%A1%8C%E7%BC%96%E7%A8%8B%E5%BE%88%E9%9A%BE%E4%BD%86%E4%BD%A0%E6%80%BB%E5%8F%AF%E4%BB%A5%E5%81%9A%E4%BA%9B%E4%BB%80%E4%B9%88%E4%B8%80/images/14.png"
+	width="950"
+	height="1161"
+	srcset="/p/%E6%88%91%E5%BD%93%E7%84%B6%E7%9F%A5%E9%81%93%E5%B9%B6%E8%A1%8C%E7%BC%96%E7%A8%8B%E5%BE%88%E9%9A%BE%E4%BD%86%E4%BD%A0%E6%80%BB%E5%8F%AF%E4%BB%A5%E5%81%9A%E4%BA%9B%E4%BB%80%E4%B9%88%E4%B8%80/images/14_hub04fd39e51dbd5204be65e795f3451e3_256434_480x0_resize_box_3.png 480w, /p/%E6%88%91%E5%BD%93%E7%84%B6%E7%9F%A5%E9%81%93%E5%B9%B6%E8%A1%8C%E7%BC%96%E7%A8%8B%E5%BE%88%E9%9A%BE%E4%BD%86%E4%BD%A0%E6%80%BB%E5%8F%AF%E4%BB%A5%E5%81%9A%E4%BA%9B%E4%BB%80%E4%B9%88%E4%B8%80/images/14_hub04fd39e51dbd5204be65e795f3451e3_256434_1024x0_resize_box_3.png 1024w"
+	loading="lazy"
+	
+		alt="图14:paralle1"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="81"
+		data-flex-basis="196px"
+	
+></p>
+<p>1980年以来，</p>
+<p>人类从未停下对并行编程的挑战，</p>
+<p>所以根本没有理由拒绝,21世纪的今天所面临的挑战！</p>
+<h3 id="chapter-3-hardware-and-its-habits">Chapter 3 Hardware and its Habits</h3>
+<p>This chapter therefore looks at the costof synchronization and communication within a shared-memory system.</p>
+<p><img src="/p/%E6%88%91%E5%BD%93%E7%84%B6%E7%9F%A5%E9%81%93%E5%B9%B6%E8%A1%8C%E7%BC%96%E7%A8%8B%E5%BE%88%E9%9A%BE%E4%BD%86%E4%BD%A0%E6%80%BB%E5%8F%AF%E4%BB%A5%E5%81%9A%E4%BA%9B%E4%BB%80%E4%B9%88%E4%B8%80/images/15.png"
+	width="418"
+	height="356"
+	srcset="/p/%E6%88%91%E5%BD%93%E7%84%B6%E7%9F%A5%E9%81%93%E5%B9%B6%E8%A1%8C%E7%BC%96%E7%A8%8B%E5%BE%88%E9%9A%BE%E4%BD%86%E4%BD%A0%E6%80%BB%E5%8F%AF%E4%BB%A5%E5%81%9A%E4%BA%9B%E4%BB%80%E4%B9%88%E4%B8%80/images/15_hu87bab61356d71d3417ccd509b0282fa7_60704_480x0_resize_box_3.png 480w, /p/%E6%88%91%E5%BD%93%E7%84%B6%E7%9F%A5%E9%81%93%E5%B9%B6%E8%A1%8C%E7%BC%96%E7%A8%8B%E5%BE%88%E9%9A%BE%E4%BD%86%E4%BD%A0%E6%80%BB%E5%8F%AF%E4%BB%A5%E5%81%9A%E4%BA%9B%E4%BB%80%E4%B9%88%E4%B8%80/images/15_hu87bab61356d71d3417ccd509b0282fa7_60704_1024x0_resize_box_3.png 1024w"
+	loading="lazy"
+	
+		alt="图15:paralle1"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="117"
+		data-flex-basis="281px"
+	
+></p>
+<p>CPU其实不是按照一条直线跑道在跑。</p>
+<p>In contrast, the CPU of the late 1990s and of the 2000s execute many instructions simultaneously, using pipelines; superscalar techniques;</p>
+<p>out-of-order instruction and data handling; speculative execution, and more [HP17, HP11] in order to optimize the flow of instructions and data through the CPU.</p>
+<p><img src="/p/%E6%88%91%E5%BD%93%E7%84%B6%E7%9F%A5%E9%81%93%E5%B9%B6%E8%A1%8C%E7%BC%96%E7%A8%8B%E5%BE%88%E9%9A%BE%E4%BD%86%E4%BD%A0%E6%80%BB%E5%8F%AF%E4%BB%A5%E5%81%9A%E4%BA%9B%E4%BB%80%E4%B9%88%E4%B8%80/images/16.png"
+	width="901"
+	height="1107"
+	srcset="/p/%E6%88%91%E5%BD%93%E7%84%B6%E7%9F%A5%E9%81%93%E5%B9%B6%E8%A1%8C%E7%BC%96%E7%A8%8B%E5%BE%88%E9%9A%BE%E4%BD%86%E4%BD%A0%E6%80%BB%E5%8F%AF%E4%BB%A5%E5%81%9A%E4%BA%9B%E4%BB%80%E4%B9%88%E4%B8%80/images/16_hu8e47d7872facf1d8eb25ad21a2d78390_342979_480x0_resize_box_3.png 480w, /p/%E6%88%91%E5%BD%93%E7%84%B6%E7%9F%A5%E9%81%93%E5%B9%B6%E8%A1%8C%E7%BC%96%E7%A8%8B%E5%BE%88%E9%9A%BE%E4%BD%86%E4%BD%A0%E6%80%BB%E5%8F%AF%E4%BB%A5%E5%81%9A%E4%BA%9B%E4%BB%80%E4%B9%88%E4%B8%80/images/16_hu8e47d7872facf1d8eb25ad21a2d78390_342979_1024x0_resize_box_3.png 1024w"
+	loading="lazy"
+	
+		alt="图16:paralle1"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="81"
+		data-flex-basis="195px"
+	
+></p>
+<h4 id="pipelined-cpus">Pipelined CPUs</h4>
+<p>Suitable control flow can be provided by a program that executes primarily in tight loops, for example, arithmetic on large matrices or vectors.这其中有很多控制流，cpu在边猜测边执行，猜错的成本很高，对于可预测控制流程序运行良好，但涉及到非可预测的分支，cpu猜错后必须丢弃此前的所有分支指令，非常浪费时间。</p>
+<p><img src="/p/%E6%88%91%E5%BD%93%E7%84%B6%E7%9F%A5%E9%81%93%E5%B9%B6%E8%A1%8C%E7%BC%96%E7%A8%8B%E5%BE%88%E9%9A%BE%E4%BD%86%E4%BD%A0%E6%80%BB%E5%8F%AF%E4%BB%A5%E5%81%9A%E4%BA%9B%E4%BB%80%E4%B9%88%E4%B8%80/images/17.png"
+	width="429"
+	height="317"
+	srcset="/p/%E6%88%91%E5%BD%93%E7%84%B6%E7%9F%A5%E9%81%93%E5%B9%B6%E8%A1%8C%E7%BC%96%E7%A8%8B%E5%BE%88%E9%9A%BE%E4%BD%86%E4%BD%A0%E6%80%BB%E5%8F%AF%E4%BB%A5%E5%81%9A%E4%BA%9B%E4%BB%80%E4%B9%88%E4%B8%80/images/17_hu04a7bec84abae59033db9b81e8c31f17_9330_480x0_resize_box_3.png 480w, /p/%E6%88%91%E5%BD%93%E7%84%B6%E7%9F%A5%E9%81%93%E5%B9%B6%E8%A1%8C%E7%BC%96%E7%A8%8B%E5%BE%88%E9%9A%BE%E4%BD%86%E4%BD%A0%E6%80%BB%E5%8F%AF%E4%BB%A5%E5%81%9A%E4%BA%9B%E4%BB%80%E4%B9%88%E4%B8%80/images/17_hu04a7bec84abae59033db9b81e8c31f17_9330_1024x0_resize_box_3.png 1024w"
+	loading="lazy"
+	
+		alt="图17:paralle1"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="135"
+		data-flex-basis="324px"
+	
+></p>
+<p>This gets even worse in the increasingly common case of hyperthreading (or SMT, if you prefer), especially on pipelined superscalar out-of-order CPU featuring speculative execution.</p>
+<p>Therefore, the execution of one hardware thread can and often is perturbed by the actions of other hardware threads sharing that core.</p>
+<p><img src="/p/%E6%88%91%E5%BD%93%E7%84%B6%E7%9F%A5%E9%81%93%E5%B9%B6%E8%A1%8C%E7%BC%96%E7%A8%8B%E5%BE%88%E9%9A%BE%E4%BD%86%E4%BD%A0%E6%80%BB%E5%8F%AF%E4%BB%A5%E5%81%9A%E4%BA%9B%E4%BB%80%E4%B9%88%E4%B8%80/images/18.png"
+	width="920"
+	height="1165"
+	srcset="/p/%E6%88%91%E5%BD%93%E7%84%B6%E7%9F%A5%E9%81%93%E5%B9%B6%E8%A1%8C%E7%BC%96%E7%A8%8B%E5%BE%88%E9%9A%BE%E4%BD%86%E4%BD%A0%E6%80%BB%E5%8F%AF%E4%BB%A5%E5%81%9A%E4%BA%9B%E4%BB%80%E4%B9%88%E4%B8%80/images/18_hu56ea676f202083c2da4e72ec1684f886_433323_480x0_resize_box_3.png 480w, /p/%E6%88%91%E5%BD%93%E7%84%B6%E7%9F%A5%E9%81%93%E5%B9%B6%E8%A1%8C%E7%BC%96%E7%A8%8B%E5%BE%88%E9%9A%BE%E4%BD%86%E4%BD%A0%E6%80%BB%E5%8F%AF%E4%BB%A5%E5%81%9A%E4%BA%9B%E4%BB%80%E4%B9%88%E4%B8%80/images/18_hu56ea676f202083c2da4e72ec1684f886_433323_1024x0_resize_box_3.png 1024w"
+	loading="lazy"
+	
+		alt="图18:paralle1"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="78"
+		data-flex-basis="189px"
+	
+></p>
+<p>n theory, this contention is avoidable, but in practice CPUs must choose very quickly and without the benefit of clairvoyance. In particular, adding an instruction to a tight loop can sometimes actually cause execution to speed up.</p>
+<p>CPU运行得太快了，以至于对指令的判断能力跟不上。</p>
+<h4 id="memory-references">Memory References</h4>
+<p>memory references often pose severe obstacles to modern CPUs.</p>
+<p>these caches require highly predictabledata-access patterns to successfully hide those latencies.</p>
+<p>nfortunately, common operations such as traversing a linked list have extremely unpredictable memory-access patterns.</p>
+<p>延迟总是会成为cpu访问内存的困扰,当然原子操作也会。</p>
+<h4 id="atomic-operations">Atomic Operations</h4>
+<p>even though they are in fact being executed piece-at-a-time, with one common trick being to identify all the cachelines containing the data to be atomically operated on, ensure that these cachelines are owned by the CPU executing the atomic operation, and only then proceed with the atomic operation while ensuring that these cachelines remained owned by this CPU.</p>
+<p><img src="/p/%E6%88%91%E5%BD%93%E7%84%B6%E7%9F%A5%E9%81%93%E5%B9%B6%E8%A1%8C%E7%BC%96%E7%A8%8B%E5%BE%88%E9%9A%BE%E4%BD%86%E4%BD%A0%E6%80%BB%E5%8F%AF%E4%BB%A5%E5%81%9A%E4%BA%9B%E4%BB%80%E4%B9%88%E4%B8%80/images/19.png"
+	width="927"
+	height="1147"
+	srcset="/p/%E6%88%91%E5%BD%93%E7%84%B6%E7%9F%A5%E9%81%93%E5%B9%B6%E8%A1%8C%E7%BC%96%E7%A8%8B%E5%BE%88%E9%9A%BE%E4%BD%86%E4%BD%A0%E6%80%BB%E5%8F%AF%E4%BB%A5%E5%81%9A%E4%BA%9B%E4%BB%80%E4%B9%88%E4%B8%80/images/19_hu17479a0f24da389593f5a9b5f05c65ea_458504_480x0_resize_box_3.png 480w, /p/%E6%88%91%E5%BD%93%E7%84%B6%E7%9F%A5%E9%81%93%E5%B9%B6%E8%A1%8C%E7%BC%96%E7%A8%8B%E5%BE%88%E9%9A%BE%E4%BD%86%E4%BD%A0%E6%80%BB%E5%8F%AF%E4%BB%A5%E5%81%9A%E4%BA%9B%E4%BB%80%E4%B9%88%E4%B8%80/images/19_hu17479a0f24da389593f5a9b5f05c65ea_458504_1024x0_resize_box_3.png 1024w"
+	loading="lazy"
+	
+		alt="图19:paralle1"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="80"
+		data-flex-basis="193px"
+	
+></p>
+<p>Memory Barriers</p>
+<p>Cache Misses</p>
+<p>I/O Operations</p>
+<p>在CSAPP书中，对于内存屏障、缓存未命中、以及IO操作有更全面的描述。</p>
+<p><img src="/p/%E6%88%91%E5%BD%93%E7%84%B6%E7%9F%A5%E9%81%93%E5%B9%B6%E8%A1%8C%E7%BC%96%E7%A8%8B%E5%BE%88%E9%9A%BE%E4%BD%86%E4%BD%A0%E6%80%BB%E5%8F%AF%E4%BB%A5%E5%81%9A%E4%BA%9B%E4%BB%80%E4%B9%88%E4%B8%80/images/20.png"
+	width="957"
+	height="1173"
+	srcset="/p/%E6%88%91%E5%BD%93%E7%84%B6%E7%9F%A5%E9%81%93%E5%B9%B6%E8%A1%8C%E7%BC%96%E7%A8%8B%E5%BE%88%E9%9A%BE%E4%BD%86%E4%BD%A0%E6%80%BB%E5%8F%AF%E4%BB%A5%E5%81%9A%E4%BA%9B%E4%BB%80%E4%B9%88%E4%B8%80/images/20_hu224802effe50659ebffd1d80bb6a542e_402722_480x0_resize_box_3.png 480w, /p/%E6%88%91%E5%BD%93%E7%84%B6%E7%9F%A5%E9%81%93%E5%B9%B6%E8%A1%8C%E7%BC%96%E7%A8%8B%E5%BE%88%E9%9A%BE%E4%BD%86%E4%BD%A0%E6%80%BB%E5%8F%AF%E4%BB%A5%E5%81%9A%E4%BA%9B%E4%BB%80%E4%B9%88%E4%B8%80/images/20_hu224802effe50659ebffd1d80bb6a542e_402722_1024x0_resize_box_3.png 1024w"
+	loading="lazy"
+	
+		alt="图20:paralle1"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="81"
+		data-flex-basis="195px"
+	
+></p>
+<p>A major goal of parallel hardware design is to reduce this ratio as needed to achieve the relevant performance and scalability goals.</p>
+<h4 id="overheads">Overheads</h4>
+<p>Don&rsquo;t design bridges in ignorance of materials, and don&rsquo;t design low-level software in ignorance of the underlying hardware.</p>
+<p><img src="/p/%E6%88%91%E5%BD%93%E7%84%B6%E7%9F%A5%E9%81%93%E5%B9%B6%E8%A1%8C%E7%BC%96%E7%A8%8B%E5%BE%88%E9%9A%BE%E4%BD%86%E4%BD%A0%E6%80%BB%E5%8F%AF%E4%BB%A5%E5%81%9A%E4%BA%9B%E4%BB%80%E4%B9%88%E4%B8%80/images/21.png"
+	width="892"
+	height="1132"
+	srcset="/p/%E6%88%91%E5%BD%93%E7%84%B6%E7%9F%A5%E9%81%93%E5%B9%B6%E8%A1%8C%E7%BC%96%E7%A8%8B%E5%BE%88%E9%9A%BE%E4%BD%86%E4%BD%A0%E6%80%BB%E5%8F%AF%E4%BB%A5%E5%81%9A%E4%BA%9B%E4%BB%80%E4%B9%88%E4%B8%80/images/21_hue626ed02724c9ccc4d974295fb0c101b_336041_480x0_resize_box_3.png 480w, /p/%E6%88%91%E5%BD%93%E7%84%B6%E7%9F%A5%E9%81%93%E5%B9%B6%E8%A1%8C%E7%BC%96%E7%A8%8B%E5%BE%88%E9%9A%BE%E4%BD%86%E4%BD%A0%E6%80%BB%E5%8F%AF%E4%BB%A5%E5%81%9A%E4%BA%9B%E4%BB%80%E4%B9%88%E4%B8%80/images/21_hue626ed02724c9ccc4d974295fb0c101b_336041_1024x0_resize_box_3.png 1024w"
+	loading="lazy"
+	
+		alt="图21:paralle1"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="78"
+		data-flex-basis="189px"
+	
+></p>
+<p>下面进入硬件系统架构。</p>
+<p><img src="/p/%E6%88%91%E5%BD%93%E7%84%B6%E7%9F%A5%E9%81%93%E5%B9%B6%E8%A1%8C%E7%BC%96%E7%A8%8B%E5%BE%88%E9%9A%BE%E4%BD%86%E4%BD%A0%E6%80%BB%E5%8F%AF%E4%BB%A5%E5%81%9A%E4%BA%9B%E4%BB%80%E4%B9%88%E4%B8%80/images/22.png"
+	width="417"
+	height="365"
+	srcset="/p/%E6%88%91%E5%BD%93%E7%84%B6%E7%9F%A5%E9%81%93%E5%B9%B6%E8%A1%8C%E7%BC%96%E7%A8%8B%E5%BE%88%E9%9A%BE%E4%BD%86%E4%BD%A0%E6%80%BB%E5%8F%AF%E4%BB%A5%E5%81%9A%E4%BA%9B%E4%BB%80%E4%B9%88%E4%B8%80/images/22_hu1858cdd00a192f96a23acb7f4de467c4_43653_480x0_resize_box_3.png 480w, /p/%E6%88%91%E5%BD%93%E7%84%B6%E7%9F%A5%E9%81%93%E5%B9%B6%E8%A1%8C%E7%BC%96%E7%A8%8B%E5%BE%88%E9%9A%BE%E4%BD%86%E4%BD%A0%E6%80%BB%E5%8F%AF%E4%BB%A5%E5%81%9A%E4%BA%9B%E4%BB%80%E4%B9%88%E4%B8%80/images/22_hu1858cdd00a192f96a23acb7f4de467c4_43653_1024x0_resize_box_3.png 1024w"
+	loading="lazy"
+	
+		alt="图22:paralle1"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="114"
+		data-flex-basis="274px"
+	
+></p>
+<p>This simplified sequence is just the beginning of a discipline called cache-coherency protocols. 缓存一致性。</p>
+<p><img src="/p/%E6%88%91%E5%BD%93%E7%84%B6%E7%9F%A5%E9%81%93%E5%B9%B6%E8%A1%8C%E7%BC%96%E7%A8%8B%E5%BE%88%E9%9A%BE%E4%BD%86%E4%BD%A0%E6%80%BB%E5%8F%AF%E4%BB%A5%E5%81%9A%E4%BA%9B%E4%BB%80%E4%B9%88%E4%B8%80/images/23.png"
+	width="925"
+	height="1140"
+	srcset="/p/%E6%88%91%E5%BD%93%E7%84%B6%E7%9F%A5%E9%81%93%E5%B9%B6%E8%A1%8C%E7%BC%96%E7%A8%8B%E5%BE%88%E9%9A%BE%E4%BD%86%E4%BD%A0%E6%80%BB%E5%8F%AF%E4%BB%A5%E5%81%9A%E4%BA%9B%E4%BB%80%E4%B9%88%E4%B8%80/images/23_hu7498e0b4bc3d5c41390d10d9e5fb2966_417471_480x0_resize_box_3.png 480w, /p/%E6%88%91%E5%BD%93%E7%84%B6%E7%9F%A5%E9%81%93%E5%B9%B6%E8%A1%8C%E7%BC%96%E7%A8%8B%E5%BE%88%E9%9A%BE%E4%BD%86%E4%BD%A0%E6%80%BB%E5%8F%AF%E4%BB%A5%E5%81%9A%E4%BA%9B%E4%BB%80%E4%B9%88%E4%B8%80/images/23_hu7498e0b4bc3d5c41390d10d9e5fb2966_417471_1024x0_resize_box_3.png 1024w"
+	loading="lazy"
+	
+		alt="图23:paralle1"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="81"
+		data-flex-basis="194px"
+	
+></p>
+<p>same-CPU compare-and-swap（CAS）,CSAPP里也有讲到。</p>
+<p>这里讲得很细，建议直接看原文吧。</p>
+<p>CAS is an atomic operation in which the hardware compares the contents of the specified memory location to a specified &ldquo;old&rdquo; value, and if they compare equal, stores a specified &ldquo;new&rdquo; value, in which case the CAS operation succeeds.这里涉及到很多优化和计算方式的改变。</p>
+<p><img src="/p/%E6%88%91%E5%BD%93%E7%84%B6%E7%9F%A5%E9%81%93%E5%B9%B6%E8%A1%8C%E7%BC%96%E7%A8%8B%E5%BE%88%E9%9A%BE%E4%BD%86%E4%BD%A0%E6%80%BB%E5%8F%AF%E4%BB%A5%E5%81%9A%E4%BA%9B%E4%BB%80%E4%B9%88%E4%B8%80/images/24.png"
+	width="944"
+	height="1170"
+	srcset="/p/%E6%88%91%E5%BD%93%E7%84%B6%E7%9F%A5%E9%81%93%E5%B9%B6%E8%A1%8C%E7%BC%96%E7%A8%8B%E5%BE%88%E9%9A%BE%E4%BD%86%E4%BD%A0%E6%80%BB%E5%8F%AF%E4%BB%A5%E5%81%9A%E4%BA%9B%E4%BB%80%E4%B9%88%E4%B8%80/images/24_hu1e7a9a24d556726de5ea24a3b970fc4f_380683_480x0_resize_box_3.png 480w, /p/%E6%88%91%E5%BD%93%E7%84%B6%E7%9F%A5%E9%81%93%E5%B9%B6%E8%A1%8C%E7%BC%96%E7%A8%8B%E5%BE%88%E9%9A%BE%E4%BD%86%E4%BD%A0%E6%80%BB%E5%8F%AF%E4%BB%A5%E5%81%9A%E4%BA%9B%E4%BB%80%E4%B9%88%E4%B8%80/images/24_hu1e7a9a24d556726de5ea24a3b970fc4f_380683_1024x0_resize_box_3.png 1024w"
+	loading="lazy"
+	
+		alt="图24:paralle1"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="80"
+		data-flex-basis="193px"
+	
+></p>
+<h4 id="hardware-optimizations">Hardware Optimizations</h4>
+<p><img src="/p/%E6%88%91%E5%BD%93%E7%84%B6%E7%9F%A5%E9%81%93%E5%B9%B6%E8%A1%8C%E7%BC%96%E7%A8%8B%E5%BE%88%E9%9A%BE%E4%BD%86%E4%BD%A0%E6%80%BB%E5%8F%AF%E4%BB%A5%E5%81%9A%E4%BA%9B%E4%BB%80%E4%B9%88%E4%B8%80/images/25.png"
+	width="912"
+	height="1136"
+	srcset="/p/%E6%88%91%E5%BD%93%E7%84%B6%E7%9F%A5%E9%81%93%E5%B9%B6%E8%A1%8C%E7%BC%96%E7%A8%8B%E5%BE%88%E9%9A%BE%E4%BD%86%E4%BD%A0%E6%80%BB%E5%8F%AF%E4%BB%A5%E5%81%9A%E4%BA%9B%E4%BB%80%E4%B9%88%E4%B8%80/images/25_hud0649610c0d441fd84f3a870418b6ed9_510335_480x0_resize_box_3.png 480w, /p/%E6%88%91%E5%BD%93%E7%84%B6%E7%9F%A5%E9%81%93%E5%B9%B6%E8%A1%8C%E7%BC%96%E7%A8%8B%E5%BE%88%E9%9A%BE%E4%BD%86%E4%BD%A0%E6%80%BB%E5%8F%AF%E4%BB%A5%E5%81%9A%E4%BA%9B%E4%BB%80%E4%B9%88%E4%B8%80/images/25_hud0649610c0d441fd84f3a870418b6ed9_510335_1024x0_resize_box_3.png 1024w"
+	loading="lazy"
+	
+		alt="图25:paralle1"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="80"
+		data-flex-basis="192px"
+	
+></p>
+<p>1.One hardware optimization is large cachelines.</p>
+<p>2.A second related hardware optimization is cache prefetching, in which the hardware reacts to consecutive accesses by prefetching subsequent cachelines, thereby evading speed-of-light delays for these subsequent cache-lines.</p>
+<p>3.A third hardware optimization is the store buffer, whichallows a string of store instructions to execute quickly even when the stores are to non-consecutive addresses and when none of the needed cachelines are present in the CPU&rsquo;s cache.</p>
+<p>4.A fourth hardware optimization is speculative execution, which can allow the hardware to make good use of the store buffers without resulting in memory misordering.</p>
+<p>5.A fifth hardware optimization is large caches, allowing individual CPUs to operate on larger datasets without incurring expensive cache misses.</p>
+<p>6.A final hardware optimization is read-mostly replication, in which data that is frequently read but rarely updated is present in all CPUs&rsquo; caches.</p>
+<p>Hardware Free Lunch?</p>
+<p>The major reason that concurrency has been receiving somuch focus over the past few years is the end of Moore&rsquo;s-Law induced single-threaded performance increases.</p>
+<p>摩尔定律的终结，带来对并发的关注。</p>
+<p>但是任何事物都是有代价的。</p>
+<p><img src="/p/%E6%88%91%E5%BD%93%E7%84%B6%E7%9F%A5%E9%81%93%E5%B9%B6%E8%A1%8C%E7%BC%96%E7%A8%8B%E5%BE%88%E9%9A%BE%E4%BD%86%E4%BD%A0%E6%80%BB%E5%8F%AF%E4%BB%A5%E5%81%9A%E4%BA%9B%E4%BB%80%E4%B9%88%E4%B8%80/images/26.png"
+	width="883"
+	height="1116"
+	srcset="/p/%E6%88%91%E5%BD%93%E7%84%B6%E7%9F%A5%E9%81%93%E5%B9%B6%E8%A1%8C%E7%BC%96%E7%A8%8B%E5%BE%88%E9%9A%BE%E4%BD%86%E4%BD%A0%E6%80%BB%E5%8F%AF%E4%BB%A5%E5%81%9A%E4%BA%9B%E4%BB%80%E4%B9%88%E4%B8%80/images/26_hud847ae73f3ed68193b459724f67e07ce_475277_480x0_resize_box_3.png 480w, /p/%E6%88%91%E5%BD%93%E7%84%B6%E7%9F%A5%E9%81%93%E5%B9%B6%E8%A1%8C%E7%BC%96%E7%A8%8B%E5%BE%88%E9%9A%BE%E4%BD%86%E4%BD%A0%E6%80%BB%E5%8F%AF%E4%BB%A5%E5%81%9A%E4%BA%9B%E4%BB%80%E4%B9%88%E4%B8%80/images/26_hud847ae73f3ed68193b459724f67e07ce_475277_1024x0_resize_box_3.png 1024w"
+	loading="lazy"
+	
+		alt="图26:paralle1"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="79"
+		data-flex-basis="189px"
+	
+></p>
+<p>现在开始谈3D集成了。</p>
+<p><img src="/p/%E6%88%91%E5%BD%93%E7%84%B6%E7%9F%A5%E9%81%93%E5%B9%B6%E8%A1%8C%E7%BC%96%E7%A8%8B%E5%BE%88%E9%9A%BE%E4%BD%86%E4%BD%A0%E6%80%BB%E5%8F%AF%E4%BB%A5%E5%81%9A%E4%BA%9B%E4%BB%80%E4%B9%88%E4%B8%80/images/27.png"
+	width="431"
+	height="478"
+	srcset="/p/%E6%88%91%E5%BD%93%E7%84%B6%E7%9F%A5%E9%81%93%E5%B9%B6%E8%A1%8C%E7%BC%96%E7%A8%8B%E5%BE%88%E9%9A%BE%E4%BD%86%E4%BD%A0%E6%80%BB%E5%8F%AF%E4%BB%A5%E5%81%9A%E4%BA%9B%E4%BB%80%E4%B9%88%E4%B8%80/images/27_huac111edc2792b85d10f8b1a295339333_41575_480x0_resize_box_3.png 480w, /p/%E6%88%91%E5%BD%93%E7%84%B6%E7%9F%A5%E9%81%93%E5%B9%B6%E8%A1%8C%E7%BC%96%E7%A8%8B%E5%BE%88%E9%9A%BE%E4%BD%86%E4%BD%A0%E6%80%BB%E5%8F%AF%E4%BB%A5%E5%81%9A%E4%BA%9B%E4%BB%80%E4%B9%88%E4%B8%80/images/27_huac111edc2792b85d10f8b1a295339333_41575_1024x0_resize_box_3.png 1024w"
+	loading="lazy"
+	
+		alt="图27:paralle1"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="90"
+		data-flex-basis="216px"
+	
+></p>
+<p>好吧，数电模电没好好学，流下悔恨的眼泪&hellip;&hellip;.</p>
+<p><img src="/p/%E6%88%91%E5%BD%93%E7%84%B6%E7%9F%A5%E9%81%93%E5%B9%B6%E8%A1%8C%E7%BC%96%E7%A8%8B%E5%BE%88%E9%9A%BE%E4%BD%86%E4%BD%A0%E6%80%BB%E5%8F%AF%E4%BB%A5%E5%81%9A%E4%BA%9B%E4%BB%80%E4%B9%88%E4%B8%80/images/28.png"
+	width="908"
+	height="1132"
+	srcset="/p/%E6%88%91%E5%BD%93%E7%84%B6%E7%9F%A5%E9%81%93%E5%B9%B6%E8%A1%8C%E7%BC%96%E7%A8%8B%E5%BE%88%E9%9A%BE%E4%BD%86%E4%BD%A0%E6%80%BB%E5%8F%AF%E4%BB%A5%E5%81%9A%E4%BA%9B%E4%BB%80%E4%B9%88%E4%B8%80/images/28_hu72220f66f6f5f511a0b6cbc3b0ac2531_438771_480x0_resize_box_3.png 480w, /p/%E6%88%91%E5%BD%93%E7%84%B6%E7%9F%A5%E9%81%93%E5%B9%B6%E8%A1%8C%E7%BC%96%E7%A8%8B%E5%BE%88%E9%9A%BE%E4%BD%86%E4%BD%A0%E6%80%BB%E5%8F%AF%E4%BB%A5%E5%81%9A%E4%BA%9B%E4%BB%80%E4%B9%88%E4%B8%80/images/28_hu72220f66f6f5f511a0b6cbc3b0ac2531_438771_1024x0_resize_box_3.png 1024w"
+	loading="lazy"
+	
+		alt="图28:paralle1"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="80"
+		data-flex-basis="192px"
+	
+></p>
+<p>Special-Purpose Accelerators</p>
+<p>专用的并行编程加速器</p>
+<p>Existing Parallel Software</p>
+<p>其实现有的并行软件也能解决部分的工业问题。</p>
+<p>Software Design Implications</p>
+<p>The lesson should be quite clear: Parallel algorithms must be explicitly designed with these hardware properties firmly in mind.</p>
+<p><img src="/p/%E6%88%91%E5%BD%93%E7%84%B6%E7%9F%A5%E9%81%93%E5%B9%B6%E8%A1%8C%E7%BC%96%E7%A8%8B%E5%BE%88%E9%9A%BE%E4%BD%86%E4%BD%A0%E6%80%BB%E5%8F%AF%E4%BB%A5%E5%81%9A%E4%BA%9B%E4%BB%80%E4%B9%88%E4%B8%80/images/29.png"
+	width="885"
+	height="1158"
+	srcset="/p/%E6%88%91%E5%BD%93%E7%84%B6%E7%9F%A5%E9%81%93%E5%B9%B6%E8%A1%8C%E7%BC%96%E7%A8%8B%E5%BE%88%E9%9A%BE%E4%BD%86%E4%BD%A0%E6%80%BB%E5%8F%AF%E4%BB%A5%E5%81%9A%E4%BA%9B%E4%BB%80%E4%B9%88%E4%B8%80/images/29_hubb171b3bf30ab2fba6b0a0a4961ff67c_317315_480x0_resize_box_3.png 480w, /p/%E6%88%91%E5%BD%93%E7%84%B6%E7%9F%A5%E9%81%93%E5%B9%B6%E8%A1%8C%E7%BC%96%E7%A8%8B%E5%BE%88%E9%9A%BE%E4%BD%86%E4%BD%A0%E6%80%BB%E5%8F%AF%E4%BB%A5%E5%81%9A%E4%BA%9B%E4%BB%80%E4%B9%88%E4%B8%80/images/29_hubb171b3bf30ab2fba6b0a0a4961ff67c_317315_1024x0_resize_box_3.png 1024w"
+	loading="lazy"
+	
+		alt="图29:paralle1"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="76"
+		data-flex-basis="183px"
+	
+></p>
+<p>Ok，第三章结束！</p>
+<p>主要讲得是如何实现出色的并行性能和可扩展性，大量的底层细节。</p>
+<p>最后问大家一个问题吧。</p>
+<p>Question：</p>
+<p>OK, if we are going to have to apply distributed-programming techniques to shared-memory parallel programs, why not just always use these distributed techniques and dispense with shared memory?</p>
+<p>Answer:</p>
+<p>Because it is often the case that only a small fraction of the program is performance-critical. Shared-memory parallelism allows us to focus distributed-programming techniques on that small fraction, allowing simpler shared-memory techniques to be used on the non-performance-critical bulk of the program.</p>
+<p>未完待续~</p>
+<p>感谢阅读到这里，周末愉快~</p>
+
+</section>
+
+
+    <footer class="article-footer">
+    
+    <section class="article-tags">
+        
+            <a href="/tags/book/">Book</a>
+        
+            <a href="/tags/translate/">Translate</a>
+        
+    </section>
+
+
+    
+    <section class="article-copyright">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M14.5 9a3.5 4 0 1 0 0 6" />
+</svg>
+
+
+
+        <span>Licensed under CC BY-NC-SA 4.0</span>
+    </section>
+    </footer>
+
+
+    
+</article>
+
+    
+
+    
+
+<aside class="related-contents--wrapper">
+    <h2 class="section-title">Related contents</h2>
+    <div class="related-contents">
+        <div class="flex article-list--tile">
+            
+                
+<article class="">
+    <a href="/p/%E6%8B%A8%E5%9B%9E1984%E7%9C%8Bimplementing-remote-procedure-calls%E5%A6%82%E4%BD%95%E7%9F%B3%E7%A0%B4%E5%A4%A9%E6%83%8A/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">拨回1984:看Implementing Remote Procedure Calls如何石破天惊?</h2>
+        </div>
+    </a>
+</article>
+            
+                
+<article class="">
+    <a href="/p/infrastructure-as-codeterraform%E5%88%B6%E9%9C%B8%E4%B9%8B%E9%81%93/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">Infrastructure As Code：Terraform制霸之道</h2>
+        </div>
+    </a>
+</article>
+            
+                
+<article class="">
+    <a href="/p/golang%E9%97%AE%E9%A2%98%E8%A7%A3%E6%9E%90%E4%B8%80/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">Golang问题解析（一）</h2>
+        </div>
+    </a>
+</article>
+            
+                
+<article class="">
+    <a href="/p/golang-defer%E7%9A%84%E6%8E%A2%E7%B4%A2/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">Golang defer的探索</h2>
+        </div>
+    </a>
+</article>
+            
+                
+<article class="">
+    <a href="/p/linux-screen/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">Linux Screen</h2>
+        </div>
+    </a>
+</article>
+            
+        </div>
+    </div>
+</aside>
+
+     
+    
+        
+    <div class="disqus-container">
+    <div id="disqus_thread"></div>
+<script type="application/javascript">
+    window.disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "hugo-theme-stack" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+</div>
+
+<style>
+    .disqus-container {
+        background-color: var(--card-background);
+        border-radius: var(--card-border-radius);
+        box-shadow: var(--shadow-l1);
+        padding: var(--card-padding);
+    }
+</style>
+
+<script>
+    window.addEventListener('onColorSchemeChange', (e) => {
+        if (DISQUS) {
+            DISQUS.reset({
+                reload: true
+            });
+        }
+    })
+</script>
+
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy; 
+        
+            2018 - 
+        
+        2022 panzd
+    </section>
+    
+    <section class="powerby">
+        Built with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> <br />
+        Theme <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.11.0">Stack</a></b> designed by <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a>
+    </section>
+</footer>
+
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.css"integrity="sha256-c0uckgykQ9v5k&#43;IqViZOZKc47Jn7KQil4/MP3ySA3F8="crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.css"integrity="sha256-SBLU4vv6CA6lHsZ1XyTdhyjJxCjPif/TRkjnsyGAGnE="crossorigin="anonymous"
+            >
+
+            </main>
+    <aside class="sidebar right-sidebar sticky">
+        
+            
+                
+    <section class="widget archives">
+        <div class="widget-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <line x1="5" y1="9" x2="19" y2="9" />
+  <line x1="5" y1="15" x2="19" y2="15" />
+  <line x1="11" y1="4" x2="7" y2="20" />
+  <line x1="17" y1="4" x2="13" y2="20" />
+</svg>
+
+
+
+        </div>
+        <h2 class="widget-title section-title">Table of contents</h2>
+        
+        <div class="widget--toc">
+            <nav id="TableOfContents">
+  <ol>
+    <li>
+      <ol>
+        <li><a href="#前言">前言</a></li>
+        <li><a href="#chapter-1">Chapter 1</a></li>
+        <li><a href="#chapter-2--introduction">Chapter 2  Introduction</a></li>
+        <li><a href="#chapter-3-hardware-and-its-habits">Chapter 3 Hardware and its Habits</a>
+          <ol>
+            <li><a href="#pipelined-cpus">Pipelined CPUs</a></li>
+            <li><a href="#memory-references">Memory References</a></li>
+            <li><a href="#atomic-operations">Atomic Operations</a></li>
+            <li><a href="#overheads">Overheads</a></li>
+            <li><a href="#hardware-optimizations">Hardware Optimizations</a></li>
+          </ol>
+        </li>
+      </ol>
+    </li>
+  </ol>
+</nav>
+        </div>
+    </section>
+
+            
+        
+    </aside>
+
+
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.5/dist/vibrant.min.js"integrity="sha256-5NovOZc4iwiAWTYIFiIM7DxKUXKWvpVEuMEPLzcm5/g="crossorigin="anonymous"
+                
+                >
+            </script><script type="text/javascript" src="/ts/main.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+    </body>
+</html>

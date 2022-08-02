@@ -1,0 +1,576 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+    <channel>
+        <title>Book on panzd</title>
+        <link>/tags/book/</link>
+        <description>Recent content in Book on panzd</description>
+        <generator>Hugo -- gohugo.io</generator>
+        <language>en-us</language>
+        <lastBuildDate>Sat, 30 Jul 2022 00:00:00 +0000</lastBuildDate><atom:link href="/tags/book/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>我当然知道并行编程很难，但你总可以做些什么（一）</title>
+        <link>/p/%E6%88%91%E5%BD%93%E7%84%B6%E7%9F%A5%E9%81%93%E5%B9%B6%E8%A1%8C%E7%BC%96%E7%A8%8B%E5%BE%88%E9%9A%BE%E4%BD%86%E4%BD%A0%E6%80%BB%E5%8F%AF%E4%BB%A5%E5%81%9A%E4%BA%9B%E4%BB%80%E4%B9%88%E4%B8%80/</link>
+        <pubDate>Sat, 30 Jul 2022 00:00:00 +0000</pubDate>
+        
+        <guid>/p/%E6%88%91%E5%BD%93%E7%84%B6%E7%9F%A5%E9%81%93%E5%B9%B6%E8%A1%8C%E7%BC%96%E7%A8%8B%E5%BE%88%E9%9A%BE%E4%BD%86%E4%BD%A0%E6%80%BB%E5%8F%AF%E4%BB%A5%E5%81%9A%E4%BA%9B%E4%BB%80%E4%B9%88%E4%B8%80/</guid>
+        <description>&lt;h3 id=&#34;前言&#34;&gt;前言&lt;/h3&gt;
+&lt;p&gt;这是A Week系列的第四期。&lt;/p&gt;
+&lt;p&gt;主要是开了一个新坑，讲讲McKenney大师写的Parallel Programming，因为本书在国内尚无正式的译本，所以多写了一些翻译和理解。&lt;/p&gt;
+&lt;h3 id=&#34;chapter-1&#34;&gt;Chapter 1&lt;/h3&gt;
+&lt;p&gt;Is Parallel Programming Hard, And, If So,What Can You Do About It?&lt;/p&gt;
+&lt;p&gt;作者Paul E. McKenney是世界并行编程专家，Linux 内核中 RCU 实现和 rcutorture 测试模块的维护者，也是RCU的发明人。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/p/%E6%88%91%E5%BD%93%E7%84%B6%E7%9F%A5%E9%81%93%E5%B9%B6%E8%A1%8C%E7%BC%96%E7%A8%8B%E5%BE%88%E9%9A%BE%E4%BD%86%E4%BD%A0%E6%80%BB%E5%8F%AF%E4%BB%A5%E5%81%9A%E4%BA%9B%E4%BB%80%E4%B9%88%E4%B8%80/images/1.png&#34;
+	width=&#34;1041&#34;
+	height=&#34;1269&#34;
+	srcset=&#34;/p/%E6%88%91%E5%BD%93%E7%84%B6%E7%9F%A5%E9%81%93%E5%B9%B6%E8%A1%8C%E7%BC%96%E7%A8%8B%E5%BE%88%E9%9A%BE%E4%BD%86%E4%BD%A0%E6%80%BB%E5%8F%AF%E4%BB%A5%E5%81%9A%E4%BA%9B%E4%BB%80%E4%B9%88%E4%B8%80/images/1_hua00c9ba27f69b973f7600fa46519f41d_19235_480x0_resize_box_3.png 480w, /p/%E6%88%91%E5%BD%93%E7%84%B6%E7%9F%A5%E9%81%93%E5%B9%B6%E8%A1%8C%E7%BC%96%E7%A8%8B%E5%BE%88%E9%9A%BE%E4%BD%86%E4%BD%A0%E6%80%BB%E5%8F%AF%E4%BB%A5%E5%81%9A%E4%BA%9B%E4%BB%80%E4%B9%88%E4%B8%80/images/1_hua00c9ba27f69b973f7600fa46519f41d_19235_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;图1:paralle1&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;82&#34;
+		data-flex-basis=&#34;196px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;在一开始有关于使用本书的指南，主要是一些代码和习题的初衷。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/p/%E6%88%91%E5%BD%93%E7%84%B6%E7%9F%A5%E9%81%93%E5%B9%B6%E8%A1%8C%E7%BC%96%E7%A8%8B%E5%BE%88%E9%9A%BE%E4%BD%86%E4%BD%A0%E6%80%BB%E5%8F%AF%E4%BB%A5%E5%81%9A%E4%BA%9B%E4%BB%80%E4%B9%88%E4%B8%80/images/2.png&#34;
+	width=&#34;1034&#34;
+	height=&#34;1299&#34;
+	srcset=&#34;/p/%E6%88%91%E5%BD%93%E7%84%B6%E7%9F%A5%E9%81%93%E5%B9%B6%E8%A1%8C%E7%BC%96%E7%A8%8B%E5%BE%88%E9%9A%BE%E4%BD%86%E4%BD%A0%E6%80%BB%E5%8F%AF%E4%BB%A5%E5%81%9A%E4%BA%9B%E4%BB%80%E4%B9%88%E4%B8%80/images/2_hu438be327d74213170c2bdc52caf4348a_389247_480x0_resize_box_3.png 480w, /p/%E6%88%91%E5%BD%93%E7%84%B6%E7%9F%A5%E9%81%93%E5%B9%B6%E8%A1%8C%E7%BC%96%E7%A8%8B%E5%BE%88%E9%9A%BE%E4%BD%86%E4%BD%A0%E6%80%BB%E5%8F%AF%E4%BB%A5%E5%81%9A%E4%BA%9B%E4%BB%80%E4%B9%88%E4%B8%80/images/2_hu438be327d74213170c2bdc52caf4348a_389247_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;图2:paralle1&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;79&#34;
+		data-flex-basis=&#34;191px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;下面进入正式的章节：&lt;/p&gt;
+&lt;h3 id=&#34;chapter-2--introduction&#34;&gt;Chapter 2  Introduction&lt;/h3&gt;
+&lt;p&gt;&lt;img src=&#34;/p/%E6%88%91%E5%BD%93%E7%84%B6%E7%9F%A5%E9%81%93%E5%B9%B6%E8%A1%8C%E7%BC%96%E7%A8%8B%E5%BE%88%E9%9A%BE%E4%BD%86%E4%BD%A0%E6%80%BB%E5%8F%AF%E4%BB%A5%E5%81%9A%E4%BA%9B%E4%BB%80%E4%B9%88%E4%B8%80/images/3.png&#34;
+	width=&#34;991&#34;
+	height=&#34;1302&#34;
+	srcset=&#34;/p/%E6%88%91%E5%BD%93%E7%84%B6%E7%9F%A5%E9%81%93%E5%B9%B6%E8%A1%8C%E7%BC%96%E7%A8%8B%E5%BE%88%E9%9A%BE%E4%BD%86%E4%BD%A0%E6%80%BB%E5%8F%AF%E4%BB%A5%E5%81%9A%E4%BA%9B%E4%BB%80%E4%B9%88%E4%B8%80/images/3_hu285600c88e656690ba32a0059ec2d53c_359569_480x0_resize_box_3.png 480w, /p/%E6%88%91%E5%BD%93%E7%84%B6%E7%9F%A5%E9%81%93%E5%B9%B6%E8%A1%8C%E7%BC%96%E7%A8%8B%E5%BE%88%E9%9A%BE%E4%BD%86%E4%BD%A0%E6%80%BB%E5%8F%AF%E4%BB%A5%E5%81%9A%E4%BA%9B%E4%BB%80%E4%B9%88%E4%B8%80/images/3_hu285600c88e656690ba32a0059ec2d53c_359569_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;图3:paralle1&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;76&#34;
+		data-flex-basis=&#34;182px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;New technologies that are difficult to use at introduction invariably become easier over time.新事物总是在开始很难，但随着长时间的普及而变得简单。&lt;/p&gt;
+&lt;p&gt;It instead examines the reasons why parallel programming is difficult, and then works to help the reader to overcome these difficulties.&lt;/p&gt;
+&lt;p&gt;因为并行编程确实很难，但是这些困难都会克服的。&lt;/p&gt;
+&lt;p&gt;包括以下几个方面：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;The historic high cost and relative rarity of parallel systems.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;The typical researcher&amp;rsquo;s and practitioner&amp;rsquo;s lack of experience with parallel systems.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;The paucity of publicly accessible parallel code.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;The lack of a widely understood engineering discipline of parallel programming.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;The high overhead of communication relative to that of processing, even in tightly coupled shared-memory computers.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;除了因为是未知性较高，部分也是因为关联性复杂、运算代价高、通信繁琐。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/p/%E6%88%91%E5%BD%93%E7%84%B6%E7%9F%A5%E9%81%93%E5%B9%B6%E8%A1%8C%E7%BC%96%E7%A8%8B%E5%BE%88%E9%9A%BE%E4%BD%86%E4%BD%A0%E6%80%BB%E5%8F%AF%E4%BB%A5%E5%81%9A%E4%BA%9B%E4%BB%80%E4%B9%88%E4%B8%80/images/4.png&#34;
+	width=&#34;948&#34;
+	height=&#34;1150&#34;
+	srcset=&#34;/p/%E6%88%91%E5%BD%93%E7%84%B6%E7%9F%A5%E9%81%93%E5%B9%B6%E8%A1%8C%E7%BC%96%E7%A8%8B%E5%BE%88%E9%9A%BE%E4%BD%86%E4%BD%A0%E6%80%BB%E5%8F%AF%E4%BB%A5%E5%81%9A%E4%BA%9B%E4%BB%80%E4%B9%88%E4%B8%80/images/4_hu7868d8d79ca74133abc0b105391f5205_461861_480x0_resize_box_3.png 480w, /p/%E6%88%91%E5%BD%93%E7%84%B6%E7%9F%A5%E9%81%93%E5%B9%B6%E8%A1%8C%E7%BC%96%E7%A8%8B%E5%BE%88%E9%9A%BE%E4%BD%86%E4%BD%A0%E6%80%BB%E5%8F%AF%E4%BB%A5%E5%81%9A%E4%BA%9B%E4%BB%80%E4%B9%88%E4%B8%80/images/4_hu7868d8d79ca74133abc0b105391f5205_461861_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;图4:paralle1&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;82&#34;
+		data-flex-basis=&#34;197px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;虽然现存的大部分是并发编程，但随着计算机体系结构的发展，以及操作系统内核、数据库系统和消息处理系统的提升，并行编程的潜力将得到释放，虽然相对的通信成本还过高，但颇有点&amp;quot;苦尽甘来&amp;quot;的感觉。&lt;/p&gt;
+&lt;p&gt;并行编程的三个目标：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;Performance.性能&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Productivity.生产力&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Generality.普适性&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;他们之间是三角关系，永远在平衡和拉扯中。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/p/%E6%88%91%E5%BD%93%E7%84%B6%E7%9F%A5%E9%81%93%E5%B9%B6%E8%A1%8C%E7%BC%96%E7%A8%8B%E5%BE%88%E9%9A%BE%E4%BD%86%E4%BD%A0%E6%80%BB%E5%8F%AF%E4%BB%A5%E5%81%9A%E4%BA%9B%E4%BB%80%E4%B9%88%E4%B8%80/images/5.png&#34;
+	width=&#34;970&#34;
+	height=&#34;1243&#34;
+	srcset=&#34;/p/%E6%88%91%E5%BD%93%E7%84%B6%E7%9F%A5%E9%81%93%E5%B9%B6%E8%A1%8C%E7%BC%96%E7%A8%8B%E5%BE%88%E9%9A%BE%E4%BD%86%E4%BD%A0%E6%80%BB%E5%8F%AF%E4%BB%A5%E5%81%9A%E4%BA%9B%E4%BB%80%E4%B9%88%E4%B8%80/images/5_hua54e89b65d13d3ddbd250be3f365ecd6_475090_480x0_resize_box_3.png 480w, /p/%E6%88%91%E5%BD%93%E7%84%B6%E7%9F%A5%E9%81%93%E5%B9%B6%E8%A1%8C%E7%BC%96%E7%A8%8B%E5%BE%88%E9%9A%BE%E4%BD%86%E4%BD%A0%E6%80%BB%E5%8F%AF%E4%BB%A5%E5%81%9A%E4%BA%9B%E4%BB%80%E4%B9%88%E4%B8%80/images/5_hua54e89b65d13d3ddbd250be3f365ecd6_475090_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;图5:paralle1&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;78&#34;
+		data-flex-basis=&#34;187px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;Parallelism is the way to go for those wanting to avail themselves of the full performance of their systems.并行是为了发挥机器的全部性能。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/p/%E6%88%91%E5%BD%93%E7%84%B6%E7%9F%A5%E9%81%93%E5%B9%B6%E8%A1%8C%E7%BC%96%E7%A8%8B%E5%BE%88%E9%9A%BE%E4%BD%86%E4%BD%A0%E6%80%BB%E5%8F%AF%E4%BB%A5%E5%81%9A%E4%BA%9B%E4%BB%80%E4%B9%88%E4%B8%80/images/6.png&#34;
+	width=&#34;982&#34;
+	height=&#34;1266&#34;
+	srcset=&#34;/p/%E6%88%91%E5%BD%93%E7%84%B6%E7%9F%A5%E9%81%93%E5%B9%B6%E8%A1%8C%E7%BC%96%E7%A8%8B%E5%BE%88%E9%9A%BE%E4%BD%86%E4%BD%A0%E6%80%BB%E5%8F%AF%E4%BB%A5%E5%81%9A%E4%BA%9B%E4%BB%80%E4%B9%88%E4%B8%80/images/6_hu615a8454f68ec8e3e87c7e5871dada6f_493569_480x0_resize_box_3.png 480w, /p/%E6%88%91%E5%BD%93%E7%84%B6%E7%9F%A5%E9%81%93%E5%B9%B6%E8%A1%8C%E7%BC%96%E7%A8%8B%E5%BE%88%E9%9A%BE%E4%BD%86%E4%BD%A0%E6%80%BB%E5%8F%AF%E4%BB%A5%E5%81%9A%E4%BA%9B%E4%BB%80%E4%B9%88%E4%B8%80/images/6_hu615a8454f68ec8e3e87c7e5871dada6f_493569_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;图6:paralle1&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;77&#34;
+		data-flex-basis=&#34;186px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;One of the inescapable consequences of the rapid decrease in the cost of hardware is that software productivity becomes increasingly important.硬件成本下降后，软件生产力的重要性得到了提高。&lt;/p&gt;
+&lt;p&gt;In fact, this economic force explains much of the maniacal focus on portability, which can be seen as an important special case of generality.为了兼容，总是要失去一些性能的。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/p/%E6%88%91%E5%BD%93%E7%84%B6%E7%9F%A5%E9%81%93%E5%B9%B6%E8%A1%8C%E7%BC%96%E7%A8%8B%E5%BE%88%E9%9A%BE%E4%BD%86%E4%BD%A0%E6%80%BB%E5%8F%AF%E4%BB%A5%E5%81%9A%E4%BA%9B%E4%BB%80%E4%B9%88%E4%B8%80/images/7.png&#34;
+	width=&#34;1007&#34;
+	height=&#34;1216&#34;
+	srcset=&#34;/p/%E6%88%91%E5%BD%93%E7%84%B6%E7%9F%A5%E9%81%93%E5%B9%B6%E8%A1%8C%E7%BC%96%E7%A8%8B%E5%BE%88%E9%9A%BE%E4%BD%86%E4%BD%A0%E6%80%BB%E5%8F%AF%E4%BB%A5%E5%81%9A%E4%BA%9B%E4%BB%80%E4%B9%88%E4%B8%80/images/7_hude90fb5a7378e2a4b488beec3e06f7f5_454599_480x0_resize_box_3.png 480w, /p/%E6%88%91%E5%BD%93%E7%84%B6%E7%9F%A5%E9%81%93%E5%B9%B6%E8%A1%8C%E7%BC%96%E7%A8%8B%E5%BE%88%E9%9A%BE%E4%BD%86%E4%BD%A0%E6%80%BB%E5%8F%AF%E4%BB%A5%E5%81%9A%E4%BA%9B%E4%BB%80%E4%B9%88%E4%B8%80/images/7_hude90fb5a7378e2a4b488beec3e06f7f5_454599_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;图7:paralle1&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;82&#34;
+		data-flex-basis=&#34;198px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;总是要在performance, productivity, and generality中取得平衡，包括C/C++、Java、MPI等。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/p/%E6%88%91%E5%BD%93%E7%84%B6%E7%9F%A5%E9%81%93%E5%B9%B6%E8%A1%8C%E7%BC%96%E7%A8%8B%E5%BE%88%E9%9A%BE%E4%BD%86%E4%BD%A0%E6%80%BB%E5%8F%AF%E4%BB%A5%E5%81%9A%E4%BA%9B%E4%BB%80%E4%B9%88%E4%B8%80/images/8.png&#34;
+	width=&#34;925&#34;
+	height=&#34;1131&#34;
+	srcset=&#34;/p/%E6%88%91%E5%BD%93%E7%84%B6%E7%9F%A5%E9%81%93%E5%B9%B6%E8%A1%8C%E7%BC%96%E7%A8%8B%E5%BE%88%E9%9A%BE%E4%BD%86%E4%BD%A0%E6%80%BB%E5%8F%AF%E4%BB%A5%E5%81%9A%E4%BA%9B%E4%BB%80%E4%B9%88%E4%B8%80/images/8_hu16f2123f54421e00e88a90e910c62ed8_454545_480x0_resize_box_3.png 480w, /p/%E6%88%91%E5%BD%93%E7%84%B6%E7%9F%A5%E9%81%93%E5%B9%B6%E8%A1%8C%E7%BC%96%E7%A8%8B%E5%BE%88%E9%9A%BE%E4%BD%86%E4%BD%A0%E6%80%BB%E5%8F%AF%E4%BB%A5%E5%81%9A%E4%BA%9B%E4%BB%80%E4%B9%88%E4%B8%80/images/8_hu16f2123f54421e00e88a90e910c62ed8_454545_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;图8:paralle1&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;81&#34;
+		data-flex-basis=&#34;196px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;但也有其他的方法来提高性能：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;Run multiple instances of a sequential application.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Make the application use existing parallel software.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Optimize the serial application.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;1.If your program is analyzing a large number of different scenarios, or is analyzing a large number of independent data sets, one easy and effective approach is to create a single sequential program that carries out a single analysis, then use any of a number of scripting environments (for example the bash shell) to run a number of instances of&lt;/p&gt;
+&lt;p&gt;that sequential program in parallel.&lt;/p&gt;
+&lt;p&gt;用单一的结果运算脚本并行地去计算数据集的结果。&lt;/p&gt;
+&lt;p&gt;2.There is no longer any shortage of parallel software environments that can present a single-threaded programmingenvironment, including relational databases [Dat82], web-application servers, and map-reduce environments.&lt;/p&gt;
+&lt;p&gt;除了加入GPU外，还可以加入关系型数据库、web应用服务和map-reduce环境。&lt;/p&gt;
+&lt;p&gt;3.随着摩尔定律不能再来显著的单线程性能改进，并行编程将是打破性能瓶颈最好的选择。但数据结构与算法的选择仍然很重要，数据布局的调整也会提高性能，减少CPU等待磁盘的时间.&lt;/p&gt;
+&lt;p&gt;Of course, the easier it is to parallelize your program, the more attractive parallelization becomes as an optimization.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/p/%E6%88%91%E5%BD%93%E7%84%B6%E7%9F%A5%E9%81%93%E5%B9%B6%E8%A1%8C%E7%BC%96%E7%A8%8B%E5%BE%88%E9%9A%BE%E4%BD%86%E4%BD%A0%E6%80%BB%E5%8F%AF%E4%BB%A5%E5%81%9A%E4%BA%9B%E4%BB%80%E4%B9%88%E4%B8%80/images/9.png&#34;
+	width=&#34;960&#34;
+	height=&#34;1177&#34;
+	srcset=&#34;/p/%E6%88%91%E5%BD%93%E7%84%B6%E7%9F%A5%E9%81%93%E5%B9%B6%E8%A1%8C%E7%BC%96%E7%A8%8B%E5%BE%88%E9%9A%BE%E4%BD%86%E4%BD%A0%E6%80%BB%E5%8F%AF%E4%BB%A5%E5%81%9A%E4%BA%9B%E4%BB%80%E4%B9%88%E4%B8%80/images/9_hud92f35e78cadc617729dee973d28780a_497421_480x0_resize_box_3.png 480w, /p/%E6%88%91%E5%BD%93%E7%84%B6%E7%9F%A5%E9%81%93%E5%B9%B6%E8%A1%8C%E7%BC%96%E7%A8%8B%E5%BE%88%E9%9A%BE%E4%BD%86%E4%BD%A0%E6%80%BB%E5%8F%AF%E4%BB%A5%E5%81%9A%E4%BA%9B%E4%BB%80%E4%B9%88%E4%B8%80/images/9_hud92f35e78cadc617729dee973d28780a_497421_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;图9:paralle1&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;81&#34;
+		data-flex-basis=&#34;195px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;But parallel programming involves two-way communication, with a program&amp;rsquo;s performance and scalability being the communication from the machine to the human. In short, the human writes a program telling the computer what to do, and the computer critiques this program via the resulting performance and scalability. Therefore, appeals&lt;/p&gt;
+&lt;p&gt;to abstractions or to mathematical analyses will often be of severely limited utility.&lt;/p&gt;
+&lt;p&gt;但并行编程不仅是写代码，也会涉及到two-way communication双向通信，以及可伸缩性，还需要有抽象和数学分析能力。So，人为因素占比较大。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/p/%E6%88%91%E5%BD%93%E7%84%B6%E7%9F%A5%E9%81%93%E5%B9%B6%E8%A1%8C%E7%BC%96%E7%A8%8B%E5%BE%88%E9%9A%BE%E4%BD%86%E4%BD%A0%E6%80%BB%E5%8F%AF%E4%BB%A5%E5%81%9A%E4%BA%9B%E4%BB%80%E4%B9%88%E4%B8%80/images/10.png&#34;
+	width=&#34;412&#34;
+	height=&#34;297&#34;
+	srcset=&#34;/p/%E6%88%91%E5%BD%93%E7%84%B6%E7%9F%A5%E9%81%93%E5%B9%B6%E8%A1%8C%E7%BC%96%E7%A8%8B%E5%BE%88%E9%9A%BE%E4%BD%86%E4%BD%A0%E6%80%BB%E5%8F%AF%E4%BB%A5%E5%81%9A%E4%BA%9B%E4%BB%80%E4%B9%88%E4%B8%80/images/10_hu6b5422d33dcd2460c37207b9bee29afc_32337_480x0_resize_box_3.png 480w, /p/%E6%88%91%E5%BD%93%E7%84%B6%E7%9F%A5%E9%81%93%E5%B9%B6%E8%A1%8C%E7%BC%96%E7%A8%8B%E5%BE%88%E9%9A%BE%E4%BD%86%E4%BD%A0%E6%80%BB%E5%8F%AF%E4%BB%A5%E5%81%9A%E4%BA%9B%E4%BB%80%E4%B9%88%E4%B8%80/images/10_hu6b5422d33dcd2460c37207b9bee29afc_32337_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;图10:paralle1&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;138&#34;
+		data-flex-basis=&#34;332px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;如图所言：对软件开发人员的要求较高。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/p/%E6%88%91%E5%BD%93%E7%84%B6%E7%9F%A5%E9%81%93%E5%B9%B6%E8%A1%8C%E7%BC%96%E7%A8%8B%E5%BE%88%E9%9A%BE%E4%BD%86%E4%BD%A0%E6%80%BB%E5%8F%AF%E4%BB%A5%E5%81%9A%E4%BA%9B%E4%BB%80%E4%B9%88%E4%B8%80/images/11.png&#34;
+	width=&#34;883&#34;
+	height=&#34;1133&#34;
+	srcset=&#34;/p/%E6%88%91%E5%BD%93%E7%84%B6%E7%9F%A5%E9%81%93%E5%B9%B6%E8%A1%8C%E7%BC%96%E7%A8%8B%E5%BE%88%E9%9A%BE%E4%BD%86%E4%BD%A0%E6%80%BB%E5%8F%AF%E4%BB%A5%E5%81%9A%E4%BA%9B%E4%BB%80%E4%B9%88%E4%B8%80/images/11_hu946adf600afee0b3e013142ba538a9a5_465826_480x0_resize_box_3.png 480w, /p/%E6%88%91%E5%BD%93%E7%84%B6%E7%9F%A5%E9%81%93%E5%B9%B6%E8%A1%8C%E7%BC%96%E7%A8%8B%E5%BE%88%E9%9A%BE%E4%BD%86%E4%BD%A0%E6%80%BB%E5%8F%AF%E4%BB%A5%E5%81%9A%E4%BA%9B%E4%BB%80%E4%B9%88%E4%B8%80/images/11_hu946adf600afee0b3e013142ba538a9a5_465826_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;图11:paralle1&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;77&#34;
+		data-flex-basis=&#34;187px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;Work Partitioning&lt;/p&gt;
+&lt;p&gt;良好的并行程序设计拥有适合的数据结构，而它所需要的state spaces以及I/O devices都很合理，也不会引起cpu caches，但糟糕的并行程序会引起争夺，及难以理解。&lt;/p&gt;
+&lt;p&gt;Parallel Access Control&lt;/p&gt;
+&lt;p&gt;The first parallel-access-control issue is whether the form of access to a given resource depends on that resource&amp;rsquo;s location.&lt;/p&gt;
+&lt;p&gt;The other parallel-access-control issue is how threads coordinate access to the resources.&lt;/p&gt;
+&lt;p&gt;同步永远会涉及到权限机制，deadlock, livelock, transaction rollback这些问题永远都在。&lt;/p&gt;
+&lt;p&gt;Resource Partitioning and Replication&lt;/p&gt;
+&lt;p&gt;The most effective parallel algorithms and systems exploit resource parallelism, so much so that it is usually wise to begin parallelization by partitioning your write-intensive resources and replicating frequently accessed read-mostly resources.&lt;/p&gt;
+&lt;p&gt;对写入密集型资源进行分区，以便于并行化资源的访问和复制，并随着时间动态改变。dynamically change the partitioning over time.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/p/%E6%88%91%E5%BD%93%E7%84%B6%E7%9F%A5%E9%81%93%E5%B9%B6%E8%A1%8C%E7%BC%96%E7%A8%8B%E5%BE%88%E9%9A%BE%E4%BD%86%E4%BD%A0%E6%80%BB%E5%8F%AF%E4%BB%A5%E5%81%9A%E4%BA%9B%E4%BB%80%E4%B9%88%E4%B8%80/images/12.png&#34;
+	width=&#34;409&#34;
+	height=&#34;298&#34;
+	srcset=&#34;/p/%E6%88%91%E5%BD%93%E7%84%B6%E7%9F%A5%E9%81%93%E5%B9%B6%E8%A1%8C%E7%BC%96%E7%A8%8B%E5%BE%88%E9%9A%BE%E4%BD%86%E4%BD%A0%E6%80%BB%E5%8F%AF%E4%BB%A5%E5%81%9A%E4%BA%9B%E4%BB%80%E4%B9%88%E4%B8%80/images/12_hu6c5978912781ce6536b7ba9c1b4f8024_34345_480x0_resize_box_3.png 480w, /p/%E6%88%91%E5%BD%93%E7%84%B6%E7%9F%A5%E9%81%93%E5%B9%B6%E8%A1%8C%E7%BC%96%E7%A8%8B%E5%BE%88%E9%9A%BE%E4%BD%86%E4%BD%A0%E6%80%BB%E5%8F%AF%E4%BB%A5%E5%81%9A%E4%BA%9B%E4%BB%80%E4%B9%88%E4%B8%80/images/12_hu6c5978912781ce6536b7ba9c1b4f8024_34345_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;图12:paralle1&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;137&#34;
+		data-flex-basis=&#34;329px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;So,这就是并行编程的挑战。&lt;/p&gt;
+&lt;p&gt;Interacting With Hardware&lt;/p&gt;
+&lt;p&gt;Hardware interaction is normally the domain of the operating system, the compiler, libraries, or other software-environment infrastructure.&lt;/p&gt;
+&lt;p&gt;但涉及到性能的方向，我们就会想要压榨干机器的所有潜力，所以必须要理解与硬件的交互。以下都需要有所理解。&lt;/p&gt;
+&lt;p&gt;cache geometry,&lt;/p&gt;
+&lt;p&gt;system topology,&lt;/p&gt;
+&lt;p&gt;interconnect protocol of the target hardware.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/p/%E6%88%91%E5%BD%93%E7%84%B6%E7%9F%A5%E9%81%93%E5%B9%B6%E8%A1%8C%E7%BC%96%E7%A8%8B%E5%BE%88%E9%9A%BE%E4%BD%86%E4%BD%A0%E6%80%BB%E5%8F%AF%E4%BB%A5%E5%81%9A%E4%BA%9B%E4%BB%80%E4%B9%88%E4%B8%80/images/13.png&#34;
+	width=&#34;950&#34;
+	height=&#34;1156&#34;
+	srcset=&#34;/p/%E6%88%91%E5%BD%93%E7%84%B6%E7%9F%A5%E9%81%93%E5%B9%B6%E8%A1%8C%E7%BC%96%E7%A8%8B%E5%BE%88%E9%9A%BE%E4%BD%86%E4%BD%A0%E6%80%BB%E5%8F%AF%E4%BB%A5%E5%81%9A%E4%BA%9B%E4%BB%80%E4%B9%88%E4%B8%80/images/13_hu6f09b9fd039a2e8fa8268119daf5404b_455936_480x0_resize_box_3.png 480w, /p/%E6%88%91%E5%BD%93%E7%84%B6%E7%9F%A5%E9%81%93%E5%B9%B6%E8%A1%8C%E7%BC%96%E7%A8%8B%E5%BE%88%E9%9A%BE%E4%BD%86%E4%BD%A0%E6%80%BB%E5%8F%AF%E4%BB%A5%E5%81%9A%E4%BA%9B%E4%BB%80%E4%B9%88%E4%B8%80/images/13_hu6f09b9fd039a2e8fa8268119daf5404b_455936_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;图13:paralle1&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;82&#34;
+		data-flex-basis=&#34;197px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;Writing concurrent programs has a reputation for being exotic and difficult. I believe it is neither. You need a system that provides you with good primitives and suitable libraries, you need a basic caution and carefulness, you need an armory of useful techniques, and you need&lt;/p&gt;
+&lt;p&gt;to know of the common pitfalls. I hope that this paper has helped you towards sharing my belief.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/p/%E6%88%91%E5%BD%93%E7%84%B6%E7%9F%A5%E9%81%93%E5%B9%B6%E8%A1%8C%E7%BC%96%E7%A8%8B%E5%BE%88%E9%9A%BE%E4%BD%86%E4%BD%A0%E6%80%BB%E5%8F%AF%E4%BB%A5%E5%81%9A%E4%BA%9B%E4%BB%80%E4%B9%88%E4%B8%80/images/14.png&#34;
+	width=&#34;950&#34;
+	height=&#34;1161&#34;
+	srcset=&#34;/p/%E6%88%91%E5%BD%93%E7%84%B6%E7%9F%A5%E9%81%93%E5%B9%B6%E8%A1%8C%E7%BC%96%E7%A8%8B%E5%BE%88%E9%9A%BE%E4%BD%86%E4%BD%A0%E6%80%BB%E5%8F%AF%E4%BB%A5%E5%81%9A%E4%BA%9B%E4%BB%80%E4%B9%88%E4%B8%80/images/14_hub04fd39e51dbd5204be65e795f3451e3_256434_480x0_resize_box_3.png 480w, /p/%E6%88%91%E5%BD%93%E7%84%B6%E7%9F%A5%E9%81%93%E5%B9%B6%E8%A1%8C%E7%BC%96%E7%A8%8B%E5%BE%88%E9%9A%BE%E4%BD%86%E4%BD%A0%E6%80%BB%E5%8F%AF%E4%BB%A5%E5%81%9A%E4%BA%9B%E4%BB%80%E4%B9%88%E4%B8%80/images/14_hub04fd39e51dbd5204be65e795f3451e3_256434_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;图14:paralle1&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;81&#34;
+		data-flex-basis=&#34;196px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;1980年以来，&lt;/p&gt;
+&lt;p&gt;人类从未停下对并行编程的挑战，&lt;/p&gt;
+&lt;p&gt;所以根本没有理由拒绝,21世纪的今天所面临的挑战！&lt;/p&gt;
+&lt;h3 id=&#34;chapter-3-hardware-and-its-habits&#34;&gt;Chapter 3 Hardware and its Habits&lt;/h3&gt;
+&lt;p&gt;This chapter therefore looks at the costof synchronization and communication within a shared-memory system.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/p/%E6%88%91%E5%BD%93%E7%84%B6%E7%9F%A5%E9%81%93%E5%B9%B6%E8%A1%8C%E7%BC%96%E7%A8%8B%E5%BE%88%E9%9A%BE%E4%BD%86%E4%BD%A0%E6%80%BB%E5%8F%AF%E4%BB%A5%E5%81%9A%E4%BA%9B%E4%BB%80%E4%B9%88%E4%B8%80/images/15.png&#34;
+	width=&#34;418&#34;
+	height=&#34;356&#34;
+	srcset=&#34;/p/%E6%88%91%E5%BD%93%E7%84%B6%E7%9F%A5%E9%81%93%E5%B9%B6%E8%A1%8C%E7%BC%96%E7%A8%8B%E5%BE%88%E9%9A%BE%E4%BD%86%E4%BD%A0%E6%80%BB%E5%8F%AF%E4%BB%A5%E5%81%9A%E4%BA%9B%E4%BB%80%E4%B9%88%E4%B8%80/images/15_hu87bab61356d71d3417ccd509b0282fa7_60704_480x0_resize_box_3.png 480w, /p/%E6%88%91%E5%BD%93%E7%84%B6%E7%9F%A5%E9%81%93%E5%B9%B6%E8%A1%8C%E7%BC%96%E7%A8%8B%E5%BE%88%E9%9A%BE%E4%BD%86%E4%BD%A0%E6%80%BB%E5%8F%AF%E4%BB%A5%E5%81%9A%E4%BA%9B%E4%BB%80%E4%B9%88%E4%B8%80/images/15_hu87bab61356d71d3417ccd509b0282fa7_60704_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;图15:paralle1&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;117&#34;
+		data-flex-basis=&#34;281px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;CPU其实不是按照一条直线跑道在跑。&lt;/p&gt;
+&lt;p&gt;In contrast, the CPU of the late 1990s and of the 2000s execute many instructions simultaneously, using pipelines; superscalar techniques;&lt;/p&gt;
+&lt;p&gt;out-of-order instruction and data handling; speculative execution, and more [HP17, HP11] in order to optimize the flow of instructions and data through the CPU.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/p/%E6%88%91%E5%BD%93%E7%84%B6%E7%9F%A5%E9%81%93%E5%B9%B6%E8%A1%8C%E7%BC%96%E7%A8%8B%E5%BE%88%E9%9A%BE%E4%BD%86%E4%BD%A0%E6%80%BB%E5%8F%AF%E4%BB%A5%E5%81%9A%E4%BA%9B%E4%BB%80%E4%B9%88%E4%B8%80/images/16.png&#34;
+	width=&#34;901&#34;
+	height=&#34;1107&#34;
+	srcset=&#34;/p/%E6%88%91%E5%BD%93%E7%84%B6%E7%9F%A5%E9%81%93%E5%B9%B6%E8%A1%8C%E7%BC%96%E7%A8%8B%E5%BE%88%E9%9A%BE%E4%BD%86%E4%BD%A0%E6%80%BB%E5%8F%AF%E4%BB%A5%E5%81%9A%E4%BA%9B%E4%BB%80%E4%B9%88%E4%B8%80/images/16_hu8e47d7872facf1d8eb25ad21a2d78390_342979_480x0_resize_box_3.png 480w, /p/%E6%88%91%E5%BD%93%E7%84%B6%E7%9F%A5%E9%81%93%E5%B9%B6%E8%A1%8C%E7%BC%96%E7%A8%8B%E5%BE%88%E9%9A%BE%E4%BD%86%E4%BD%A0%E6%80%BB%E5%8F%AF%E4%BB%A5%E5%81%9A%E4%BA%9B%E4%BB%80%E4%B9%88%E4%B8%80/images/16_hu8e47d7872facf1d8eb25ad21a2d78390_342979_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;图16:paralle1&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;81&#34;
+		data-flex-basis=&#34;195px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;h4 id=&#34;pipelined-cpus&#34;&gt;Pipelined CPUs&lt;/h4&gt;
+&lt;p&gt;Suitable control flow can be provided by a program that executes primarily in tight loops, for example, arithmetic on large matrices or vectors.这其中有很多控制流，cpu在边猜测边执行，猜错的成本很高，对于可预测控制流程序运行良好，但涉及到非可预测的分支，cpu猜错后必须丢弃此前的所有分支指令，非常浪费时间。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/p/%E6%88%91%E5%BD%93%E7%84%B6%E7%9F%A5%E9%81%93%E5%B9%B6%E8%A1%8C%E7%BC%96%E7%A8%8B%E5%BE%88%E9%9A%BE%E4%BD%86%E4%BD%A0%E6%80%BB%E5%8F%AF%E4%BB%A5%E5%81%9A%E4%BA%9B%E4%BB%80%E4%B9%88%E4%B8%80/images/17.png&#34;
+	width=&#34;429&#34;
+	height=&#34;317&#34;
+	srcset=&#34;/p/%E6%88%91%E5%BD%93%E7%84%B6%E7%9F%A5%E9%81%93%E5%B9%B6%E8%A1%8C%E7%BC%96%E7%A8%8B%E5%BE%88%E9%9A%BE%E4%BD%86%E4%BD%A0%E6%80%BB%E5%8F%AF%E4%BB%A5%E5%81%9A%E4%BA%9B%E4%BB%80%E4%B9%88%E4%B8%80/images/17_hu04a7bec84abae59033db9b81e8c31f17_9330_480x0_resize_box_3.png 480w, /p/%E6%88%91%E5%BD%93%E7%84%B6%E7%9F%A5%E9%81%93%E5%B9%B6%E8%A1%8C%E7%BC%96%E7%A8%8B%E5%BE%88%E9%9A%BE%E4%BD%86%E4%BD%A0%E6%80%BB%E5%8F%AF%E4%BB%A5%E5%81%9A%E4%BA%9B%E4%BB%80%E4%B9%88%E4%B8%80/images/17_hu04a7bec84abae59033db9b81e8c31f17_9330_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;图17:paralle1&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;135&#34;
+		data-flex-basis=&#34;324px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;This gets even worse in the increasingly common case of hyperthreading (or SMT, if you prefer), especially on pipelined superscalar out-of-order CPU featuring speculative execution.&lt;/p&gt;
+&lt;p&gt;Therefore, the execution of one hardware thread can and often is perturbed by the actions of other hardware threads sharing that core.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/p/%E6%88%91%E5%BD%93%E7%84%B6%E7%9F%A5%E9%81%93%E5%B9%B6%E8%A1%8C%E7%BC%96%E7%A8%8B%E5%BE%88%E9%9A%BE%E4%BD%86%E4%BD%A0%E6%80%BB%E5%8F%AF%E4%BB%A5%E5%81%9A%E4%BA%9B%E4%BB%80%E4%B9%88%E4%B8%80/images/18.png&#34;
+	width=&#34;920&#34;
+	height=&#34;1165&#34;
+	srcset=&#34;/p/%E6%88%91%E5%BD%93%E7%84%B6%E7%9F%A5%E9%81%93%E5%B9%B6%E8%A1%8C%E7%BC%96%E7%A8%8B%E5%BE%88%E9%9A%BE%E4%BD%86%E4%BD%A0%E6%80%BB%E5%8F%AF%E4%BB%A5%E5%81%9A%E4%BA%9B%E4%BB%80%E4%B9%88%E4%B8%80/images/18_hu56ea676f202083c2da4e72ec1684f886_433323_480x0_resize_box_3.png 480w, /p/%E6%88%91%E5%BD%93%E7%84%B6%E7%9F%A5%E9%81%93%E5%B9%B6%E8%A1%8C%E7%BC%96%E7%A8%8B%E5%BE%88%E9%9A%BE%E4%BD%86%E4%BD%A0%E6%80%BB%E5%8F%AF%E4%BB%A5%E5%81%9A%E4%BA%9B%E4%BB%80%E4%B9%88%E4%B8%80/images/18_hu56ea676f202083c2da4e72ec1684f886_433323_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;图18:paralle1&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;78&#34;
+		data-flex-basis=&#34;189px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;n theory, this contention is avoidable, but in practice CPUs must choose very quickly and without the benefit of clairvoyance. In particular, adding an instruction to a tight loop can sometimes actually cause execution to speed up.&lt;/p&gt;
+&lt;p&gt;CPU运行得太快了，以至于对指令的判断能力跟不上。&lt;/p&gt;
+&lt;h4 id=&#34;memory-references&#34;&gt;Memory References&lt;/h4&gt;
+&lt;p&gt;memory references often pose severe obstacles to modern CPUs.&lt;/p&gt;
+&lt;p&gt;these caches require highly predictabledata-access patterns to successfully hide those latencies.&lt;/p&gt;
+&lt;p&gt;nfortunately, common operations such as traversing a linked list have extremely unpredictable memory-access patterns.&lt;/p&gt;
+&lt;p&gt;延迟总是会成为cpu访问内存的困扰,当然原子操作也会。&lt;/p&gt;
+&lt;h4 id=&#34;atomic-operations&#34;&gt;Atomic Operations&lt;/h4&gt;
+&lt;p&gt;even though they are in fact being executed piece-at-a-time, with one common trick being to identify all the cachelines containing the data to be atomically operated on, ensure that these cachelines are owned by the CPU executing the atomic operation, and only then proceed with the atomic operation while ensuring that these cachelines remained owned by this CPU.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/p/%E6%88%91%E5%BD%93%E7%84%B6%E7%9F%A5%E9%81%93%E5%B9%B6%E8%A1%8C%E7%BC%96%E7%A8%8B%E5%BE%88%E9%9A%BE%E4%BD%86%E4%BD%A0%E6%80%BB%E5%8F%AF%E4%BB%A5%E5%81%9A%E4%BA%9B%E4%BB%80%E4%B9%88%E4%B8%80/images/19.png&#34;
+	width=&#34;927&#34;
+	height=&#34;1147&#34;
+	srcset=&#34;/p/%E6%88%91%E5%BD%93%E7%84%B6%E7%9F%A5%E9%81%93%E5%B9%B6%E8%A1%8C%E7%BC%96%E7%A8%8B%E5%BE%88%E9%9A%BE%E4%BD%86%E4%BD%A0%E6%80%BB%E5%8F%AF%E4%BB%A5%E5%81%9A%E4%BA%9B%E4%BB%80%E4%B9%88%E4%B8%80/images/19_hu17479a0f24da389593f5a9b5f05c65ea_458504_480x0_resize_box_3.png 480w, /p/%E6%88%91%E5%BD%93%E7%84%B6%E7%9F%A5%E9%81%93%E5%B9%B6%E8%A1%8C%E7%BC%96%E7%A8%8B%E5%BE%88%E9%9A%BE%E4%BD%86%E4%BD%A0%E6%80%BB%E5%8F%AF%E4%BB%A5%E5%81%9A%E4%BA%9B%E4%BB%80%E4%B9%88%E4%B8%80/images/19_hu17479a0f24da389593f5a9b5f05c65ea_458504_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;图19:paralle1&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;80&#34;
+		data-flex-basis=&#34;193px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;Memory Barriers&lt;/p&gt;
+&lt;p&gt;Cache Misses&lt;/p&gt;
+&lt;p&gt;I/O Operations&lt;/p&gt;
+&lt;p&gt;在CSAPP书中，对于内存屏障、缓存未命中、以及IO操作有更全面的描述。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/p/%E6%88%91%E5%BD%93%E7%84%B6%E7%9F%A5%E9%81%93%E5%B9%B6%E8%A1%8C%E7%BC%96%E7%A8%8B%E5%BE%88%E9%9A%BE%E4%BD%86%E4%BD%A0%E6%80%BB%E5%8F%AF%E4%BB%A5%E5%81%9A%E4%BA%9B%E4%BB%80%E4%B9%88%E4%B8%80/images/20.png&#34;
+	width=&#34;957&#34;
+	height=&#34;1173&#34;
+	srcset=&#34;/p/%E6%88%91%E5%BD%93%E7%84%B6%E7%9F%A5%E9%81%93%E5%B9%B6%E8%A1%8C%E7%BC%96%E7%A8%8B%E5%BE%88%E9%9A%BE%E4%BD%86%E4%BD%A0%E6%80%BB%E5%8F%AF%E4%BB%A5%E5%81%9A%E4%BA%9B%E4%BB%80%E4%B9%88%E4%B8%80/images/20_hu224802effe50659ebffd1d80bb6a542e_402722_480x0_resize_box_3.png 480w, /p/%E6%88%91%E5%BD%93%E7%84%B6%E7%9F%A5%E9%81%93%E5%B9%B6%E8%A1%8C%E7%BC%96%E7%A8%8B%E5%BE%88%E9%9A%BE%E4%BD%86%E4%BD%A0%E6%80%BB%E5%8F%AF%E4%BB%A5%E5%81%9A%E4%BA%9B%E4%BB%80%E4%B9%88%E4%B8%80/images/20_hu224802effe50659ebffd1d80bb6a542e_402722_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;图20:paralle1&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;81&#34;
+		data-flex-basis=&#34;195px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;A major goal of parallel hardware design is to reduce this ratio as needed to achieve the relevant performance and scalability goals.&lt;/p&gt;
+&lt;h4 id=&#34;overheads&#34;&gt;Overheads&lt;/h4&gt;
+&lt;p&gt;Don&amp;rsquo;t design bridges in ignorance of materials, and don&amp;rsquo;t design low-level software in ignorance of the underlying hardware.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/p/%E6%88%91%E5%BD%93%E7%84%B6%E7%9F%A5%E9%81%93%E5%B9%B6%E8%A1%8C%E7%BC%96%E7%A8%8B%E5%BE%88%E9%9A%BE%E4%BD%86%E4%BD%A0%E6%80%BB%E5%8F%AF%E4%BB%A5%E5%81%9A%E4%BA%9B%E4%BB%80%E4%B9%88%E4%B8%80/images/21.png&#34;
+	width=&#34;892&#34;
+	height=&#34;1132&#34;
+	srcset=&#34;/p/%E6%88%91%E5%BD%93%E7%84%B6%E7%9F%A5%E9%81%93%E5%B9%B6%E8%A1%8C%E7%BC%96%E7%A8%8B%E5%BE%88%E9%9A%BE%E4%BD%86%E4%BD%A0%E6%80%BB%E5%8F%AF%E4%BB%A5%E5%81%9A%E4%BA%9B%E4%BB%80%E4%B9%88%E4%B8%80/images/21_hue626ed02724c9ccc4d974295fb0c101b_336041_480x0_resize_box_3.png 480w, /p/%E6%88%91%E5%BD%93%E7%84%B6%E7%9F%A5%E9%81%93%E5%B9%B6%E8%A1%8C%E7%BC%96%E7%A8%8B%E5%BE%88%E9%9A%BE%E4%BD%86%E4%BD%A0%E6%80%BB%E5%8F%AF%E4%BB%A5%E5%81%9A%E4%BA%9B%E4%BB%80%E4%B9%88%E4%B8%80/images/21_hue626ed02724c9ccc4d974295fb0c101b_336041_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;图21:paralle1&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;78&#34;
+		data-flex-basis=&#34;189px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;下面进入硬件系统架构。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/p/%E6%88%91%E5%BD%93%E7%84%B6%E7%9F%A5%E9%81%93%E5%B9%B6%E8%A1%8C%E7%BC%96%E7%A8%8B%E5%BE%88%E9%9A%BE%E4%BD%86%E4%BD%A0%E6%80%BB%E5%8F%AF%E4%BB%A5%E5%81%9A%E4%BA%9B%E4%BB%80%E4%B9%88%E4%B8%80/images/22.png&#34;
+	width=&#34;417&#34;
+	height=&#34;365&#34;
+	srcset=&#34;/p/%E6%88%91%E5%BD%93%E7%84%B6%E7%9F%A5%E9%81%93%E5%B9%B6%E8%A1%8C%E7%BC%96%E7%A8%8B%E5%BE%88%E9%9A%BE%E4%BD%86%E4%BD%A0%E6%80%BB%E5%8F%AF%E4%BB%A5%E5%81%9A%E4%BA%9B%E4%BB%80%E4%B9%88%E4%B8%80/images/22_hu1858cdd00a192f96a23acb7f4de467c4_43653_480x0_resize_box_3.png 480w, /p/%E6%88%91%E5%BD%93%E7%84%B6%E7%9F%A5%E9%81%93%E5%B9%B6%E8%A1%8C%E7%BC%96%E7%A8%8B%E5%BE%88%E9%9A%BE%E4%BD%86%E4%BD%A0%E6%80%BB%E5%8F%AF%E4%BB%A5%E5%81%9A%E4%BA%9B%E4%BB%80%E4%B9%88%E4%B8%80/images/22_hu1858cdd00a192f96a23acb7f4de467c4_43653_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;图22:paralle1&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;114&#34;
+		data-flex-basis=&#34;274px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;This simplified sequence is just the beginning of a discipline called cache-coherency protocols. 缓存一致性。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/p/%E6%88%91%E5%BD%93%E7%84%B6%E7%9F%A5%E9%81%93%E5%B9%B6%E8%A1%8C%E7%BC%96%E7%A8%8B%E5%BE%88%E9%9A%BE%E4%BD%86%E4%BD%A0%E6%80%BB%E5%8F%AF%E4%BB%A5%E5%81%9A%E4%BA%9B%E4%BB%80%E4%B9%88%E4%B8%80/images/23.png&#34;
+	width=&#34;925&#34;
+	height=&#34;1140&#34;
+	srcset=&#34;/p/%E6%88%91%E5%BD%93%E7%84%B6%E7%9F%A5%E9%81%93%E5%B9%B6%E8%A1%8C%E7%BC%96%E7%A8%8B%E5%BE%88%E9%9A%BE%E4%BD%86%E4%BD%A0%E6%80%BB%E5%8F%AF%E4%BB%A5%E5%81%9A%E4%BA%9B%E4%BB%80%E4%B9%88%E4%B8%80/images/23_hu7498e0b4bc3d5c41390d10d9e5fb2966_417471_480x0_resize_box_3.png 480w, /p/%E6%88%91%E5%BD%93%E7%84%B6%E7%9F%A5%E9%81%93%E5%B9%B6%E8%A1%8C%E7%BC%96%E7%A8%8B%E5%BE%88%E9%9A%BE%E4%BD%86%E4%BD%A0%E6%80%BB%E5%8F%AF%E4%BB%A5%E5%81%9A%E4%BA%9B%E4%BB%80%E4%B9%88%E4%B8%80/images/23_hu7498e0b4bc3d5c41390d10d9e5fb2966_417471_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;图23:paralle1&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;81&#34;
+		data-flex-basis=&#34;194px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;same-CPU compare-and-swap（CAS）,CSAPP里也有讲到。&lt;/p&gt;
+&lt;p&gt;这里讲得很细，建议直接看原文吧。&lt;/p&gt;
+&lt;p&gt;CAS is an atomic operation in which the hardware compares the contents of the specified memory location to a specified &amp;ldquo;old&amp;rdquo; value, and if they compare equal, stores a specified &amp;ldquo;new&amp;rdquo; value, in which case the CAS operation succeeds.这里涉及到很多优化和计算方式的改变。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/p/%E6%88%91%E5%BD%93%E7%84%B6%E7%9F%A5%E9%81%93%E5%B9%B6%E8%A1%8C%E7%BC%96%E7%A8%8B%E5%BE%88%E9%9A%BE%E4%BD%86%E4%BD%A0%E6%80%BB%E5%8F%AF%E4%BB%A5%E5%81%9A%E4%BA%9B%E4%BB%80%E4%B9%88%E4%B8%80/images/24.png&#34;
+	width=&#34;944&#34;
+	height=&#34;1170&#34;
+	srcset=&#34;/p/%E6%88%91%E5%BD%93%E7%84%B6%E7%9F%A5%E9%81%93%E5%B9%B6%E8%A1%8C%E7%BC%96%E7%A8%8B%E5%BE%88%E9%9A%BE%E4%BD%86%E4%BD%A0%E6%80%BB%E5%8F%AF%E4%BB%A5%E5%81%9A%E4%BA%9B%E4%BB%80%E4%B9%88%E4%B8%80/images/24_hu1e7a9a24d556726de5ea24a3b970fc4f_380683_480x0_resize_box_3.png 480w, /p/%E6%88%91%E5%BD%93%E7%84%B6%E7%9F%A5%E9%81%93%E5%B9%B6%E8%A1%8C%E7%BC%96%E7%A8%8B%E5%BE%88%E9%9A%BE%E4%BD%86%E4%BD%A0%E6%80%BB%E5%8F%AF%E4%BB%A5%E5%81%9A%E4%BA%9B%E4%BB%80%E4%B9%88%E4%B8%80/images/24_hu1e7a9a24d556726de5ea24a3b970fc4f_380683_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;图24:paralle1&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;80&#34;
+		data-flex-basis=&#34;193px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;h4 id=&#34;hardware-optimizations&#34;&gt;Hardware Optimizations&lt;/h4&gt;
+&lt;p&gt;&lt;img src=&#34;/p/%E6%88%91%E5%BD%93%E7%84%B6%E7%9F%A5%E9%81%93%E5%B9%B6%E8%A1%8C%E7%BC%96%E7%A8%8B%E5%BE%88%E9%9A%BE%E4%BD%86%E4%BD%A0%E6%80%BB%E5%8F%AF%E4%BB%A5%E5%81%9A%E4%BA%9B%E4%BB%80%E4%B9%88%E4%B8%80/images/25.png&#34;
+	width=&#34;912&#34;
+	height=&#34;1136&#34;
+	srcset=&#34;/p/%E6%88%91%E5%BD%93%E7%84%B6%E7%9F%A5%E9%81%93%E5%B9%B6%E8%A1%8C%E7%BC%96%E7%A8%8B%E5%BE%88%E9%9A%BE%E4%BD%86%E4%BD%A0%E6%80%BB%E5%8F%AF%E4%BB%A5%E5%81%9A%E4%BA%9B%E4%BB%80%E4%B9%88%E4%B8%80/images/25_hud0649610c0d441fd84f3a870418b6ed9_510335_480x0_resize_box_3.png 480w, /p/%E6%88%91%E5%BD%93%E7%84%B6%E7%9F%A5%E9%81%93%E5%B9%B6%E8%A1%8C%E7%BC%96%E7%A8%8B%E5%BE%88%E9%9A%BE%E4%BD%86%E4%BD%A0%E6%80%BB%E5%8F%AF%E4%BB%A5%E5%81%9A%E4%BA%9B%E4%BB%80%E4%B9%88%E4%B8%80/images/25_hud0649610c0d441fd84f3a870418b6ed9_510335_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;图25:paralle1&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;80&#34;
+		data-flex-basis=&#34;192px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;1.One hardware optimization is large cachelines.&lt;/p&gt;
+&lt;p&gt;2.A second related hardware optimization is cache prefetching, in which the hardware reacts to consecutive accesses by prefetching subsequent cachelines, thereby evading speed-of-light delays for these subsequent cache-lines.&lt;/p&gt;
+&lt;p&gt;3.A third hardware optimization is the store buffer, whichallows a string of store instructions to execute quickly even when the stores are to non-consecutive addresses and when none of the needed cachelines are present in the CPU&amp;rsquo;s cache.&lt;/p&gt;
+&lt;p&gt;4.A fourth hardware optimization is speculative execution, which can allow the hardware to make good use of the store buffers without resulting in memory misordering.&lt;/p&gt;
+&lt;p&gt;5.A fifth hardware optimization is large caches, allowing individual CPUs to operate on larger datasets without incurring expensive cache misses.&lt;/p&gt;
+&lt;p&gt;6.A final hardware optimization is read-mostly replication, in which data that is frequently read but rarely updated is present in all CPUs&amp;rsquo; caches.&lt;/p&gt;
+&lt;p&gt;Hardware Free Lunch?&lt;/p&gt;
+&lt;p&gt;The major reason that concurrency has been receiving somuch focus over the past few years is the end of Moore&amp;rsquo;s-Law induced single-threaded performance increases.&lt;/p&gt;
+&lt;p&gt;摩尔定律的终结，带来对并发的关注。&lt;/p&gt;
+&lt;p&gt;但是任何事物都是有代价的。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/p/%E6%88%91%E5%BD%93%E7%84%B6%E7%9F%A5%E9%81%93%E5%B9%B6%E8%A1%8C%E7%BC%96%E7%A8%8B%E5%BE%88%E9%9A%BE%E4%BD%86%E4%BD%A0%E6%80%BB%E5%8F%AF%E4%BB%A5%E5%81%9A%E4%BA%9B%E4%BB%80%E4%B9%88%E4%B8%80/images/26.png&#34;
+	width=&#34;883&#34;
+	height=&#34;1116&#34;
+	srcset=&#34;/p/%E6%88%91%E5%BD%93%E7%84%B6%E7%9F%A5%E9%81%93%E5%B9%B6%E8%A1%8C%E7%BC%96%E7%A8%8B%E5%BE%88%E9%9A%BE%E4%BD%86%E4%BD%A0%E6%80%BB%E5%8F%AF%E4%BB%A5%E5%81%9A%E4%BA%9B%E4%BB%80%E4%B9%88%E4%B8%80/images/26_hud847ae73f3ed68193b459724f67e07ce_475277_480x0_resize_box_3.png 480w, /p/%E6%88%91%E5%BD%93%E7%84%B6%E7%9F%A5%E9%81%93%E5%B9%B6%E8%A1%8C%E7%BC%96%E7%A8%8B%E5%BE%88%E9%9A%BE%E4%BD%86%E4%BD%A0%E6%80%BB%E5%8F%AF%E4%BB%A5%E5%81%9A%E4%BA%9B%E4%BB%80%E4%B9%88%E4%B8%80/images/26_hud847ae73f3ed68193b459724f67e07ce_475277_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;图26:paralle1&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;79&#34;
+		data-flex-basis=&#34;189px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;现在开始谈3D集成了。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/p/%E6%88%91%E5%BD%93%E7%84%B6%E7%9F%A5%E9%81%93%E5%B9%B6%E8%A1%8C%E7%BC%96%E7%A8%8B%E5%BE%88%E9%9A%BE%E4%BD%86%E4%BD%A0%E6%80%BB%E5%8F%AF%E4%BB%A5%E5%81%9A%E4%BA%9B%E4%BB%80%E4%B9%88%E4%B8%80/images/27.png&#34;
+	width=&#34;431&#34;
+	height=&#34;478&#34;
+	srcset=&#34;/p/%E6%88%91%E5%BD%93%E7%84%B6%E7%9F%A5%E9%81%93%E5%B9%B6%E8%A1%8C%E7%BC%96%E7%A8%8B%E5%BE%88%E9%9A%BE%E4%BD%86%E4%BD%A0%E6%80%BB%E5%8F%AF%E4%BB%A5%E5%81%9A%E4%BA%9B%E4%BB%80%E4%B9%88%E4%B8%80/images/27_huac111edc2792b85d10f8b1a295339333_41575_480x0_resize_box_3.png 480w, /p/%E6%88%91%E5%BD%93%E7%84%B6%E7%9F%A5%E9%81%93%E5%B9%B6%E8%A1%8C%E7%BC%96%E7%A8%8B%E5%BE%88%E9%9A%BE%E4%BD%86%E4%BD%A0%E6%80%BB%E5%8F%AF%E4%BB%A5%E5%81%9A%E4%BA%9B%E4%BB%80%E4%B9%88%E4%B8%80/images/27_huac111edc2792b85d10f8b1a295339333_41575_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;图27:paralle1&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;90&#34;
+		data-flex-basis=&#34;216px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;好吧，数电模电没好好学，流下悔恨的眼泪&amp;hellip;&amp;hellip;.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/p/%E6%88%91%E5%BD%93%E7%84%B6%E7%9F%A5%E9%81%93%E5%B9%B6%E8%A1%8C%E7%BC%96%E7%A8%8B%E5%BE%88%E9%9A%BE%E4%BD%86%E4%BD%A0%E6%80%BB%E5%8F%AF%E4%BB%A5%E5%81%9A%E4%BA%9B%E4%BB%80%E4%B9%88%E4%B8%80/images/28.png&#34;
+	width=&#34;908&#34;
+	height=&#34;1132&#34;
+	srcset=&#34;/p/%E6%88%91%E5%BD%93%E7%84%B6%E7%9F%A5%E9%81%93%E5%B9%B6%E8%A1%8C%E7%BC%96%E7%A8%8B%E5%BE%88%E9%9A%BE%E4%BD%86%E4%BD%A0%E6%80%BB%E5%8F%AF%E4%BB%A5%E5%81%9A%E4%BA%9B%E4%BB%80%E4%B9%88%E4%B8%80/images/28_hu72220f66f6f5f511a0b6cbc3b0ac2531_438771_480x0_resize_box_3.png 480w, /p/%E6%88%91%E5%BD%93%E7%84%B6%E7%9F%A5%E9%81%93%E5%B9%B6%E8%A1%8C%E7%BC%96%E7%A8%8B%E5%BE%88%E9%9A%BE%E4%BD%86%E4%BD%A0%E6%80%BB%E5%8F%AF%E4%BB%A5%E5%81%9A%E4%BA%9B%E4%BB%80%E4%B9%88%E4%B8%80/images/28_hu72220f66f6f5f511a0b6cbc3b0ac2531_438771_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;图28:paralle1&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;80&#34;
+		data-flex-basis=&#34;192px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;Special-Purpose Accelerators&lt;/p&gt;
+&lt;p&gt;专用的并行编程加速器&lt;/p&gt;
+&lt;p&gt;Existing Parallel Software&lt;/p&gt;
+&lt;p&gt;其实现有的并行软件也能解决部分的工业问题。&lt;/p&gt;
+&lt;p&gt;Software Design Implications&lt;/p&gt;
+&lt;p&gt;The lesson should be quite clear: Parallel algorithms must be explicitly designed with these hardware properties firmly in mind.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/p/%E6%88%91%E5%BD%93%E7%84%B6%E7%9F%A5%E9%81%93%E5%B9%B6%E8%A1%8C%E7%BC%96%E7%A8%8B%E5%BE%88%E9%9A%BE%E4%BD%86%E4%BD%A0%E6%80%BB%E5%8F%AF%E4%BB%A5%E5%81%9A%E4%BA%9B%E4%BB%80%E4%B9%88%E4%B8%80/images/29.png&#34;
+	width=&#34;885&#34;
+	height=&#34;1158&#34;
+	srcset=&#34;/p/%E6%88%91%E5%BD%93%E7%84%B6%E7%9F%A5%E9%81%93%E5%B9%B6%E8%A1%8C%E7%BC%96%E7%A8%8B%E5%BE%88%E9%9A%BE%E4%BD%86%E4%BD%A0%E6%80%BB%E5%8F%AF%E4%BB%A5%E5%81%9A%E4%BA%9B%E4%BB%80%E4%B9%88%E4%B8%80/images/29_hubb171b3bf30ab2fba6b0a0a4961ff67c_317315_480x0_resize_box_3.png 480w, /p/%E6%88%91%E5%BD%93%E7%84%B6%E7%9F%A5%E9%81%93%E5%B9%B6%E8%A1%8C%E7%BC%96%E7%A8%8B%E5%BE%88%E9%9A%BE%E4%BD%86%E4%BD%A0%E6%80%BB%E5%8F%AF%E4%BB%A5%E5%81%9A%E4%BA%9B%E4%BB%80%E4%B9%88%E4%B8%80/images/29_hubb171b3bf30ab2fba6b0a0a4961ff67c_317315_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;图29:paralle1&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;76&#34;
+		data-flex-basis=&#34;183px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;Ok，第三章结束！&lt;/p&gt;
+&lt;p&gt;主要讲得是如何实现出色的并行性能和可扩展性，大量的底层细节。&lt;/p&gt;
+&lt;p&gt;最后问大家一个问题吧。&lt;/p&gt;
+&lt;p&gt;Question：&lt;/p&gt;
+&lt;p&gt;OK, if we are going to have to apply distributed-programming techniques to shared-memory parallel programs, why not just always use these distributed techniques and dispense with shared memory?&lt;/p&gt;
+&lt;p&gt;Answer:&lt;/p&gt;
+&lt;p&gt;Because it is often the case that only a small fraction of the program is performance-critical. Shared-memory parallelism allows us to focus distributed-programming techniques on that small fraction, allowing simpler shared-memory techniques to be used on the non-performance-critical bulk of the program.&lt;/p&gt;
+&lt;p&gt;未完待续~&lt;/p&gt;
+&lt;p&gt;感谢阅读到这里，周末愉快~&lt;/p&gt;
+</description>
+        </item>
+        
+    </channel>
+</rss>
