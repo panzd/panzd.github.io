@@ -1,0 +1,1067 @@
+<!DOCTYPE html>
+<html lang="en-us" dir="ltr">
+    <head><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='the ideas in this book hava become more important with time'><title>在常识成为常识之前：细读Ruminations on C&#43;&#43;</title>
+
+<link rel='canonical' href='/p/%E5%9C%A8%E5%B8%B8%E8%AF%86%E6%88%90%E4%B8%BA%E5%B8%B8%E8%AF%86%E4%B9%8B%E5%89%8D%E7%BB%86%E8%AF%BBruminations-on-c-/'>
+
+<link rel="stylesheet" href="/scss/style.min.450926226e724574a6b936335ea06111f8aeb253d932c86cb2cc807341cd2889.css"><meta property='og:title' content='在常识成为常识之前：细读Ruminations on C&#43;&#43;'>
+<meta property='og:description' content='the ideas in this book hava become more important with time'>
+<meta property='og:url' content='/p/%E5%9C%A8%E5%B8%B8%E8%AF%86%E6%88%90%E4%B8%BA%E5%B8%B8%E8%AF%86%E4%B9%8B%E5%89%8D%E7%BB%86%E8%AF%BBruminations-on-c-/'>
+<meta property='og:site_name' content='panzd'>
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='C&#43;&#43;' /><meta property='article:published_time' content='2022-09-02T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2022-09-02T00:00:00&#43;00:00'/>
+<meta name="twitter:title" content="在常识成为常识之前：细读Ruminations on C&#43;&#43;">
+<meta name="twitter:description" content="the ideas in this book hava become more important with time">
+    </head>
+    <body class="
+    article-page
+    ">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "auto");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky ">
+    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="Toggle Menu">
+        <span class="hamburger-box">
+            <span class="hamburger-inner"></span>
+        </span>
+    </button>
+
+    <header>
+        
+            
+            <figure class="site-avatar">
+                <a href="/">
+                
+                    
+                    
+                    
+                        
+                        <img src="/img/avatar_hucb79f288fbfc5ef8a2d525cd76ba88b6_49364_300x0_resize_box_3.png" width="300"
+                            height="300" class="site-logo" loading="lazy" alt="Avatar">
+                    
+                
+                </a>
+                
+                    <span class="emoji">😊</span>
+                
+            </figure>
+            
+        
+        
+        <div class="site-meta">
+            <h1 class="site-name"><a href="/">panzd</a></h1>
+            <h2 class="site-description">微信公众号：溪见</h2>
+        </div>
+    </header><ol class="social-menu">
+            
+                <li>
+                    <a 
+                        href='https://github.com/panzd'
+                        target="_blank"
+                        title="GitHub"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-github" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a 
+                        href='mailto:%20donggnij@foxmail.com'
+                        target="_blank"
+                        title="Mail"
+                    >
+                        
+                        
+                            <?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 19.1.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 64 64" enable-background="new 0 0 64 64" xml:space="preserve">
+<path id="Mail" d="M58.0034485,8H5.9965506c-3.3136795,0-5.9999995,2.6862001-5.9999995,6v36c0,3.3137016,2.6863203,6,5.9999995,6
+	h52.006897c3.3137016,0,6-2.6862984,6-6V14C64.0034485,10.6862001,61.3171501,8,58.0034485,8z M62.0034485,49.1108017
+	L43.084549,30.1919994l18.9188995-12.0555992V49.1108017z M5.9965506,10h52.006897c2.2056007,0,4,1.7943001,4,4v1.7664003
+	L34.4677505,33.3134003c-1.4902,0.9492989-3.3935013,0.9199982-4.8495998-0.0703011L1.9965508,14.4694996V14
+	C1.9965508,11.7943001,3.7910507,10,5.9965506,10z M1.9965508,16.8852005L21.182251,29.9251003L1.9965508,49.1108017V16.8852005z
+	 M58.0034485,54H5.9965506c-1.6473999,0-3.0638998-1.0021019-3.6760998-2.4278984l20.5199013-20.5200024l5.6547985,3.843401
+	c1.0859013,0.7383003,2.3418007,1.1083984,3.5995998,1.1083984c1.1953011,0,2.3925018-0.3339996,3.4463005-1.0048981
+	l5.8423996-3.7230015l20.2961006,20.2961025C61.0673485,52.9978981,59.6508713,54,58.0034485,54z"/>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+</svg>
+
+                        
+                    </a>
+                </li>
+            
+        </ol><ol class="menu" id="main-menu">
+        
+        
+        
+
+        <li >
+            <a href='/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <polyline points="5 12 3 12 12 3 21 12 19 12" />
+  <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
+  <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
+</svg>
+
+
+
+                
+                <span>Home</span>
+            </a>
+        </li>
+        
+        
+
+        <li >
+            <a href='/about/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="7" r="4" />
+  <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
+</svg>
+
+
+
+                
+                <span>About</span>
+            </a>
+        </li>
+        
+        
+
+        <li >
+            <a href='/archives/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <rect x="3" y="4" width="18" height="4" rx="2" />
+  <path d="M5 8v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-10" />
+  <line x1="10" y1="12" x2="14" y2="12" />
+</svg>
+
+
+
+                
+                <span>Archives</span>
+            </a>
+        </li>
+        
+        
+
+        <li >
+            <a href='/search/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="10" cy="10" r="7" />
+  <line x1="21" y1="21" x2="15" y2="15" />
+</svg>
+
+
+
+                
+                <span>Search</span>
+            </a>
+        </li>
+        
+
+        <div class="menu-bottom-section">
+            
+            
+                <li id="dark-mode-toggle">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="8" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="16" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                    <span>Dark Mode</span>
+                </li>
+            
+        </div>
+    </ol>
+</aside>
+<main class="main full-width">
+    <article class="main-article">
+    <header class="article-header">
+
+    <div class="article-details">
+    
+    <header class="article-category">
+        
+            <a href="/categories/article/" >
+                Article
+            </a>
+        
+    </header>
+    
+
+    <div class="article-title-wrapper">
+        <h2 class="article-title">
+            <a href="/p/%E5%9C%A8%E5%B8%B8%E8%AF%86%E6%88%90%E4%B8%BA%E5%B8%B8%E8%AF%86%E4%B9%8B%E5%89%8D%E7%BB%86%E8%AF%BBruminations-on-c-/">在常识成为常识之前：细读Ruminations on C&#43;&#43;</a>
+        </h2>
+    
+        
+        <h3 class="article-subtitle">
+            the ideas in this book hava become more important with time
+        </h3>
+        
+    </div>
+
+    
+    <footer class="article-time">
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published">Sep 02, 2022</time>
+            </div>
+        
+
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+                <time class="article-time--reading">
+                    3 minute read
+                </time>
+            </div>
+        
+    </footer>
+    
+
+    
+</div>
+</header>
+
+    <section class="article-content">
+    
+    
+    <p>Ruminations on C++ 是由Andrew Koenig 与Bjarne Stroustrup写的，贝尔实验室成员，1986年从事C语言研究，还有一本书是《C缺陷与陷阱》。</p>
+<p><img src="/p/%E5%9C%A8%E5%B8%B8%E8%AF%86%E6%88%90%E4%B8%BA%E5%B8%B8%E8%AF%86%E4%B9%8B%E5%89%8D%E7%BB%86%E8%AF%BBruminations-on-c/images/1.png"
+	width="773"
+	height="1156"
+	srcset="/p/%E5%9C%A8%E5%B8%B8%E8%AF%86%E6%88%90%E4%B8%BA%E5%B8%B8%E8%AF%86%E4%B9%8B%E5%89%8D%E7%BB%86%E8%AF%BBruminations-on-c/images/1_hua3b767a05b4067288b23134ff4ffb77d_1340154_480x0_resize_box_3.png 480w, /p/%E5%9C%A8%E5%B8%B8%E8%AF%86%E6%88%90%E4%B8%BA%E5%B8%B8%E8%AF%86%E4%B9%8B%E5%89%8D%E7%BB%86%E8%AF%BBruminations-on-c/images/1_hua3b767a05b4067288b23134ff4ffb77d_1340154_1024x0_resize_box_3.png 1024w"
+	loading="lazy"
+	
+		alt="图1:ruminations on c&#43;&#43;"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="66"
+		data-flex-basis="160px"
+	
+></p>
+<p><img src="/p/%E5%9C%A8%E5%B8%B8%E8%AF%86%E6%88%90%E4%B8%BA%E5%B8%B8%E8%AF%86%E4%B9%8B%E5%89%8D%E7%BB%86%E8%AF%BBruminations-on-c/images/2.png"
+	width="810"
+	height="1158"
+	srcset="/p/%E5%9C%A8%E5%B8%B8%E8%AF%86%E6%88%90%E4%B8%BA%E5%B8%B8%E8%AF%86%E4%B9%8B%E5%89%8D%E7%BB%86%E8%AF%BBruminations-on-c/images/2_hu85e8fed03f647d26e73072fa8919f7aa_172646_480x0_resize_box_3.png 480w, /p/%E5%9C%A8%E5%B8%B8%E8%AF%86%E6%88%90%E4%B8%BA%E5%B8%B8%E8%AF%86%E4%B9%8B%E5%89%8D%E7%BB%86%E8%AF%BBruminations-on-c/images/2_hu85e8fed03f647d26e73072fa8919f7aa_172646_1024x0_resize_box_3.png 1024w"
+	loading="lazy"
+	
+		alt="图2:ruminations on c&#43;&#43;"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="69"
+		data-flex-basis="167px"
+	
+></p>
+<p>简单来说，本书就是强调了一个理念。认字最多的人一定是最好的作家吗？不是，讲好故事才是一个好作家的标配。The hard part of programming is not learning the details of language features——it is understanding how to solve problems. 所以编程中最困难的地方不是去学习语言的细节，而是理解问题的解决之道。</p>
+<p>书中主要表达了,<!-- raw HTML omitted --></p>
+<p>C++最基本的设计理念就是&quot;用类来表示概念&quot;；<!-- raw HTML omitted --></p>
+<p>C++解决复杂性的基本原则是抽象；<!-- raw HTML omitted --></p>
+<p>面向对象思想是C++的手段之一，而不是全部。<!-- raw HTML omitted --></p>
+<p>所谓面向对象编程，就是使用继承和动态绑定机制编程。也就是两个及以上的类型，至少有一个共同操作，也至少有一个不同操作，否则就不需要继承。其次，必然有一个场景，需要在运行时从这些类型中挑选一个，否则也不需要动态绑定机制。</p>
+<p>继承让我们抓住了各种节点类型之间的相似之处，而动态绑定帮助我们为各种类型节点定义操作，让编译器来负责安排在运行时能够调用正确的函数。</p>
+<p>C++在运行时性能上做了一个很好的折中，能够在&quot;一切都是对象&quot;的语言与&quot;避免任何抽象&quot;的语言之间取得恰到好处的平衡，这就是C++的实用性。</p>
+<p>从语言本身来说，C++是挺&quot;温柔&quot;的，他敏锐、高效、成熟、稳重、分寸感很强、最重要的是&quot;自主&quot;。</p>
+<p>挑几个比较有趣的章节讲一下</p>
+<p>1.Bjarne Stroustrup 在The C++ programming Language（1991）提到的定义句柄类，简单来说，就是将引用计数从数据中分离出来，把引用计数放入它自己的对象中。</p>
+<p>得简单介绍下句柄，它允许在保持代理的多态行为的同时，避免进行不必要的复制。</p>
+<p><img src="/p/%E5%9C%A8%E5%B8%B8%E8%AF%86%E6%88%90%E4%B8%BA%E5%B8%B8%E8%AF%86%E4%B9%8B%E5%89%8D%E7%BB%86%E8%AF%BBruminations-on-c/images/3.png"
+	width="793"
+	height="1095"
+	srcset="/p/%E5%9C%A8%E5%B8%B8%E8%AF%86%E6%88%90%E4%B8%BA%E5%B8%B8%E8%AF%86%E4%B9%8B%E5%89%8D%E7%BB%86%E8%AF%BBruminations-on-c/images/3_hu48049756af2e24b5670db9c8d60254dd_729438_480x0_resize_box_3.png 480w, /p/%E5%9C%A8%E5%B8%B8%E8%AF%86%E6%88%90%E4%B8%BA%E5%B8%B8%E8%AF%86%E4%B9%8B%E5%89%8D%E7%BB%86%E8%AF%BBruminations-on-c/images/3_hu48049756af2e24b5670db9c8d60254dd_729438_1024x0_resize_box_3.png 1024w"
+	loading="lazy"
+	
+		alt="图3:ruminations on c&#43;&#43;"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="72"
+		data-flex-basis="173px"
+	
+></p>
+<p>handle应该&quot;控制&quot;它所绑定到的对象，创建和销毁。从效果上来说，handle就是一种只包含单个对象的容器。</p>
+<p><img src="/p/%E5%9C%A8%E5%B8%B8%E8%AF%86%E6%88%90%E4%B8%BA%E5%B8%B8%E8%AF%86%E4%B9%8B%E5%89%8D%E7%BB%86%E8%AF%BBruminations-on-c/images/4.png"
+	width="766"
+	height="836"
+	srcset="/p/%E5%9C%A8%E5%B8%B8%E8%AF%86%E6%88%90%E4%B8%BA%E5%B8%B8%E8%AF%86%E4%B9%8B%E5%89%8D%E7%BB%86%E8%AF%BBruminations-on-c/images/4_hu7c48c513caeb82f15bf1118e88b90fcc_549593_480x0_resize_box_3.png 480w, /p/%E5%9C%A8%E5%B8%B8%E8%AF%86%E6%88%90%E4%B8%BA%E5%B8%B8%E8%AF%86%E4%B9%8B%E5%89%8D%E7%BB%86%E8%AF%BBruminations-on-c/images/4_hu7c48c513caeb82f15bf1118e88b90fcc_549593_1024x0_resize_box_3.png 1024w"
+	loading="lazy"
+	
+		alt="图4:ruminations on c&#43;&#43;"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="91"
+		data-flex-basis="219px"
+	
+></p>
+<p>因为使用上通常是复制句柄，我们必须了解有多少个句柄绑定在同一个对象上，只有这样才能确定应当在何时删除对象。而通常使用引用计数（use count）来达到目的。所以设计了定义一个新的类，来容纳一个引用计数和一个Point对象。</p>
+<p>但这种技术有一种缺点，为了把句柄捆绑到类T的对象上，必须定义一个具有类型为T的成员的新类，较为繁琐。使用定义句柄类会更加简单。</p>
+<p><img src="/p/%E5%9C%A8%E5%B8%B8%E8%AF%86%E6%88%90%E4%B8%BA%E5%B8%B8%E8%AF%86%E4%B9%8B%E5%89%8D%E7%BB%86%E8%AF%BBruminations-on-c/images/5.png"
+	width="785"
+	height="1096"
+	srcset="/p/%E5%9C%A8%E5%B8%B8%E8%AF%86%E6%88%90%E4%B8%BA%E5%B8%B8%E8%AF%86%E4%B9%8B%E5%89%8D%E7%BB%86%E8%AF%BBruminations-on-c/images/5_huf5757359b4eabde16c1f30625e1b2bab_324240_480x0_resize_box_3.png 480w, /p/%E5%9C%A8%E5%B8%B8%E8%AF%86%E6%88%90%E4%B8%BA%E5%B8%B8%E8%AF%86%E4%B9%8B%E5%89%8D%E7%BB%86%E8%AF%BBruminations-on-c/images/5_huf5757359b4eabde16c1f30625e1b2bab_324240_1024x0_resize_box_3.png 1024w"
+	loading="lazy"
+	
+		alt="图5:ruminations on c&#43;&#43;"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="71"
+		data-flex-basis="171px"
+	
+></p>
+<p><img src="/p/%E5%9C%A8%E5%B8%B8%E8%AF%86%E6%88%90%E4%B8%BA%E5%B8%B8%E8%AF%86%E4%B9%8B%E5%89%8D%E7%BB%86%E8%AF%BBruminations-on-c/images/6.png"
+	width="771"
+	height="1084"
+	srcset="/p/%E5%9C%A8%E5%B8%B8%E8%AF%86%E6%88%90%E4%B8%BA%E5%B8%B8%E8%AF%86%E4%B9%8B%E5%89%8D%E7%BB%86%E8%AF%BBruminations-on-c/images/6_hue65fcaa6d86c7983fa51f6ffc19781c9_541271_480x0_resize_box_3.png 480w, /p/%E5%9C%A8%E5%B8%B8%E8%AF%86%E6%88%90%E4%B8%BA%E5%B8%B8%E8%AF%86%E4%B9%8B%E5%89%8D%E7%BB%86%E8%AF%BBruminations-on-c/images/6_hue65fcaa6d86c7983fa51f6ffc19781c9_541271_1024x0_resize_box_3.png 1024w"
+	loading="lazy"
+	
+		alt="图6:ruminations on c&#43;&#43;"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="71"
+		data-flex-basis="170px"
+	
+></p>
+<p>将引用计数从Point里面分离后，便会改变对句柄类的实现。不再有指向UPint的指针，此时只有指向Point的指针和指向一个int的指针表示引用计数。然后再定义一个新类即可。然后再抽象一下即可。</p>
+<p><img src="/p/%E5%9C%A8%E5%B8%B8%E8%AF%86%E6%88%90%E4%B8%BA%E5%B8%B8%E8%AF%86%E4%B9%8B%E5%89%8D%E7%BB%86%E8%AF%BBruminations-on-c/images/7.png"
+	width="803"
+	height="1038"
+	srcset="/p/%E5%9C%A8%E5%B8%B8%E8%AF%86%E6%88%90%E4%B8%BA%E5%B8%B8%E8%AF%86%E4%B9%8B%E5%89%8D%E7%BB%86%E8%AF%BBruminations-on-c/images/7_hua24c5233b6cd8a5af4e58b6a6755d246_376746_480x0_resize_box_3.png 480w, /p/%E5%9C%A8%E5%B8%B8%E8%AF%86%E6%88%90%E4%B8%BA%E5%B8%B8%E8%AF%86%E4%B9%8B%E5%89%8D%E7%BB%86%E8%AF%BBruminations-on-c/images/7_hua24c5233b6cd8a5af4e58b6a6755d246_376746_1024x0_resize_box_3.png 1024w"
+	loading="lazy"
+	
+		alt="图7:ruminations on c&#43;&#43;"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="77"
+		data-flex-basis="185px"
+	
+></p>
+<p>最后就是将引用计数类当成句柄实现的一部分，与各种不同的数据结构协同工作，简化了引用计算句柄实现，使得handle类与其他传统方式实现的类同样容易使用，且更加灵活。</p>
+<p><img src="/p/%E5%9C%A8%E5%B8%B8%E8%AF%86%E6%88%90%E4%B8%BA%E5%B8%B8%E8%AF%86%E4%B9%8B%E5%89%8D%E7%BB%86%E8%AF%BBruminations-on-c/images/8.png"
+	width="766"
+	height="364"
+	srcset="/p/%E5%9C%A8%E5%B8%B8%E8%AF%86%E6%88%90%E4%B8%BA%E5%B8%B8%E8%AF%86%E4%B9%8B%E5%89%8D%E7%BB%86%E8%AF%BBruminations-on-c/images/8_hu3ba5e65e4f64073f27b0963ef782dc64_297144_480x0_resize_box_3.png 480w, /p/%E5%9C%A8%E5%B8%B8%E8%AF%86%E6%88%90%E4%B8%BA%E5%B8%B8%E8%AF%86%E4%B9%8B%E5%89%8D%E7%BB%86%E8%AF%BBruminations-on-c/images/8_hu3ba5e65e4f64073f27b0963ef782dc64_297144_1024x0_resize_box_3.png 1024w"
+	loading="lazy"
+	
+		alt="图8:ruminations on c&#43;&#43;"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="210"
+		data-flex-basis="505px"
+	
+></p>
+<p>2.Generic iterators 泛型迭代器</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-c++" data-lang="c++"><span class="line"><span class="cl"><span class="k">template</span><span class="o">&lt;</span><span class="k">class</span> <span class="nc">P</span><span class="p">,</span> <span class="k">class</span> <span class="nc">T</span><span class="o">&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="n">P</span> <span class="n">find</span><span class="p">(</span><span class="n">P</span> <span class="n">start</span><span class="p">,</span> <span class="n">P</span> <span class="n">beyond</span><span class="p">,</span> <span class="k">const</span> <span class="n">T</span><span class="o">&amp;</span> <span class="n">x</span><span class="p">){</span>
+</span></span><span class="line"><span class="cl">    <span class="k">while</span> <span class="p">(</span><span class="n">start</span> <span class="o">!=</span> <span class="n">beyond</span> <span class="o">&amp;&amp;</span> <span class="o">*</span> <span class="n">start</span> <span class="o">!=</span> <span class="n">x</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">      <span class="o">++</span><span class="n">start</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">start</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>这里面定义了类P，使用了同一个find函数来对数组、链表、文件或者其他的数据结构进行查找，经典的模板编写，适用于不同的数据结构和参数类型的函数。</p>
+<p>理解了这个，就深入一下，探究迭代器类型和算法之间的关系。</p>
+<p>首先我们对迭代器进行分类。</p>
+<p>1.输入迭代器，满足这些需求的类型允许我们按照某个预定的顺序去读，序列中的元素。这个输入迭代器，既不是某个特殊类型也不是对象。</p>
+<p><img src="/p/%E5%9C%A8%E5%B8%B8%E8%AF%86%E6%88%90%E4%B8%BA%E5%B8%B8%E8%AF%86%E4%B9%8B%E5%89%8D%E7%BB%86%E8%AF%BBruminations-on-c/images/9.png"
+	width="782"
+	height="547"
+	srcset="/p/%E5%9C%A8%E5%B8%B8%E8%AF%86%E6%88%90%E4%B8%BA%E5%B8%B8%E8%AF%86%E4%B9%8B%E5%89%8D%E7%BB%86%E8%AF%BBruminations-on-c/images/9_hu93b70bfe1a7e9f32d37ca949a8c7d73c_468469_480x0_resize_box_3.png 480w, /p/%E5%9C%A8%E5%B8%B8%E8%AF%86%E6%88%90%E4%B8%BA%E5%B8%B8%E8%AF%86%E4%B9%8B%E5%89%8D%E7%BB%86%E8%AF%BBruminations-on-c/images/9_hu93b70bfe1a7e9f32d37ca949a8c7d73c_468469_1024x0_resize_box_3.png 1024w"
+	loading="lazy"
+	
+		alt="图9:ruminations on c&#43;&#43;"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="142"
+		data-flex-basis="343px"
+	
+></p>
+<p>2.输出迭代器，就是对序列中进行写操作。</p>
+<p><img src="/p/%E5%9C%A8%E5%B8%B8%E8%AF%86%E6%88%90%E4%B8%BA%E5%B8%B8%E8%AF%86%E4%B9%8B%E5%89%8D%E7%BB%86%E8%AF%BBruminations-on-c/images/10.png"
+	width="756"
+	height="187"
+	srcset="/p/%E5%9C%A8%E5%B8%B8%E8%AF%86%E6%88%90%E4%B8%BA%E5%B8%B8%E8%AF%86%E4%B9%8B%E5%89%8D%E7%BB%86%E8%AF%BBruminations-on-c/images/10_hue505f11b959f2c974325ddb29869b1f9_117840_480x0_resize_box_3.png 480w, /p/%E5%9C%A8%E5%B8%B8%E8%AF%86%E6%88%90%E4%B8%BA%E5%B8%B8%E8%AF%86%E4%B9%8B%E5%89%8D%E7%BB%86%E8%AF%BBruminations-on-c/images/10_hue505f11b959f2c974325ddb29869b1f9_117840_1024x0_resize_box_3.png 1024w"
+	loading="lazy"
+	
+		alt="图10:ruminations on c&#43;&#43;"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="404"
+		data-flex-basis="970px"
+	
+></p>
+<p>这时候，可以用输入和输出迭代器写一个泛型复制函数了.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-c++" data-lang="c++"><span class="line"><span class="cl"><span class="k">template</span> <span class="o">&lt;</span><span class="k">class</span> <span class="nc">In</span><span class="p">,</span>  <span class="k">class</span> <span class="nc">Out</span><span class="o">&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="kt">void</span> <span class="n">copy</span><span class="p">(</span><span class="n">In</span> <span class="n">start</span> <span class="p">,</span> <span class="n">In</span> <span class="n">beyond</span><span class="p">,</span> <span class="n">Out</span> <span class="n">result</span><span class="p">){</span>
+</span></span><span class="line"><span class="cl">     <span class="k">while</span> <span class="p">(</span><span class="n">start</span> <span class="o">!=</span> <span class="n">beyond</span><span class="p">){</span>
+</span></span><span class="line"><span class="cl">       <span class="o">*</span><span class="n">result</span> <span class="o">=</span> <span class="o">*</span><span class="n">start</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">       <span class="o">++</span><span class="n">result</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">       <span class="o">++</span><span class="n">start</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">       <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>上面比较容易理解，不过一般都是写成</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-c++" data-lang="c++"><span class="line"><span class="cl">    <span class="o">*</span><span class="n">result</span><span class="o">++</span> <span class="o">=</span> <span class="o">*</span><span class="n">start</span><span class="o">++</span><span class="p">;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>3.前向
+<img src="/p/%E5%9C%A8%E5%B8%B8%E8%AF%86%E6%88%90%E4%B8%BA%E5%B8%B8%E8%AF%86%E4%B9%8B%E5%89%8D%E7%BB%86%E8%AF%BBruminations-on-c/images/11.png"
+	width="694"
+	height="384"
+	srcset="/p/%E5%9C%A8%E5%B8%B8%E8%AF%86%E6%88%90%E4%B8%BA%E5%B8%B8%E8%AF%86%E4%B9%8B%E5%89%8D%E7%BB%86%E8%AF%BBruminations-on-c/images/11_hu114687133367a82e49d6a0004107f831_189298_480x0_resize_box_3.png 480w, /p/%E5%9C%A8%E5%B8%B8%E8%AF%86%E6%88%90%E4%B8%BA%E5%B8%B8%E8%AF%86%E4%B9%8B%E5%89%8D%E7%BB%86%E8%AF%BBruminations-on-c/images/11_hu114687133367a82e49d6a0004107f831_189298_1024x0_resize_box_3.png 1024w"
+	loading="lazy"
+	
+		alt="图11:ruminations on c&#43;&#43;"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="180"
+		data-flex-basis="433px"
+	
+></p>
+<p>4.双向
+<img src="/p/%E5%9C%A8%E5%B8%B8%E8%AF%86%E6%88%90%E4%B8%BA%E5%B8%B8%E8%AF%86%E4%B9%8B%E5%89%8D%E7%BB%86%E8%AF%BBruminations-on-c/images/12.png"
+	width="750"
+	height="356"
+	srcset="/p/%E5%9C%A8%E5%B8%B8%E8%AF%86%E6%88%90%E4%B8%BA%E5%B8%B8%E8%AF%86%E4%B9%8B%E5%89%8D%E7%BB%86%E8%AF%BBruminations-on-c/images/12_hu0ff03d5ac8192e263b558c1687bbd966_272006_480x0_resize_box_3.png 480w, /p/%E5%9C%A8%E5%B8%B8%E8%AF%86%E6%88%90%E4%B8%BA%E5%B8%B8%E8%AF%86%E4%B9%8B%E5%89%8D%E7%BB%86%E8%AF%BBruminations-on-c/images/12_hu0ff03d5ac8192e263b558c1687bbd966_272006_1024x0_resize_box_3.png 1024w"
+	loading="lazy"
+	
+		alt="图12:ruminations on c&#43;&#43;"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="210"
+		data-flex-basis="505px"
+	
+></p>
+<p>5.随机
+<img src="/p/%E5%9C%A8%E5%B8%B8%E8%AF%86%E6%88%90%E4%B8%BA%E5%B8%B8%E8%AF%86%E4%B9%8B%E5%89%8D%E7%BB%86%E8%AF%BBruminations-on-c/images/13.png"
+	width="728"
+	height="198"
+	srcset="/p/%E5%9C%A8%E5%B8%B8%E8%AF%86%E6%88%90%E4%B8%BA%E5%B8%B8%E8%AF%86%E4%B9%8B%E5%89%8D%E7%BB%86%E8%AF%BBruminations-on-c/images/13_hub88ae962e3edee03e3b20af21dc13335_69001_480x0_resize_box_3.png 480w, /p/%E5%9C%A8%E5%B8%B8%E8%AF%86%E6%88%90%E4%B8%BA%E5%B8%B8%E8%AF%86%E4%B9%8B%E5%89%8D%E7%BB%86%E8%AF%BBruminations-on-c/images/13_hub88ae962e3edee03e3b20af21dc13335_69001_1024x0_resize_box_3.png 1024w"
+	loading="lazy"
+	
+		alt="图13:ruminations on c&#43;&#43;"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="367"
+		data-flex-basis="882px"
+	
+></p>
+<p>譬如说</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-c++" data-lang="c++"><span class="line"><span class="cl"><span class="n">P</span> <span class="n">mid</span> <span class="o">=</span> <span class="n">low</span> <span class="o">+</span> <span class="p">(</span><span class="n">high</span> <span class="o">-</span> <span class="n">low</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span><span class="p">;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>迭代器在性能上是有所保障的，譬如说一个双向迭代器从序列的第n个元素退后到第n-1个元素的时间复杂度是O(n)。但STL赋予迭代器的支持，分摊执行时间必须是O(1)。</p>
+<p>所谓泛型算法就是：对于所操作的数据结构的细节信息，只加入最低限度的了解。甚至是不需要。</p>
+<p>通过建立一些指针，来分析一下</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-c++" data-lang="c++"><span class="line"><span class="cl"><span class="k">template</span><span class="o">&lt;</span><span class="k">class</span> <span class="nc">P</span><span class="p">,</span> <span class="k">class</span> <span class="nc">T</span><span class="o">&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="n">P</span> <span class="n">find</span><span class="p">(</span><span class="n">P</span> <span class="n">start</span><span class="p">,</span> <span class="n">P</span> <span class="n">beyond</span><span class="p">,</span> <span class="k">const</span> <span class="n">T</span><span class="o">&amp;</span> <span class="n">x</span><span class="p">){</span>
+</span></span><span class="line"><span class="cl">    <span class="k">while</span> <span class="p">(</span><span class="n">start</span> <span class="o">!=</span> <span class="n">beyond</span> <span class="o">&amp;&amp;</span> <span class="o">*</span> <span class="n">start</span> <span class="o">!=</span> <span class="n">x</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">      <span class="o">++</span><span class="n">start</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">start</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-c++" data-lang="c++"><span class="line"><span class="cl"><span class="kt">int</span> <span class="nf">main</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="kt">char</span><span class="o">*</span> <span class="n">hello</span> <span class="o">=</span> <span class="s">&#34;Hello &#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="kt">char</span><span class="o">*</span> <span class="n">world</span> <span class="o">=</span> <span class="s">&#34;world&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="kt">char</span> <span class="n">message</span><span class="p">[</span><span class="mi">15</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">  <span class="kt">char</span><span class="o">*</span> <span class="n">p</span> <span class="o">=</span> <span class="n">message</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  
+</span></span><span class="line"><span class="cl">  <span class="n">p</span> <span class="o">=</span> <span class="n">copy</span><span class="p">(</span><span class="n">hello</span><span class="p">,</span><span class="n">hello</span><span class="o">+</span><span class="mi">6</span><span class="p">,</span><span class="n">p</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">  <span class="n">p</span> <span class="o">=</span> <span class="n">copy</span><span class="p">(</span><span class="n">world</span><span class="p">,</span><span class="n">world</span><span class="o">+</span><span class="mi">5</span><span class="p">,</span><span class="n">p</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">  <span class="o">*</span><span class="n">p</span> <span class="o">=</span> <span class="sc">&#39;\0&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  
+</span></span><span class="line"><span class="cl">  <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">message</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"> <span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>就是被迭代器值start和end限定的序列复制到一个以迭代器dest为开始位置的序列中，对p*的赋值在d后面放入空字符（c的要求）。</p>
+<p>加一点理解。</p>
+<p>如果我们想要找某个特定值相等的最后一个，而不是通常的第一个。</p>
+<p>可以使用双向迭代器。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-c++" data-lang="c++"><span class="line"><span class="cl"><span class="n">templeate</span><span class="o">&lt;</span><span class="k">class</span> <span class="nc">T</span><span class="p">,</span> <span class="k">class</span> <span class="nc">X</span><span class="o">&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="n">T</span> <span class="n">rfind</span><span class="p">(</span><span class="n">T</span> <span class="n">start</span><span class="p">,</span> <span class="n">T</span> <span class="n">beyond</span><span class="p">,</span> <span class="k">const</span> <span class="n">X</span> <span class="o">&amp;</span> <span class="n">x</span><span class="p">){</span>
+</span></span><span class="line"><span class="cl">  <span class="k">if</span> <span class="p">(</span><span class="n">start</span> <span class="o">!=</span> <span class="n">beyond</span><span class="p">){</span>
+</span></span><span class="line"><span class="cl">    <span class="n">T</span> <span class="n">p</span> <span class="o">=</span> <span class="n">beyond</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">do</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">       <span class="k">if</span><span class="p">(</span><span class="o">*--</span><span class="n">p</span> <span class="o">==</span> <span class="n">x</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">         <span class="k">return</span> <span class="n">p</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">       <span class="p">)</span><span class="k">while</span> <span class="p">(</span><span class="n">p</span> <span class="o">!=</span> <span class="n">start</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">      <span class="k">return</span> <span class="n">beyond</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>还可以再深入一点。</p>
+<p>直接自动反向。</p>
+<p>创建一个新类型TR，使用&quot;邻接技术&quot;将T转换为TR，并且保障++和&ndash;都能使用，以及常规的复制、赋值、比较和解除dereference都能使用。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-c++" data-lang="c++"><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">// C++
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">template</span><span class="o">&lt;</span><span class="k">class</span> <span class="nc">It</span><span class="p">,</span><span class="k">class</span> <span class="nc">T</span><span class="o">&gt;</span> <span class="k">class</span> <span class="nc">Rev</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="k">friend</span> <span class="kt">bool</span> <span class="k">operator</span> <span class="o">==</span> 
+</span></span><span class="line"><span class="cl">    <span class="p">(</span><span class="k">const</span> <span class="n">Rev</span><span class="o">&lt;</span><span class="n">It</span><span class="p">,</span> <span class="n">T</span><span class="o">&gt;</span><span class="p">,</span> <span class="k">const</span> <span class="n">Rev</span><span class="o">&lt;</span><span class="n">It</span><span class="p">,</span> <span class="n">T</span><span class="o">&gt;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="k">friend</span> <span class="kt">bool</span> <span class="n">operater</span> <span class="o">==</span> 
+</span></span><span class="line"><span class="cl">    <span class="p">(</span><span class="k">const</span> <span class="n">Rev</span><span class="o">&lt;</span><span class="n">It</span><span class="p">,</span> <span class="n">T</span><span class="o">&gt;</span><span class="p">,</span> <span class="k">const</span> <span class="n">Rev</span><span class="o">&lt;</span><span class="n">It</span><span class="p">,</span> <span class="n">T</span><span class="o">&gt;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl"> <span class="k">public</span> <span class="nf">Rev</span><span class="p">(){}</span>
+</span></span><span class="line"><span class="cl">        <span class="n">Rev</span><span class="p">(</span><span class="n">It</span><span class="p">,</span><span class="n">i</span><span class="p">)</span><span class="o">:</span> <span class="n">it</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="p">{}</span>
+</span></span><span class="line"><span class="cl">        <span class="k">operator</span> <span class="nf">It</span><span class="p">()</span> <span class="p">{</span><span class="k">return</span> <span class="n">it</span><span class="p">;}</span>
+</span></span><span class="line"><span class="cl">        
+</span></span><span class="line"><span class="cl">        <span class="n">Rev</span><span class="o">&lt;</span><span class="n">It</span><span class="p">,</span><span class="n">T</span><span class="o">&gt;&amp;</span> <span class="k">operator</span><span class="o">++</span><span class="p">()</span> <span class="p">{</span><span class="o">--</span><span class="n">it</span><span class="p">;</span> <span class="k">return</span> <span class="o">*</span><span class="k">this</span><span class="p">;}</span>
+</span></span><span class="line"><span class="cl">        <span class="n">Rev</span><span class="o">&lt;</span><span class="n">It</span><span class="p">,</span> <span class="n">T</span><span class="o">&gt;</span> <span class="n">r</span> <span class="o">=</span> <span class="o">*</span><span class="k">this</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="o">--</span><span class="n">it</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">r</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        
+</span></span><span class="line"><span class="cl">        <span class="n">Rev</span><span class="o">&lt;</span><span class="n">It</span><span class="p">,</span> <span class="n">T</span><span class="o">&gt;</span> <span class="o">&amp;</span> <span class="k">operator</span><span class="o">-</span><span class="p">(</span><span class="kt">int</span><span class="p">){</span>
+</span></span><span class="line"><span class="cl">              <span class="n">Rev</span><span class="o">&lt;</span><span class="n">It</span><span class="p">,</span> <span class="n">T</span><span class="o">&gt;</span> <span class="n">r</span> <span class="o">=</span> <span class="o">*</span><span class="k">this</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">              <span class="o">++</span><span class="n">it</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">              <span class="k">return</span> <span class="n">r</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">        
+</span></span><span class="line"><span class="cl">        <span class="n">T</span><span class="o">&amp;</span> <span class="k">operator</span><span class="o">*</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">              <span class="n">It</span> <span class="n">I</span> <span class="o">=</span> <span class="n">it</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">              <span class="o">--</span> <span class="n">i</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">              <span class="k">return</span> <span class="o">*</span><span class="n">i</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl"> <span class="k">private</span><span class="o">:</span>
+</span></span><span class="line"><span class="cl">   <span class="n">It</span> <span class="n">it</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"> <span class="p">};</span>
+</span></span><span class="line"><span class="cl"> 
+</span></span><span class="line"><span class="cl"> <span class="k">template</span><span class="o">&lt;</span><span class="k">class</span> <span class="nc">It</span><span class="p">,</span> <span class="k">class</span> <span class="nc">T</span><span class="o">&gt;</span>
+</span></span><span class="line"><span class="cl"> <span class="kt">bool</span> <span class="n">operate</span> <span class="o">==</span> <span class="p">(</span><span class="k">const</span> <span class="n">Rev</span><span class="o">&lt;</span><span class="n">It</span><span class="p">,</span><span class="n">T</span><span class="o">&gt;&amp;</span> <span class="n">x</span><span class="p">,</span> <span class="k">const</span> <span class="n">Rev</span><span class="o">&lt;</span><span class="n">It</span><span class="p">,</span> <span class="n">T</span><span class="o">&gt;</span> <span class="o">&amp;</span><span class="n">y</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">       <span class="k">return</span> <span class="n">x</span><span class="p">.</span><span class="n">it</span> <span class="o">==</span> <span class="n">y</span><span class="p">.</span><span class="n">it</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"> <span class="p">}</span>
+</span></span><span class="line"><span class="cl"> 
+</span></span><span class="line"><span class="cl"> <span class="k">template</span><span class="o">&lt;</span><span class="k">class</span> <span class="nc">It</span><span class="p">,</span> <span class="k">class</span> <span class="nc">T</span><span class="o">&gt;</span>
+</span></span><span class="line"><span class="cl"> <span class="kt">bool</span> <span class="n">operate</span> <span class="o">!=</span> <span class="p">(</span><span class="k">const</span> <span class="n">Rev</span><span class="o">&lt;</span><span class="n">It</span><span class="p">,</span><span class="n">T</span><span class="o">&gt;&amp;</span> <span class="n">x</span><span class="p">.</span> <span class="k">const</span> <span class="n">Rev</span><span class="o">&lt;</span><span class="n">It</span><span class="p">,</span><span class="n">T</span><span class="o">&gt;</span> <span class="o">&amp;</span><span class="n">y</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">       <span class="k">return</span> <span class="n">x</span><span class="p">.</span><span class="n">it</span> <span class="o">!=</span> <span class="n">y</span><span class="p">.</span><span class="n">it</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"> <span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>然后，我们就可以随便找到第一次出现的位置，和最后一次出现的位置。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">Rev&lt;int*, int&gt; r =   
+</span></span><span class="line"><span class="cl">      find(Rev&lt;int*. int&gt; (x + 310),
+</span></span><span class="line"><span class="cl">      Rev&lt;int*,int&gt;(x),9);
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>迭代器配接器可以极大减少要写的算法数量，达到事半功倍的效果。</p>
+<p>差不多就谈到这儿了。</p>
+<p>这是在一个新语言的创造中心里，思考与实践的Koenig写的书，也就是常识成为常识之前(hhh点题了)。Bjarne,Rob Murray,Martin Carrcoll,Barbara Moo与Koenig等这些人一起开创了C++时代，成为一个强大的、稳健的、成熟的高级语言。</p>
+<p>这也就是本书的意义所在，要知其然，也更要知其所以然。但它带来的思考不仅仅是这些。历史总与现在遥遥相合，在这个时代里创造新的技术，也要走同样的路的。</p>
+<p>用Koenig的话来作为结束吧，</p>
+<p>As a result, the ideas in this book hava become more important with time.</p>
+<p>时光如筛，必现所金。</p>
+
+</section>
+
+
+    <footer class="article-footer">
+    
+    <section class="article-tags">
+        
+            <a href="/tags/c&#43;&#43;/">C&#43;&#43;</a>
+        
+    </section>
+
+
+    
+    <section class="article-copyright">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M14.5 9a3.5 4 0 1 0 0 6" />
+</svg>
+
+
+
+        <span>Licensed under CC BY-NC-SA 4.0</span>
+    </section>
+    </footer>
+
+
+    
+</article>
+
+    
+
+    
+
+<aside class="related-contents--wrapper">
+    <h2 class="section-title">Related contents</h2>
+    <div class="related-contents">
+        <div class="flex article-list--tile">
+            
+                
+<article class="">
+    <a href="/p/%E6%88%91%E5%BD%93%E7%84%B6%E7%9F%A5%E9%81%93%E5%B9%B6%E8%A1%8C%E7%BC%96%E7%A8%8B%E5%BE%88%E9%9A%BE%E4%BD%86%E4%BD%A0%E6%80%BB%E5%8F%AF%E4%BB%A5%E5%81%9A%E4%BA%9B%E4%BB%80%E4%B9%88%E4%B8%80/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">我当然知道并行编程很难，但你总可以做些什么（一）</h2>
+        </div>
+    </a>
+</article>
+            
+                
+<article class="">
+    <a href="/p/%E6%8B%A8%E5%9B%9E1984%E7%9C%8Bimplementing-remote-procedure-calls%E5%A6%82%E4%BD%95%E7%9F%B3%E7%A0%B4%E5%A4%A9%E6%83%8A/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">拨回1984:看Implementing Remote Procedure Calls如何石破天惊?</h2>
+        </div>
+    </a>
+</article>
+            
+                
+<article class="">
+    <a href="/p/infrastructure-as-codeterraform%E5%88%B6%E9%9C%B8%E4%B9%8B%E9%81%93/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">Infrastructure As Code：Terraform制霸之道</h2>
+        </div>
+    </a>
+</article>
+            
+                
+<article class="">
+    <a href="/p/golang%E9%97%AE%E9%A2%98%E8%A7%A3%E6%9E%90%E4%B8%80/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">Golang问题解析（一）</h2>
+        </div>
+    </a>
+</article>
+            
+                
+<article class="">
+    <a href="/p/golang-defer%E7%9A%84%E6%8E%A2%E7%B4%A2/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">Golang defer的探索</h2>
+        </div>
+    </a>
+</article>
+            
+        </div>
+    </div>
+</aside>
+
+     
+    
+        
+    <div class="disqus-container">
+    <div id="disqus_thread"></div>
+<script type="application/javascript">
+    window.disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "hugo-theme-stack" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+</div>
+
+<style>
+    .disqus-container {
+        background-color: var(--card-background);
+        border-radius: var(--card-border-radius);
+        box-shadow: var(--shadow-l1);
+        padding: var(--card-padding);
+    }
+</style>
+
+<script>
+    window.addEventListener('onColorSchemeChange', (e) => {
+        if (DISQUS) {
+            DISQUS.reset({
+                reload: true
+            });
+        }
+    })
+</script>
+
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy; 
+        
+            2018 - 
+        
+        2022 panzd
+    </section>
+    
+    <section class="powerby">
+        Built with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> <br />
+        Theme <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.11.0">Stack</a></b> designed by <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a>
+    </section>
+</footer>
+
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.css"integrity="sha256-c0uckgykQ9v5k&#43;IqViZOZKc47Jn7KQil4/MP3ySA3F8="crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.css"integrity="sha256-SBLU4vv6CA6lHsZ1XyTdhyjJxCjPif/TRkjnsyGAGnE="crossorigin="anonymous"
+            >
+
+            </main>
+    
+
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.5/dist/vibrant.min.js"integrity="sha256-5NovOZc4iwiAWTYIFiIM7DxKUXKWvpVEuMEPLzcm5/g="crossorigin="anonymous"
+                
+                >
+            </script><script type="text/javascript" src="/ts/main.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+    </body>
+</html>
